@@ -1,0 +1,100 @@
+aid: singlestore
+url: https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml
+modified: '2026-03-21'
+apis:
+  - aid: singlestore:management-api
+    name: SingleStore Management API
+    tags:
+      - Cloud
+      - Database
+      - Workspace Management
+      - Infrastructure
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api.singlestore.com
+    humanURL: https://docs.singlestore.com/cloud/reference/management-api/
+    properties:
+      - url: https://docs.singlestore.com/cloud/reference/management-api/
+        type: Documentation
+      - url: https://docs.singlestore.com/cloud/reference/management-api/reference/
+        type: Documentation
+      - url: openapi/singlestore-management-api-openapi.yml
+        type: OpenAPI
+    description: >-
+      The SingleStore Management API is a REST interface for programmatically
+      creating and managing workspace groups and workspaces within SingleStore
+      Helios, the cloud-managed distributed SQL database service. It supports
+      operations for provisioning, updating, suspending, resuming, and deleting
+      workspaces, as well as managing private connections, Flow instances,
+      invitations, teams, and cloud workload identity configurations.
+      Authentication uses HTTP Bearer tokens generated from the Cloud Portal,
+      and all requests must be made over HTTPS. An OpenAPI specification is
+      provided alongside the API to facilitate client SDK generation in multiple
+      languages.
+
+  - aid: singlestore:data-api
+    name: SingleStore Data API
+    tags:
+      - Database
+      - SQL
+      - Query
+      - Serverless
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api.singlestore.com
+    humanURL: https://docs.singlestore.com/cloud/reference/data-api/
+    properties:
+      - url: https://docs.singlestore.com/cloud/reference/data-api/
+        type: Documentation
+      - url: https://docs.singlestore.com/cloud/reference/data-api/data-api-endpoint-reference/
+        type: Documentation
+      - url: openapi/singlestore-data-api-openapi.yml
+        type: OpenAPI
+      - url: json-schema/singlestore-query-schema.json
+        type: JSONSchema
+    description: >-
+      The SingleStore Data API enables developers to execute SQL statements
+      against a SingleStore Helios database over standard HTTP connections
+      without requiring a native database driver. It supports all SQL statements
+      available through a direct database connection, returning results as
+      JSON-encoded responses using standard HTTP methods and response codes.
+      The API exposes endpoints for executing DDL and DML statements via
+      /api/v2/exec and returning query result sets via /api/v2/query/rows.
+      Authentication is handled using HTTP Basic or Bearer Authentication over
+      HTTPS, and the API supports up to 192 parallel requests per aggregator,
+      making it suitable for serverless architectures and custom application
+      integrations.
+
+  - aid: singlestore:kai
+    name: SingleStore Kai MongoDB API
+    tags:
+      - Database
+      - MongoDB
+      - NoSQL
+      - JSON
+      - Compatibility
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    baseURL: https://api.singlestore.com
+    humanURL: https://docs.singlestore.com/cloud/reference/singlestore-kai/
+    properties:
+      - url: https://docs.singlestore.com/cloud/reference/singlestore-kai/
+        type: Documentation
+      - url: https://docs.singlestore.com/cloud/reference/singlestore-kai/getting-started-with-singlestore-kai/
+        type: Documentation
+    description: >-
+      SingleStore Kai is a MongoDB wire protocol-compatible API layer that
+      allows existing MongoDB applications to connect to SingleStore Helios
+      without code changes, data transformations, schema migrations, or query
+      modifications. It implements the MongoDB 6.0 network protocol, making the
+      service appear as a MongoDB server to client applications, and includes
+      support for the BSON storage type introduced in SingleStore 8.5.1 for
+      full compatibility with all MongoDB document field types. Kai enables
+      developers to leverage SingleStore's distributed SQL engine for real-time
+      analytics workloads that would otherwise be slow on MongoDB, with
+      benchmark results showing 100x to 1000x faster analytical query
+      performance. The API can be enabled per workspace from the SingleStore
+      Cloud Portal.
+
+common:
+  - url: json-ld/singlestore-context.jsonld
+    type: JSON-LD
+  - url: json-schema/singlestore-workspace-schema.json
+    type: JSONSchema

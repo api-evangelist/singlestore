@@ -1,0 +1,343 @@
+openapi: 3.1.0
+info:
+  title: SingleStore Data API
+  description: >-
+    The SingleStore Data API enables developers to execute SQL statements
+    against a SingleStore Helios database over standard HTTP connections
+    without requiring a native database driver or MySQL-compatible client.
+    It supports all SQL statements available through a direct database
+    connection, returning results as JSON-encoded responses using standard
+    HTTP methods and response codes. The API exposes endpoints for executing
+    DDL and DML statements via /api/v2/exec and returning query result sets
+    via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled
+    using HTTP Basic or Bearer Authentication over HTTPS. The API supports up
+    to 192 parallel requests per aggregator, making it suitable for serverless
+    architectures and custom application integrations.
+  version: 'v2'
+  contact:
+    name: SingleStore Support
+    url: https://support.singlestore.com
+  termsOfService: https://www.singlestore.com/cloud-terms-and-conditions/
+externalDocs:
+  description: SingleStore Data API Documentation
+  url: https://docs.singlestore.com/cloud/reference/data-api/
+servers:
+  - url: https://{workspaceHost}
+    description: >-
+      SingleStore Helios workspace endpoint. Replace workspaceHost with the
+      hostname of the target workspace obtained from the Cloud Portal or
+      Management API.
+    variables:
+      workspaceHost:
+        default: your-workspace.singlestore.com
+        description: >-
+          Hostname of the SingleStore Helios workspace to query. Obtain this
+          value from the workspace endpoint field in the Cloud Portal or via
+          the Management API.
+tags:
+  - name: Queries
+    description: >-
+      Execute SQL statements against a SingleStore Helios workspace over HTTP.
+      Supports DDL, DML, and SELECT statements returning results as JSON.
+  - name: Health
+    description: >-
+      Health check operations for verifying connectivity to the Data API
+      endpoint without requiring authentication credentials.
+security:
+  - basicAuth: []
+  - bearerAuth: []
+paths:
+  /api/v2/exec:
+    post:
+      operationId: execSQL
+      summary: Execute a SQL statement
+      description: >-
+        Executes a DDL or DML SQL statement against the target workspace and
+        database. Use this endpoint for statements that do not return result
+        sets, such as CREATE TABLE, INSERT, UPDATE, DELETE, and DROP. The
+        endpoint returns execution metadata including the number of rows
+        affected. The request body must not exceed 1 MB in size.
+      tags:
+        - Queries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecRequest'
+      responses:
+        '200':
+          description: SQL statement executed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/v2/query/rows:
+    post:
+      operationId: queryRows
+      summary: Execute a SQL query and return rows
+      description: >-
+        Executes a SQL SELECT statement against the target workspace and
+        database, returning results as an array of JSON objects where each
+        object represents one row with column names as keys. This format is
+        convenient for most use cases but produces larger responses than the
+        tuples format due to the repeated column name keys. The request body
+        must not exceed 1 MB in size.
+      tags:
+        - Queries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Query executed successfully; results returned as row objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryRowsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/v2/query/tuples:
+    post:
+      operationId: queryTuples
+      summary: Execute a SQL query and return tuples
+      description: >-
+        Executes a SQL SELECT statement against the target workspace and
+        database, returning results as a separate columns array and a rows
+        array of value arrays. This format offers better performance for
+        queries with large result sets because column names are not repeated
+        per row. Use this endpoint when response payload size is a concern.
+      tags:
+        - Queries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Query executed successfully; results returned as column/tuple arrays.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryTuplesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /api/v2/ping:
+    get:
+      operationId: ping
+      summary: Ping the Data API
+      description: >-
+        Health check endpoint that verifies the Data API is reachable and
+        operational on the target workspace. This endpoint does not require
+        authentication credentials and can be used to confirm network
+        connectivity before making authenticated requests.
+      tags:
+        - Health
+      security: []
+      responses:
+        '200':
+          description: Data API is reachable and operational.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status message confirming the API is healthy.
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        HTTP Basic Authentication using SingleStore database credentials.
+        Provide the username and password as a Base-64 encoded
+        username:password string in the Authorization header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer token authentication using a JWT token obtained from the
+        SingleStore Cloud Portal.
+  responses:
+    BadRequest:
+      description: The SQL statement or request body was malformed or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The request did not include valid authentication credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: >-
+        The SQL statement failed to execute due to a database or server-side
+        error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ExecRequest:
+      type: object
+      description: >-
+        Request body for executing a DDL or DML SQL statement that does not
+        return a result set.
+      required:
+        - sql
+      properties:
+        sql:
+          type: string
+          description: >-
+            The SQL statement to execute. Supports all DDL and DML statement
+            types including CREATE, INSERT, UPDATE, DELETE, and DROP.
+        database:
+          type: string
+          description: >-
+            Name of the database to use when executing the statement. If not
+            provided, the default database for the authenticated user is used.
+        args:
+          type: array
+          description: >-
+            Positional arguments for parameterized SQL statements. Use ?
+            placeholders in the sql field and provide values in order here.
+          items: {}
+    ExecResponse:
+      type: object
+      description: Response returned after successfully executing a DDL or DML statement.
+      properties:
+        results:
+          type: array
+          description: >-
+            Array of result metadata objects, one per statement executed.
+          items:
+            type: object
+            properties:
+              lastInsertId:
+                type: integer
+                description: >-
+                  Auto-increment ID of the last row inserted by an INSERT
+                  statement, if applicable.
+              rowsAffected:
+                type: integer
+                description: Number of rows affected by the executed statement.
+    QueryRequest:
+      type: object
+      description: >-
+        Request body for executing a SQL SELECT statement and returning a
+        result set.
+      required:
+        - sql
+      properties:
+        sql:
+          type: string
+          description: >-
+            The SQL SELECT statement to execute. Any valid SingleStore SQL
+            SELECT syntax is supported.
+        database:
+          type: string
+          description: >-
+            Name of the database to query. If not provided, the default
+            database for the authenticated user is used.
+        args:
+          type: array
+          description: >-
+            Positional arguments for parameterized SQL queries. Use ?
+            placeholders in the sql field and provide values in order here.
+          items: {}
+    QueryRowsResponse:
+      type: object
+      description: >-
+        Response returned after a successful SELECT query using the rows
+        format, where each result row is a JSON object with column names
+        as keys.
+      properties:
+        results:
+          type: array
+          description: Array of result sets, one per statement in the request.
+          items:
+            type: object
+            properties:
+              rows:
+                type: array
+                description: >-
+                  Array of row objects where each object maps column names to
+                  their corresponding values for that row.
+                items:
+                  type: object
+                  additionalProperties: true
+    QueryTuplesResponse:
+      type: object
+      description: >-
+        Response returned after a successful SELECT query using the tuples
+        format, where columns are described once and rows are arrays of values.
+      properties:
+        results:
+          type: array
+          description: Array of result sets, one per statement in the request.
+          items:
+            type: object
+            properties:
+              columns:
+                type: array
+                description: >-
+                  Array of column descriptor objects defining the name and data
+                  type of each column in the result set.
+                items:
+                  $ref: '#/components/schemas/Column'
+              rows:
+                type: array
+                description: >-
+                  Array of value arrays where each inner array contains the
+                  column values for one result row in the same order as the
+                  columns array.
+                items:
+                  type: array
+                  items: {}
+    Column:
+      type: object
+      description: Descriptor for a single column in a query result set.
+      properties:
+        name:
+          type: string
+          description: Name of the column as defined in the SQL query or table schema.
+        dataType:
+          type: string
+          description: SingleStore data type of the column (e.g., INT, VARCHAR, DATETIME).
+        nullable:
+          type: boolean
+          description: >-
+            When true, the column may contain NULL values.
+    Error:
+      type: object
+      description: Standard error response returned when a Data API request fails.
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+        code:
+          type: integer
+          description: HTTP status code associated with the error.

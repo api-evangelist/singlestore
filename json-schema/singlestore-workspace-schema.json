@@ -1,0 +1,321 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://singlestore.com/schemas/singlestore/workspace.json",
+  "title": "SingleStore Workspace",
+  "description": "Schema representing a SingleStore Helios workspace, which provides compute capacity for running SQL queries against the SingleStore database engine. Workspaces belong to a workspace group and can be independently suspended and resumed.",
+  "type": "object",
+  "required": ["workspaceID", "workspaceGroupID", "name", "state", "size"],
+  "properties": {
+    "workspaceID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the workspace assigned by SingleStore Helios."
+    },
+    "workspaceGroupID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the workspace group this workspace belongs to."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the workspace.",
+      "maxLength": 128
+    },
+    "state": {
+      "type": "string",
+      "description": "Current lifecycle state of the workspace, reflecting its operational status.",
+      "enum": [
+        "PendingCreation",
+        "Transitioning",
+        "Active",
+        "Suspended",
+        "Resuming",
+        "Terminated",
+        "Failed"
+      ]
+    },
+    "size": {
+      "type": "string",
+      "description": "Workspace size designation controlling the allocated vCPUs and memory (e.g., S-00, S-1, S-2, S-4).",
+      "pattern": "^S-[0-9]+"
+    },
+    "endpoint": {
+      "type": "string",
+      "description": "Hostname used for establishing database connections to this workspace.",
+      "format": "hostname"
+    },
+    "autoSuspend": {
+      "$ref": "#/$defs/AutoSuspendConfig"
+    },
+    "cacheConfig": {
+      "type": "integer",
+      "description": "Cache multiplier applied to the workspace. Higher values increase the in-memory cache for frequently accessed data.",
+      "enum": [1, 2, 4]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the workspace was created."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional ISO 8601 timestamp after which the workspace is automatically terminated."
+    }
+  },
+  "$defs": {
+    "AutoSuspendConfig": {
+      "type": "object",
+      "description": "Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce compute costs.",
+      "properties": {
+        "suspended": {
+          "type": "boolean",
+          "description": "When true, auto-suspend is enabled and the workspace will be suspended after the specified idle interval."
+        },
+        "suspendAfterSeconds": {
+          "type": "integer",
+          "description": "Number of seconds of query inactivity after which the workspace is automatically suspended.",
+          "minimum": 60
+        }
+      }
+    },
+    "WorkspaceGroup": {
+      "type": "object",
+      "description": "A logical container grouping workspaces sharing a common cloud region, network configuration, and firewall rules.",
+      "required": ["workspaceGroupID", "name", "state", "regionID"],
+      "properties": {
+        "workspaceGroupID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the workspace group."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the workspace group.",
+          "maxLength": 128
+        },
+        "state": {
+          "type": "string",
+          "description": "Current lifecycle state of the workspace group.",
+          "enum": ["Active", "Pending", "Terminated", "Failed"]
+        },
+        "regionID": {
+          "type": "string",
+          "description": "Identifier of the cloud provider region where the workspace group is deployed."
+        },
+        "firewallRanges": {
+          "type": "array",
+          "description": "List of CIDR IP address ranges permitted to connect to workspaces in this group.",
+          "items": {
+            "type": "string",
+            "pattern": "^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$"
+          }
+        },
+        "allowAllTraffic": {
+          "type": "boolean",
+          "description": "When true, all inbound traffic is allowed regardless of the firewallRanges configuration."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the workspace group was created."
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional ISO 8601 timestamp after which the workspace group is automatically terminated."
+        }
+      }
+    },
+    "Region": {
+      "type": "object",
+      "description": "A cloud provider region that supports workspace group creation within SingleStore Helios.",
+      "required": ["regionID", "provider"],
+      "properties": {
+        "regionID": {
+          "type": "string",
+          "description": "Unique identifier string for the region used in Management API requests."
+        },
+        "region": {
+          "type": "string",
+          "description": "Cloud provider region code such as us-east-1 for AWS or us-central1 for GCP."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Cloud provider hosting this region.",
+          "enum": ["AWS", "GCP", "Azure"]
+        },
+        "country": {
+          "type": "string",
+          "description": "Country where the cloud region is physically located."
+        }
+      }
+    },
+    "Organization": {
+      "type": "object",
+      "description": "The top-level account entity within SingleStore Helios, grouping users, workspace groups, and billing.",
+      "required": ["orgID", "name"],
+      "properties": {
+        "orgID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the SingleStore Helios organization."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the organization."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the organization was created."
+        }
+      }
+    },
+    "Job": {
+      "type": "object",
+      "description": "A scheduled notebook job that executes a specified notebook on a configurable schedule against a target workspace.",
+      "required": ["jobID", "schedule", "executionConfig", "targetConfig"],
+      "properties": {
+        "jobID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the job."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the job."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of the job purpose."
+        },
+        "schedule": {
+          "$ref": "#/$defs/JobSchedule"
+        },
+        "executionConfig": {
+          "$ref": "#/$defs/JobExecutionConfig"
+        },
+        "targetConfig": {
+          "$ref": "#/$defs/JobTargetConfig"
+        },
+        "completedExecutionsCount": {
+          "type": "integer",
+          "description": "Total number of executions that have completed for this job.",
+          "minimum": 0
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the job was created."
+        },
+        "terminatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the job was terminated, if applicable."
+        }
+      }
+    },
+    "JobSchedule": {
+      "type": "object",
+      "description": "Schedule configuration defining when and how often a job executes.",
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "Scheduling mode. Once runs the notebook a single time; Recurring executes on a repeating interval.",
+          "enum": ["Once", "Recurring"]
+        },
+        "startAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp for when the job should first execute."
+        },
+        "executionIntervalInMinutes": {
+          "type": "integer",
+          "description": "Number of minutes between recurring executions. Required when mode is Recurring.",
+          "minimum": 1
+        }
+      }
+    },
+    "JobExecutionConfig": {
+      "type": "object",
+      "description": "Configuration specifying the notebook and runtime environment for job execution.",
+      "required": ["notebookPath"],
+      "properties": {
+        "notebookPath": {
+          "type": "string",
+          "description": "Path to the notebook file in SingleStore Spaces to execute."
+        },
+        "runtimeName": {
+          "type": "string",
+          "description": "Name of the runtime environment for notebook execution."
+        },
+        "createSnapshot": {
+          "type": "boolean",
+          "description": "When true, saves a snapshot of the executed notebook with outputs after each run."
+        }
+      }
+    },
+    "JobTargetConfig": {
+      "type": "object",
+      "description": "Configuration specifying the workspace and database the job should connect to.",
+      "required": ["targetID", "targetType"],
+      "properties": {
+        "targetID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the workspace to connect to during execution."
+        },
+        "targetType": {
+          "type": "string",
+          "description": "Type of target resource. Currently only Workspace is supported.",
+          "enum": ["Workspace"]
+        },
+        "databaseName": {
+          "type": "string",
+          "description": "Name of the database within the workspace to connect to."
+        },
+        "resumeTarget": {
+          "type": "boolean",
+          "description": "When true, automatically resumes a suspended workspace before execution."
+        }
+      }
+    },
+    "Secret": {
+      "type": "object",
+      "description": "An organization-level secret storing sensitive values that can be referenced securely in notebooks and jobs.",
+      "required": ["secretID", "name"],
+      "properties": {
+        "secretID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the secret."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name used to reference the secret in notebooks and jobs.",
+          "maxLength": 256
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "Identifier of the user who created the secret."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the secret was created."
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "description": "Identifier of the user who last updated the secret."
+        },
+        "lastUpdatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the secret was last modified."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1305 @@
+openapi: 3.1.0
+info:
+  title: SingleStore Management API
+  description: >-
+    The SingleStore Management API is a REST interface for programmatically
+    creating and managing workspace groups and workspaces within SingleStore
+    Helios, the cloud-managed distributed SQL database service. It supports
+    operations for provisioning, updating, suspending, resuming, and deleting
+    workspaces, as well as managing private connections, regions, organizations,
+    jobs, files, secrets, and teams. Authentication uses HTTP Bearer tokens
+    generated from the Cloud Portal, and all requests must be made over HTTPS.
+    An OpenAPI specification is provided alongside the API to facilitate client
+    SDK generation in multiple languages.
+  version: 'v1'
+  contact:
+    name: SingleStore Support
+    url: https://support.singlestore.com
+  termsOfService: https://www.singlestore.com/cloud-terms-and-conditions/
+externalDocs:
+  description: SingleStore Management API Documentation
+  url: https://docs.singlestore.com/cloud/reference/management-api/
+servers:
+  - url: https://api.singlestore.com/v1
+    description: SingleStore Helios Production Server
+tags:
+  - name: WorkspaceGroups
+    description: >-
+      Create, list, retrieve, update, and delete workspace groups within a
+      SingleStore Helios organization. Workspace groups are logical containers
+      that group workspaces by region and network configuration.
+  - name: Workspaces
+    description: >-
+      Create, list, retrieve, update, suspend, resume, and delete workspaces
+      within a workspace group. Workspaces are the compute resources that
+      connect to a SingleStore database.
+  - name: Regions
+    description: >-
+      List available cloud provider regions that support workspace group
+      creation, including shared tier regions.
+  - name: Organizations
+    description: >-
+      Retrieve information about the current user's organization within
+      SingleStore Helios.
+  - name: Jobs
+    description: >-
+      Create, retrieve, list, and delete scheduled notebook jobs within
+      SingleStore Helios. Jobs enable automated execution of notebooks on
+      configurable schedules.
+  - name: Secrets
+    description: >-
+      Manage organization-level secrets that can be referenced securely in
+      notebooks and jobs without exposing plaintext credentials.
+  - name: Files
+    description: >-
+      Upload, download, list, and delete files in the personal, shared, or
+      models space within SingleStore Helios Spaces (stage storage).
+  - name: PrivateConnections
+    description: >-
+      Create, retrieve, update, and delete private network connections for
+      workspace groups, enabling secure connectivity without traversing the
+      public internet.
+security:
+  - bearerAuth: []
+paths:
+  /workspaceGroups:
+    get:
+      operationId: listWorkspaceGroups
+      summary: List workspace groups
+      description: >-
+        Retrieves all workspace groups accessible to the authenticated user
+        within the current organization. Returns a list of workspace group
+        objects including their IDs, names, regions, states, and configuration.
+      tags:
+        - WorkspaceGroups
+      parameters:
+        - $ref: '#/components/parameters/organizationIDQuery'
+      responses:
+        '200':
+          description: List of workspace groups returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspaceGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createWorkspaceGroup
+      summary: Create a workspace group
+      description: >-
+        Creates a new workspace group in the specified cloud region for the
+        authenticated user's organization. A workspace group defines the network
+        boundary, region, and firewall configuration for workspaces deployed
+        within it.
+      tags:
+        - WorkspaceGroups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceGroupCreate'
+      responses:
+        '200':
+          description: Workspace group created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /workspaceGroups/{workspaceGroupID}:
+    get:
+      operationId: getWorkspaceGroup
+      summary: Get a workspace group
+      description: >-
+        Retrieves detailed information about a specific workspace group
+        identified by its unique ID, including its current state, region,
+        firewall configuration, and associated metadata.
+      tags:
+        - WorkspaceGroups
+      parameters:
+        - $ref: '#/components/parameters/workspaceGroupIDPath'
+      responses:
+        '200':
+          description: Workspace group returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateWorkspaceGroup
+      summary: Update a workspace group
+      description: >-
+        Updates the configuration of an existing workspace group, such as its
+        name or firewall IP allowlist rules. Only the fields provided in the
+        request body are modified; omitted fields remain unchanged.
+      tags:
+        - WorkspaceGroups
+      parameters:
+        - $ref: '#/components/parameters/workspaceGroupIDPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceGroupUpdate'
+      responses:
+        '200':
+          description: Workspace group updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: terminateWorkspaceGroup
+      summary: Terminate a workspace group
+      description: >-
+        Terminates and permanently deletes the specified workspace group and all
+        workspaces within it. This operation is irreversible. Use the force
+        parameter to bypass safety checks when the group contains active
+        workspaces.
+      tags:
+        - WorkspaceGroups
+      parameters:
+        - $ref: '#/components/parameters/workspaceGroupIDPath'
+        - name: force
+          in: query
+          description: >-
+            When set to true, terminates the workspace group even if it contains
+            active workspaces.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Workspace group terminated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceGroupDeleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      summary: List workspaces
+      description: >-
+        Retrieves all workspaces accessible to the authenticated user, optionally
+        filtered by workspace group ID. Returns workspace details including state,
+        size, endpoint, and configuration.
+      tags:
+        - Workspaces
+      parameters:
+        - name: workspaceGroupID
+          in: query
+          description: >-
+            Filter workspaces by the unique ID of the workspace group they belong
+            to.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of workspaces returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createWorkspace
+      summary: Create a workspace
+      description: >-
+        Creates a new workspace within an existing workspace group. The workspace
+        provides compute capacity connected to the SingleStore database engine.
+        Workspace size determines the number of vCPUs and memory allocated.
+      tags:
+        - Workspaces
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceCreate'
+      responses:
+        '200':
+          description: Workspace created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /workspaces/{workspaceID}:
+    get:
+      operationId: getWorkspace
+      summary: Get a workspace
+      description: >-
+        Retrieves detailed information about a specific workspace identified by
+        its unique ID, including its current state, endpoint hostname, size,
+        auto-suspend settings, and cache configuration.
+      tags:
+        - Workspaces
+      parameters:
+        - $ref: '#/components/parameters/workspaceIDPath'
+      responses:
+        '200':
+          description: Workspace returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateWorkspace
+      summary: Update a workspace
+      description: >-
+        Updates the configuration of an existing workspace, such as its
+        auto-suspend settings, cache multiplier, size, or deployment type.
+        Only the fields provided in the request body are modified.
+      tags:
+        - Workspaces
+      parameters:
+        - $ref: '#/components/parameters/workspaceIDPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceUpdate'
+      responses:
+        '200':
+          description: Workspace updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: terminateWorkspace
+      summary: Terminate a workspace
+      description: >-
+        Terminates and permanently deletes the specified workspace. This
+        operation is irreversible. The workspace must be in a non-transitional
+        state before it can be terminated.
+      tags:
+        - Workspaces
+      parameters:
+        - $ref: '#/components/parameters/workspaceIDPath'
+        - name: force
+          in: query
+          description: >-
+            When set to true, forces termination of the workspace even if it is
+            in an intermediate state.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Workspace terminated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDeleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspaces/{workspaceID}/suspend:
+    post:
+      operationId: suspendWorkspace
+      summary: Suspend a workspace
+      description: >-
+        Suspends an active workspace, pausing compute billing while retaining
+        the workspace configuration and associated data. The workspace can be
+        resumed at any time using the resume endpoint.
+      tags:
+        - Workspaces
+      parameters:
+        - $ref: '#/components/parameters/workspaceIDPath'
+      responses:
+        '200':
+          description: Workspace suspension initiated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspaces/{workspaceID}/resume:
+    post:
+      operationId: resumeWorkspace
+      summary: Resume a workspace
+      description: >-
+        Resumes a suspended workspace, restoring compute capacity and making
+        the workspace available for database connections. Optionally disables
+        auto-suspend when resuming.
+      tags:
+        - Workspaces
+      parameters:
+        - $ref: '#/components/parameters/workspaceIDPath'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disableAutoSuspend:
+                  type: boolean
+                  description: >-
+                    When true, disables the auto-suspend feature on the workspace
+                    after resuming.
+      responses:
+        '200':
+          description: Workspace resume initiated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /regions:
+    get:
+      operationId: listRegions
+      summary: List regions
+      description: >-
+        Retrieves all cloud provider regions that support workspace group
+        creation within SingleStore Helios, including the cloud provider name
+        and region identifier for each available region.
+      tags:
+        - Regions
+      responses:
+        '200':
+          description: List of regions returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Region'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /regions/sharedtier:
+    get:
+      operationId: listSharedTierRegions
+      summary: List shared tier regions
+      description: >-
+        Retrieves all cloud provider regions that support shared tier (starter)
+        workspace creation within SingleStore Helios.
+      tags:
+        - Regions
+      responses:
+        '200':
+          description: List of shared tier regions returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Region'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /organizations/current:
+    get:
+      operationId: getCurrentOrganization
+      summary: Get current organization
+      description: >-
+        Retrieves information about the organization associated with the current
+        API key, including the organization ID, name, and creation timestamp.
+      tags:
+        - Organizations
+      responses:
+        '200':
+          description: Current organization returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /jobs:
+    get:
+      operationId: listJobs
+      summary: List jobs
+      description: >-
+        Retrieves all scheduled notebook jobs within the current organization,
+        including job configuration, execution history metadata, and scheduling
+        details.
+      tags:
+        - Jobs
+      parameters:
+        - $ref: '#/components/parameters/organizationIDQuery'
+      responses:
+        '200':
+          description: List of jobs returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createJob
+      summary: Create a job
+      description: >-
+        Creates a new scheduled notebook job within the current organization.
+        Jobs execute a specified notebook on a defined schedule or on demand,
+        targeting a specific workspace and optional database.
+      tags:
+        - Jobs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCreate'
+      responses:
+        '200':
+          description: Job created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /jobs/{jobID}:
+    get:
+      operationId: getJob
+      summary: Get a job
+      description: >-
+        Retrieves detailed information about a specific scheduled notebook job
+        identified by its unique job ID, including its schedule configuration,
+        execution history, and current status.
+      tags:
+        - Jobs
+      parameters:
+        - $ref: '#/components/parameters/jobIDPath'
+      responses:
+        '200':
+          description: Job returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteJob
+      summary: Delete a job
+      description: >-
+        Permanently deletes a scheduled notebook job identified by its unique
+        job ID. Any currently executing job instances are not affected; only
+        future executions are cancelled.
+      tags:
+        - Jobs
+      parameters:
+        - $ref: '#/components/parameters/jobIDPath'
+      responses:
+        '200':
+          description: Job deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /jobs/{jobID}/executions:
+    get:
+      operationId: listJobExecutions
+      summary: List job executions
+      description: >-
+        Retrieves the execution history for a specific job, with optional
+        pagination by execution number range. Returns execution status,
+        timing, and any associated snapshot notebook paths.
+      tags:
+        - Jobs
+      parameters:
+        - $ref: '#/components/parameters/jobIDPath'
+        - name: start
+          in: query
+          description: The starting execution number for pagination.
+          schema:
+            type: integer
+        - name: end
+          in: query
+          description: The ending execution number for pagination.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Job executions returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobExecution'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /secrets:
+    get:
+      operationId: listSecrets
+      summary: List secrets
+      description: >-
+        Retrieves all secrets defined in the current organization, optionally
+        filtered by name. Secret values are not returned in list responses;
+        only metadata such as name, ID, and timestamps are included.
+      tags:
+        - Secrets
+      parameters:
+        - name: name
+          in: query
+          description: Filter secrets by exact name match.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of secrets returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  secrets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Secret'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /stage/{deploymentID}/fs/{stagePath}:
+    get:
+      operationId: getStageFile
+      summary: Get or list stage file
+      description: >-
+        Retrieves a file from the stage filesystem at the specified path, or
+        lists directory contents when the path points to a directory. Use the
+        metadata query parameter to return object metadata instead of file
+        content.
+      tags:
+        - Files
+      parameters:
+        - $ref: '#/components/parameters/deploymentIDPath'
+        - $ref: '#/components/parameters/stagePathPath'
+        - name: metadata
+          in: query
+          description: >-
+            When set to 1, returns file metadata (size, type, modified date)
+            instead of file content.
+          schema:
+            type: integer
+            enum: [1]
+      responses:
+        '200':
+          description: File content or metadata returned successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: uploadStageFile
+      summary: Upload a stage file
+      description: >-
+        Uploads a file to the stage filesystem at the specified path, creating
+        parent directories as needed. Existing files at the same path are
+        overwritten.
+      tags:
+        - Files
+      parameters:
+        - $ref: '#/components/parameters/deploymentIDPath'
+        - $ref: '#/components/parameters/stagePathPath'
+        - name: isFile
+          in: query
+          description: >-
+            When set to false, creates a directory instead of uploading a file.
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: File uploaded successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      operationId: renameStageFile
+      summary: Rename or move a stage file
+      description: >-
+        Renames or moves a file or directory within the stage filesystem from
+        the specified old path to a new path provided in the request body.
+      tags:
+        - Files
+      parameters:
+        - $ref: '#/components/parameters/deploymentIDPath'
+        - $ref: '#/components/parameters/stagePathPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - newPath
+              properties:
+                newPath:
+                  type: string
+                  description: The new path for the file or directory within the stage filesystem.
+      responses:
+        '200':
+          description: File renamed or moved successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteStageFile
+      summary: Delete a stage file
+      description: >-
+        Deletes a file or directory from the stage filesystem at the specified
+        path. Directory deletion removes all contained files and subdirectories
+        recursively.
+      tags:
+        - Files
+      parameters:
+        - $ref: '#/components/parameters/deploymentIDPath'
+        - $ref: '#/components/parameters/stagePathPath'
+      responses:
+        '200':
+          description: File deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        API key generated from the SingleStore Cloud Portal. Pass the key as a
+        Bearer token in the Authorization header of every request.
+  parameters:
+    workspaceGroupIDPath:
+      name: workspaceGroupID
+      in: path
+      required: true
+      description: Unique identifier of the workspace group.
+      schema:
+        type: string
+        format: uuid
+    workspaceIDPath:
+      name: workspaceID
+      in: path
+      required: true
+      description: Unique identifier of the workspace.
+      schema:
+        type: string
+        format: uuid
+    jobIDPath:
+      name: jobID
+      in: path
+      required: true
+      description: Unique identifier of the job.
+      schema:
+        type: string
+        format: uuid
+    deploymentIDPath:
+      name: deploymentID
+      in: path
+      required: true
+      description: >-
+        Unique deployment identifier associated with a workspace group, used to
+        address the stage filesystem.
+      schema:
+        type: string
+    stagePathPath:
+      name: stagePath
+      in: path
+      required: true
+      description: File or directory path within the stage filesystem.
+      schema:
+        type: string
+    organizationIDQuery:
+      name: organizationID
+      in: query
+      description: >-
+        Filter results to a specific organization when the authenticated user
+        belongs to multiple organizations.
+      schema:
+        type: string
+        format: uuid
+  responses:
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    WorkspaceGroup:
+      type: object
+      description: >-
+        A workspace group is a logical container that groups workspaces sharing
+        a common cloud region, network configuration, and firewall rules within
+        a SingleStore Helios organization.
+      properties:
+        workspaceGroupID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace group.
+        name:
+          type: string
+          description: Human-readable name of the workspace group.
+        state:
+          type: string
+          description: Current lifecycle state of the workspace group.
+          enum:
+            - Active
+            - Pending
+            - Terminated
+            - Failed
+        regionID:
+          type: string
+          description: >-
+            Identifier of the cloud provider region where the workspace group
+            is deployed.
+        firewallRanges:
+          type: array
+          description: >-
+            List of CIDR IP ranges permitted to connect to workspaces in this
+            group.
+          items:
+            type: string
+        allowAllTraffic:
+          type: boolean
+          description: >-
+            When true, all inbound traffic is allowed regardless of firewall
+            ranges.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the workspace group was created.
+        expiresAt:
+          type: string
+          format: date-time
+          description: >-
+            Optional ISO 8601 timestamp when the workspace group is scheduled to
+            expire and be automatically terminated.
+    WorkspaceGroupCreate:
+      type: object
+      description: Request body for creating a new workspace group.
+      required:
+        - name
+        - regionID
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the new workspace group.
+        regionID:
+          type: string
+          description: Cloud provider region where the workspace group will be deployed.
+        firewallRanges:
+          type: array
+          description: >-
+            CIDR IP ranges permitted to connect to workspaces in this group.
+            Use 0.0.0.0/0 to allow all traffic.
+          items:
+            type: string
+        allowAllTraffic:
+          type: boolean
+          description: When true, allows all inbound traffic to workspaces in this group.
+        adminPassword:
+          type: string
+          description: >-
+            Initial administrator password for the workspace group database.
+            Must meet SingleStore password complexity requirements.
+        expiresAt:
+          type: string
+          format: date-time
+          description: >-
+            Optional ISO 8601 timestamp after which the workspace group will be
+            automatically terminated.
+    WorkspaceGroupUpdate:
+      type: object
+      description: Request body for updating an existing workspace group.
+      properties:
+        name:
+          type: string
+          description: Updated name for the workspace group.
+        firewallRanges:
+          type: array
+          description: Updated list of CIDR IP ranges permitted to connect to workspaces.
+          items:
+            type: string
+        allowAllTraffic:
+          type: boolean
+          description: >-
+            When true, allows all inbound traffic regardless of firewall range
+            configuration.
+        expiresAt:
+          type: string
+          format: date-time
+          description: >-
+            Updated expiration timestamp after which the workspace group is
+            automatically terminated.
+    WorkspaceGroupDeleteResponse:
+      type: object
+      description: Response returned after initiating workspace group termination.
+      properties:
+        workspaceGroupID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace group that was terminated.
+    Workspace:
+      type: object
+      description: >-
+        A workspace provides compute capacity for running SQL queries against
+        the SingleStore Helios database engine. It connects to a shared database
+        within a workspace group and can be suspended and resumed independently.
+      properties:
+        workspaceID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace.
+        workspaceGroupID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace group this workspace belongs to.
+        name:
+          type: string
+          description: Human-readable name of the workspace.
+        state:
+          type: string
+          description: Current lifecycle state of the workspace.
+          enum:
+            - PendingCreation
+            - Transitioning
+            - Active
+            - Suspended
+            - Resuming
+            - Terminated
+            - Failed
+        size:
+          type: string
+          description: >-
+            Workspace size designation (e.g., S-00, S-1, S-2) controlling the
+            allocated vCPUs and memory.
+        endpoint:
+          type: string
+          description: >-
+            Hostname used for establishing database connections to this
+            workspace.
+        autoSuspend:
+          $ref: '#/components/schemas/AutoSuspendConfig'
+        cacheConfig:
+          type: integer
+          description: >-
+            Cache multiplier applied to the workspace. Valid values are 1, 2,
+            or 4.
+          enum: [1, 2, 4]
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the workspace was created.
+        expiresAt:
+          type: string
+          format: date-time
+          description: >-
+            Optional ISO 8601 timestamp when the workspace is scheduled to be
+            automatically terminated.
+    WorkspaceCreate:
+      type: object
+      description: Request body for creating a new workspace.
+      required:
+        - workspaceGroupID
+        - name
+        - size
+      properties:
+        workspaceGroupID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace group to create the workspace in.
+        name:
+          type: string
+          description: Human-readable name for the new workspace.
+        size:
+          type: string
+          description: >-
+            Size designation for the workspace controlling vCPUs and memory
+            (e.g., S-00, S-1, S-2).
+        autoSuspend:
+          $ref: '#/components/schemas/AutoSuspendConfig'
+        cacheConfig:
+          type: integer
+          description: Cache multiplier for the workspace. Valid values are 1, 2, or 4.
+          enum: [1, 2, 4]
+        expiresAt:
+          type: string
+          format: date-time
+          description: >-
+            Optional ISO 8601 timestamp after which the workspace will be
+            automatically terminated.
+    WorkspaceUpdate:
+      type: object
+      description: Request body for updating an existing workspace.
+      properties:
+        size:
+          type: string
+          description: >-
+            Updated size designation for the workspace. Changing size causes a
+            brief workspace restart.
+        autoSuspend:
+          $ref: '#/components/schemas/AutoSuspendConfig'
+        cacheConfig:
+          type: integer
+          description: Updated cache multiplier. Valid values are 1, 2, or 4.
+          enum: [1, 2, 4]
+    WorkspaceDeleteResponse:
+      type: object
+      description: Response returned after initiating workspace termination.
+      properties:
+        workspaceID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace that was terminated.
+    AutoSuspendConfig:
+      type: object
+      description: >-
+        Configuration controlling automatic suspension of a workspace after a
+        period of inactivity to reduce compute costs.
+      properties:
+        suspended:
+          type: boolean
+          description: >-
+            When true, auto-suspend is enabled and the workspace will suspend
+            after the specified idle interval.
+        suspendAfterSeconds:
+          type: integer
+          description: >-
+            Number of seconds of inactivity after which the workspace is
+            automatically suspended.
+          minimum: 60
+    Region:
+      type: object
+      description: >-
+        A cloud provider region that supports workspace group creation within
+        SingleStore Helios.
+      properties:
+        regionID:
+          type: string
+          description: Unique identifier string for the region used in API requests.
+        region:
+          type: string
+          description: Cloud provider region code (e.g., us-east-1).
+        provider:
+          type: string
+          description: Cloud provider hosting this region.
+          enum:
+            - AWS
+            - GCP
+            - Azure
+        country:
+          type: string
+          description: Country where the region is located.
+    Organization:
+      type: object
+      description: >-
+        An organization is the top-level account entity within SingleStore
+        Helios, grouping users, workspace groups, and billing.
+      properties:
+        orgID:
+          type: string
+          format: uuid
+          description: Unique identifier of the organization.
+        name:
+          type: string
+          description: Human-readable name of the organization.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the organization was created.
+    Job:
+      type: object
+      description: >-
+        A scheduled notebook job that executes a specified notebook on a
+        configurable schedule against a target workspace and database.
+      properties:
+        jobID:
+          type: string
+          format: uuid
+          description: Unique identifier of the job.
+        name:
+          type: string
+          description: Human-readable name of the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        completedExecutionsCount:
+          type: integer
+          description: Total number of completed executions for this job.
+        enqueuedBy:
+          type: string
+          description: Identifier of the user who created or last triggered the job.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the job was created.
+        terminatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the job was terminated, if applicable.
+    JobCreate:
+      type: object
+      description: Request body for creating a new scheduled notebook job.
+      required:
+        - schedule
+        - executionConfig
+        - targetConfig
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        parameters:
+          type: array
+          description: Optional parameters to pass to the notebook at execution time.
+          items:
+            $ref: '#/components/schemas/JobParameter'
+    JobSchedule:
+      type: object
+      description: Schedule configuration defining when and how often a job runs.
+      properties:
+        mode:
+          type: string
+          description: >-
+            Scheduling mode controlling execution frequency. Use Once for a
+            single immediate execution or Recurring for interval-based
+            scheduling.
+          enum:
+            - Once
+            - Recurring
+        startAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for when the job should first execute.
+        executionIntervalInMinutes:
+          type: integer
+          description: >-
+            Number of minutes between recurring executions. Required when mode
+            is Recurring.
+          minimum: 1
+    JobExecutionConfig:
+      type: object
+      description: Configuration specifying the notebook to execute and runtime environment.
+      required:
+        - notebookPath
+      properties:
+        notebookPath:
+          type: string
+          description: Path to the notebook file within SingleStore Spaces to execute.
+        runtimeName:
+          type: string
+          description: Name of the runtime environment to use for notebook execution.
+        createSnapshot:
+          type: boolean
+          description: >-
+            When true, a snapshot of the executed notebook with outputs is saved
+            after each execution.
+    JobTargetConfig:
+      type: object
+      description: >-
+        Configuration specifying the workspace and database the notebook job
+        should connect to.
+      required:
+        - targetID
+        - targetType
+      properties:
+        targetID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace or workspace group to target.
+        targetType:
+          type: string
+          description: >-
+            Type of target resource. Use Workspace to target a specific
+            workspace.
+          enum:
+            - Workspace
+        databaseName:
+          type: string
+          description: >-
+            Name of the database within the workspace to connect to during
+            execution.
+        resumeTarget:
+          type: boolean
+          description: >-
+            When true, automatically resumes a suspended workspace before
+            executing the notebook.
+    JobParameter:
+      type: object
+      description: A parameter passed to a notebook at job execution time.
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+          description: Parameter name as referenced in the notebook.
+        value:
+          type: string
+          description: Parameter value passed to the notebook.
+        type:
+          type: string
+          description: Data type of the parameter value.
+    JobExecution:
+      type: object
+      description: >-
+        A single execution instance of a scheduled job, capturing its status
+        and timing information.
+      properties:
+        executionID:
+          type: string
+          format: uuid
+          description: Unique identifier of this job execution.
+        jobID:
+          type: string
+          format: uuid
+          description: Unique identifier of the parent job.
+        status:
+          type: string
+          description: Current status of this execution.
+          enum:
+            - Queued
+            - Running
+            - Completed
+            - Failed
+            - Cancelled
+        executionNumber:
+          type: integer
+          description: Sequential execution number for this job, starting at 1.
+        scheduledStartTime:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when this execution was scheduled to start.
+        startedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when this execution actually started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when this execution completed or failed.
+        snapshotNotebookPath:
+          type: string
+          description: >-
+            Path to the snapshot notebook created after execution, if snapshot
+            creation was enabled.
+    Secret:
+      type: object
+      description: >-
+        An organization-level secret that stores sensitive values such as API
+        keys or passwords, which can be referenced in notebooks and jobs without
+        exposing plaintext credentials.
+      properties:
+        secretID:
+          type: string
+          format: uuid
+          description: Unique identifier of the secret.
+        name:
+          type: string
+          description: Human-readable name used to reference the secret.
+        createdBy:
+          type: string
+          description: Identifier of the user who created the secret.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the secret was created.
+        lastUpdatedBy:
+          type: string
+          description: Identifier of the user who last updated the secret.
+        lastUpdatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the secret was last updated.
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.

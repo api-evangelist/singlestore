@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://singlestore.com/schemas/singlestore/query.json",
+  "title": "SingleStore Data API Query",
+  "description": "Schema representing request and response payloads for the SingleStore Data API, which enables executing SQL statements against a SingleStore Helios workspace over HTTP without requiring a native database driver.",
+  "type": "object",
+  "required": ["sql"],
+  "properties": {
+    "sql": {
+      "type": "string",
+      "description": "The SQL statement to execute against the target workspace database. Supports all SingleStore SQL syntax including DDL, DML, and SELECT statements.",
+      "minLength": 1,
+      "maxLength": 1048576
+    },
+    "database": {
+      "type": "string",
+      "description": "Name of the database to use when executing the statement. If omitted, the default database for the authenticated user is used.",
+      "maxLength": 64
+    },
+    "args": {
+      "type": "array",
+      "description": "Positional parameter values for parameterized SQL statements. Provide values in the same order as the ? placeholder markers in the sql field.",
+      "items": {
+        "description": "A single parameter value of any JSON-compatible type."
+      }
+    }
+  },
+  "$defs": {
+    "ExecResponse": {
+      "type": "object",
+      "description": "Response returned after successfully executing a DDL or DML SQL statement that does not return a result set.",
+      "properties": {
+        "results": {
+          "type": "array",
+          "description": "Array of execution result metadata objects, one per SQL statement executed.",
+          "items": {
+            "$ref": "#/$defs/ExecResult"
+          }
+        }
+      }
+    },
+    "ExecResult": {
+      "type": "object",
+      "description": "Execution result metadata for a single DDL or DML statement.",
+      "properties": {
+        "lastInsertId": {
+          "type": "integer",
+          "description": "Auto-increment ID of the last row inserted by an INSERT statement. Only present for INSERT statements on tables with auto-increment primary keys."
+        },
+        "rowsAffected": {
+          "type": "integer",
+          "description": "Number of rows affected by the executed INSERT, UPDATE, DELETE, or DDL statement.",
+          "minimum": 0
+        }
+      }
+    },
+    "QueryRowsResponse": {
+      "type": "object",
+      "description": "Response returned by the /api/v2/query/rows endpoint containing SELECT query results as an array of row objects.",
+      "properties": {
+        "results": {
+          "type": "array",
+          "description": "Array of result sets, one per SQL SELECT statement in the request.",
+          "items": {
+            "$ref": "#/$defs/RowsResult"
+          }
+        }
+      }
+    },
+    "RowsResult": {
+      "type": "object",
+      "description": "A single SELECT statement result set in rows format, where each row is a JSON object with column names as keys.",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "description": "Array of row objects where each object maps column names to their corresponding values.",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "A single result row represented as a JSON object mapping column name strings to column values."
+          }
+        }
+      }
+    },
+    "QueryTuplesResponse": {
+      "type": "object",
+      "description": "Response returned by the /api/v2/query/tuples endpoint containing SELECT query results as separate columns and value arrays for better performance with large result sets.",
+      "properties": {
+        "results": {
+          "type": "array",
+          "description": "Array of result sets, one per SQL SELECT statement in the request.",
+          "items": {
+            "$ref": "#/$defs/TuplesResult"
+          }
+        }
+      }
+    },
+    "TuplesResult": {
+      "type": "object",
+      "description": "A single SELECT statement result set in tuples format, where columns are described once and rows are arrays of values.",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "description": "Array of column descriptor objects defining the name and data type of each column in the result set.",
+          "items": {
+            "$ref": "#/$defs/Column"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "description": "Array of value arrays where each inner array contains column values in the same order as the columns array.",
+          "items": {
+            "type": "array",
+            "description": "Values for a single result row in column order.",
+            "items": {
+              "description": "A single column value of any JSON-compatible type including null."
+            }
+          }
+        }
+      }
+    },
+    "Column": {
+      "type": "object",
+      "description": "Descriptor for a single column returned in a query result set.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the column as defined in the SQL query or table schema."
+        },
+        "dataType": {
+          "type": "string",
+          "description": "SingleStore data type of the column such as INT, BIGINT, VARCHAR, TEXT, DATETIME, FLOAT, or DOUBLE."
+        },
+        "nullable": {
+          "type": "boolean",
+          "description": "When true, the column may contain NULL values."
+        }
+      }
+    },
+    "DataAPIError": {
+      "type": "object",
+      "description": "Error response returned by the Data API when a request fails due to invalid SQL, authentication failure, or server error.",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Human-readable error message describing why the request failed."
+        },
+        "code": {
+          "type": "integer",
+          "description": "HTTP status code associated with the error (400, 401, or 500)."
+        }
+      }
+    }
+  }
+}
