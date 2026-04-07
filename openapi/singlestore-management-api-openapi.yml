@@ -23,6 +23,27 @@ servers:
   - url: https://api.singlestore.com/v1
     description: SingleStore Helios Production Server
 tags:
+  - name: Files
+    description: >-
+      Upload, download, list, and delete files in the personal, shared, or
+      models space within SingleStore Helios Spaces (stage storage).
+  - name: Jobs
+    description: >-
+      Create, retrieve, list, and delete scheduled notebook jobs within
+      SingleStore Helios. Jobs enable automated execution of notebooks on
+      configurable schedules.
+  - name: Organizations
+    description: >-
+      Retrieve information about the current user's organization within
+      SingleStore Helios.
+  - name: Regions
+    description: >-
+      List available cloud provider regions that support workspace group
+      creation, including shared tier regions.
+  - name: Secrets
+    description: >-
+      Manage organization-level secrets that can be referenced securely in
+      notebooks and jobs without exposing plaintext credentials.
   - name: WorkspaceGroups
     description: >-
       Create, list, retrieve, update, and delete workspace groups within a
@@ -33,32 +54,6 @@ tags:
       Create, list, retrieve, update, suspend, resume, and delete workspaces
       within a workspace group. Workspaces are the compute resources that
       connect to a SingleStore database.
-  - name: Regions
-    description: >-
-      List available cloud provider regions that support workspace group
-      creation, including shared tier regions.
-  - name: Organizations
-    description: >-
-      Retrieve information about the current user's organization within
-      SingleStore Helios.
-  - name: Jobs
-    description: >-
-      Create, retrieve, list, and delete scheduled notebook jobs within
-      SingleStore Helios. Jobs enable automated execution of notebooks on
-      configurable schedules.
-  - name: Secrets
-    description: >-
-      Manage organization-level secrets that can be referenced securely in
-      notebooks and jobs without exposing plaintext credentials.
-  - name: Files
-    description: >-
-      Upload, download, list, and delete files in the personal, shared, or
-      models space within SingleStore Helios Spaces (stage storage).
-  - name: PrivateConnections
-    description: >-
-      Create, retrieve, update, and delete private network connections for
-      workspace groups, enabling secure connectivity without traversing the
-      public internet.
 security:
   - bearerAuth: []
 paths:

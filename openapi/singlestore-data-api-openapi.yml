@@ -35,14 +35,14 @@ servers:
           value from the workspace endpoint field in the Cloud Portal or via
           the Management API.
 tags:
-  - name: Queries
-    description: >-
-      Execute SQL statements against a SingleStore Helios workspace over HTTP.
-      Supports DDL, DML, and SELECT statements returning results as JSON.
   - name: Health
     description: >-
       Health check operations for verifying connectivity to the Data API
       endpoint without requiring authentication credentials.
+  - name: Queries
+    description: >-
+      Execute SQL statements against a SingleStore Helios workspace over HTTP.
+      Supports DDL, DML, and SELECT statements returning results as JSON.
 security:
   - basicAuth: []
   - bearerAuth: []
