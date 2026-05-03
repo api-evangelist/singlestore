@@ -1,0 +1,179 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "SingleStore Data API"
+  description: >-
+    The SingleStore Data API enables execution of SQL statements against
+    SingleStore Helios databases over HTTP without native database drivers.
+    Supports exec for DDL/DML and query for SELECT results in rows or tuples format.
+  tags:
+    - Database
+    - SQL
+    - Query
+    - HTTP SQL
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SINGLESTORE_API_KEY: SINGLESTORE_API_KEY
+      SINGLESTORE_WORKSPACE_HOST: SINGLESTORE_WORKSPACE_HOST
+
+capability:
+  consumes:
+    - type: http
+      namespace: singlestore-data
+      baseUri: "https://{{SINGLESTORE_WORKSPACE_HOST}}"
+      description: "SingleStore Data API for SQL execution over HTTP"
+      authentication:
+        type: bearer
+        token: "{{SINGLESTORE_API_KEY}}"
+      resources:
+        - name: exec
+          path: /api/v2/exec
+          description: Execute DDL and DML SQL statements
+          operations:
+            - name: execute-sql
+              method: POST
+              description: Execute a SQL statement (DDL, DML, or non-SELECT statements)
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  sql: "{{tools.sql}}"
+                  database: "{{tools.database}}"
+                  args: "{{tools.args}}"
+
+        - name: query-rows
+          path: /api/v2/query/rows
+          description: Execute SELECT statements returning JSON rows
+          operations:
+            - name: query-rows
+              method: POST
+              description: Execute a SQL query and return results as named JSON rows
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  sql: "{{tools.sql}}"
+                  database: "{{tools.database}}"
+                  args: "{{tools.args}}"
+
+        - name: query-tuples
+          path: /api/v2/query/tuples
+          description: Execute SELECT statements returning JSON tuples
+          operations:
+            - name: query-tuples
+              method: POST
+              description: Execute a SQL query and return results as compact JSON tuples
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  sql: "{{tools.sql}}"
+                  database: "{{tools.database}}"
+                  args: "{{tools.args}}"
+
+        - name: ping
+          path: /api/v2/ping
+          description: Health check for the Data API
+          operations:
+            - name: ping
+              method: GET
+              description: Ping the Data API to verify connectivity
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: singlestore-data-rest
+      resources:
+        - path: /v1/sql/exec
+          name: exec
+          description: Execute SQL statements
+          operations:
+            - method: POST
+              name: execute-sql
+              description: Execute a SQL statement
+              call: "singlestore-data.execute-sql"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/sql/query
+          name: query
+          description: Query data with named row results
+          operations:
+            - method: POST
+              name: query-rows
+              description: Execute a SELECT query returning rows
+              call: "singlestore-data.query-rows"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/sql/ping
+          name: ping
+          description: Health check
+          operations:
+            - method: GET
+              name: ping
+              description: Check API connectivity
+              call: "singlestore-data.ping"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: singlestore-data-mcp
+      transport: http
+      tools:
+        - name: execute-sql
+          description: Execute a SQL DDL or DML statement against SingleStore (CREATE, INSERT, UPDATE, DELETE)
+          hints:
+            readOnly: false
+            destructive: false
+          call: "singlestore-data.execute-sql"
+          with:
+            sql: "tools.sql"
+            database: "tools.database"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: query-database
+          description: Execute a SELECT SQL query against SingleStore and return results as named rows
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "singlestore-data.query-rows"
+          with:
+            sql: "tools.sql"
+            database: "tools.database"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: ping-api
+          description: Verify connectivity to the SingleStore Data API
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "singlestore-data.ping"
+          outputParameters:
+            - type: object
+              mapping: "$."

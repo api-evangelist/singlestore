@@ -50,7 +50,7 @@ paths:
   /api/v2/exec:
     post:
       operationId: execSQL
-      summary: Execute a SQL statement
+      summary: Execute a Sql Statement
       description: >-
         Executes a DDL or DML SQL statement against the target workspace and
         database. Use this endpoint for statements that do not return result
@@ -81,7 +81,7 @@ paths:
   /api/v2/query/rows:
     post:
       operationId: queryRows
-      summary: Execute a SQL query and return rows
+      summary: Execute a Sql Query and Return Rows
       description: >-
         Executes a SQL SELECT statement against the target workspace and
         database, returning results as an array of JSON objects where each
@@ -113,7 +113,7 @@ paths:
   /api/v2/query/tuples:
     post:
       operationId: queryTuples
-      summary: Execute a SQL query and return tuples
+      summary: Execute a Sql Query and Return Tuples
       description: >-
         Executes a SQL SELECT statement against the target workspace and
         database, returning results as a separate columns array and a rows
@@ -144,7 +144,7 @@ paths:
   /api/v2/ping:
     get:
       operationId: ping
-      summary: Ping the Data API
+      summary: Ping the Data Api
       description: >-
         Health check endpoint that verifies the Data API is reachable and
         operational on the target workspace. This endpoint does not require

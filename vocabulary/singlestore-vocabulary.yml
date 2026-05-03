@@ -1,0 +1,118 @@
+vocabulary:
+  name: SingleStore Vocabulary
+  description: >-
+    Domain vocabulary for SingleStore, a cloud-native distributed SQL database
+    platform optimized for real-time analytics and mixed transactional/analytical
+    workloads.
+  version: '1.0'
+  created: '2026-05-02'
+  modified: '2026-05-02'
+  terms:
+    - term: Workspace
+      definition: >-
+        A SingleStore database instance running in the cloud with dedicated
+        compute resources. Workspaces can be suspended (paused) to save costs
+        and resumed when needed.
+      aliases:
+        - Database Instance
+        - Cluster
+
+    - term: Workspace Group
+      definition: >-
+        A logical container that groups related workspaces and provides a shared
+        administrator password, network firewall, and regional deployment.
+      aliases:
+        - Cluster Group
+
+    - term: Helios
+      definition: >-
+        SingleStore's fully managed cloud database service, providing elastic
+        scaling, automatic backups, and infrastructure management.
+      aliases:
+        - SingleStore Helios
+        - SingleStore Cloud
+
+    - term: Data API
+      definition: >-
+        The SingleStore HTTP API for executing SQL statements without requiring
+        native database drivers. Uses /api/v2/exec for DML/DDL and
+        /api/v2/query/rows or /api/v2/query/tuples for SELECT results.
+
+    - term: Aggregator
+      definition: >-
+        A SingleStore node type that receives queries and distributes work
+        across leaf nodes. The Data API connects to aggregators.
+
+    - term: Leaf Node
+      definition: >-
+        A SingleStore node that stores data partitions and executes distributed
+        query fragments directed by aggregator nodes.
+
+    - term: Columnstore
+      definition: >-
+        SingleStore's columnar storage format optimized for analytical queries.
+        Data is stored in compressed column segments for fast aggregation.
+      aliases:
+        - Column Store
+
+    - term: Rowstore
+      definition: >-
+        SingleStore's row-based in-memory storage format optimized for
+        transactional queries with low latency point lookups and updates.
+      aliases:
+        - Row Store
+        - In-Memory Store
+
+    - term: Universal Storage
+      definition: >-
+        SingleStore's hybrid storage combining rowstore (hot data) and
+        columnstore (warm/cold data) in a single table for mixed workloads.
+
+    - term: Workspace Size
+      definition: >-
+        A compute tier designation (S-00, S-1, S-2, etc.) that determines the
+        CPU, memory, and performance characteristics of a workspace.
+      aliases:
+        - Compute Size
+        - Instance Size
+
+    - term: Auto-Suspend
+      definition: >-
+        A feature that automatically suspends a workspace after a configurable
+        period of inactivity to reduce cloud spending.
+
+    - term: Stage
+      definition: >-
+        SingleStore's distributed file storage system for storing notebooks,
+        models, and data files. Accessible via the Management API Files endpoints.
+      aliases:
+        - Helios Stage
+        - Spaces
+
+    - term: Job
+      definition: >-
+        A scheduled automation unit in SingleStore Notebooks that runs a
+        notebook on a defined schedule, managed via the Management API.
+      aliases:
+        - Scheduled Job
+        - Notebook Job
+
+    - term: Region
+      definition: >-
+        A cloud provider geographic location (AWS, GCP, or Azure region) where
+        SingleStore workspaces can be deployed.
+
+    - term: Management API
+      definition: >-
+        The SingleStore REST API for infrastructure automation - creating,
+        configuring, and terminating workspaces, workspace groups, jobs, and
+        managing organization settings.
+
+    - term: Mixed Workload
+      definition: >-
+        A database usage pattern combining both transactional (OLTP) and
+        analytical (OLAP) queries, which SingleStore is designed to handle
+        simultaneously without separate systems.
+      aliases:
+        - HTAP
+        - Hybrid Transactional Analytical Processing

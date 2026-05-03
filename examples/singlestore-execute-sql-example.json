@@ -1,0 +1,27 @@
+{
+  "title": "Execute SQL Statement Example",
+  "description": "Example request and response for executing a SQL statement via the SingleStore Data API",
+  "request": {
+    "method": "POST",
+    "url": "https://{workspace-host}/api/v2/exec",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "sql": "CREATE TABLE IF NOT EXISTS orders (id BIGINT AUTO_INCREMENT PRIMARY KEY, customer_id BIGINT NOT NULL, amount DECIMAL(10,2) NOT NULL, created_at DATETIME DEFAULT NOW())",
+      "database": "production"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "results": [
+        {
+          "lastInsertId": 0,
+          "rowsAffected": 0
+        }
+      ]
+    }
+  }
+}

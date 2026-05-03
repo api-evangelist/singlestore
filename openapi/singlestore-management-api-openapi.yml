@@ -60,7 +60,7 @@ paths:
   /workspaceGroups:
     get:
       operationId: listWorkspaceGroups
-      summary: List workspace groups
+      summary: List Workspace Groups
       description: >-
         Retrieves all workspace groups accessible to the authenticated user
         within the current organization. Returns a list of workspace group
@@ -82,7 +82,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createWorkspaceGroup
-      summary: Create a workspace group
+      summary: Create a Workspace Group
       description: >-
         Creates a new workspace group in the specified cloud region for the
         authenticated user's organization. A workspace group defines the network
@@ -110,7 +110,7 @@ paths:
   /workspaceGroups/{workspaceGroupID}:
     get:
       operationId: getWorkspaceGroup
-      summary: Get a workspace group
+      summary: Get a Workspace Group
       description: >-
         Retrieves detailed information about a specific workspace group
         identified by its unique ID, including its current state, region,
@@ -132,7 +132,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateWorkspaceGroup
-      summary: Update a workspace group
+      summary: Update a Workspace Group
       description: >-
         Updates the configuration of an existing workspace group, such as its
         name or firewall IP allowlist rules. Only the fields provided in the
@@ -162,7 +162,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: terminateWorkspaceGroup
-      summary: Terminate a workspace group
+      summary: Terminate a Workspace Group
       description: >-
         Terminates and permanently deletes the specified workspace group and all
         workspaces within it. This operation is irreversible. Use the force
@@ -194,7 +194,7 @@ paths:
   /workspaces:
     get:
       operationId: listWorkspaces
-      summary: List workspaces
+      summary: List Workspaces
       description: >-
         Retrieves all workspaces accessible to the authenticated user, optionally
         filtered by workspace group ID. Returns workspace details including state,
@@ -223,7 +223,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createWorkspace
-      summary: Create a workspace
+      summary: Create a Workspace
       description: >-
         Creates a new workspace within an existing workspace group. The workspace
         provides compute capacity connected to the SingleStore database engine.
@@ -250,7 +250,7 @@ paths:
   /workspaces/{workspaceID}:
     get:
       operationId: getWorkspace
-      summary: Get a workspace
+      summary: Get a Workspace
       description: >-
         Retrieves detailed information about a specific workspace identified by
         its unique ID, including its current state, endpoint hostname, size,
@@ -272,7 +272,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: updateWorkspace
-      summary: Update a workspace
+      summary: Update a Workspace
       description: >-
         Updates the configuration of an existing workspace, such as its
         auto-suspend settings, cache multiplier, size, or deployment type.
@@ -302,7 +302,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: terminateWorkspace
-      summary: Terminate a workspace
+      summary: Terminate a Workspace
       description: >-
         Terminates and permanently deletes the specified workspace. This
         operation is irreversible. The workspace must be in a non-transitional
@@ -333,7 +333,7 @@ paths:
   /workspaces/{workspaceID}/suspend:
     post:
       operationId: suspendWorkspace
-      summary: Suspend a workspace
+      summary: Suspend a Workspace
       description: >-
         Suspends an active workspace, pausing compute billing while retaining
         the workspace configuration and associated data. The workspace can be
@@ -356,7 +356,7 @@ paths:
   /workspaces/{workspaceID}/resume:
     post:
       operationId: resumeWorkspace
-      summary: Resume a workspace
+      summary: Resume a Workspace
       description: >-
         Resumes a suspended workspace, restoring compute capacity and making
         the workspace available for database connections. Optionally disables
@@ -391,7 +391,7 @@ paths:
   /regions:
     get:
       operationId: listRegions
-      summary: List regions
+      summary: List Regions
       description: >-
         Retrieves all cloud provider regions that support workspace group
         creation within SingleStore Helios, including the cloud provider name
@@ -412,7 +412,7 @@ paths:
   /regions/sharedtier:
     get:
       operationId: listSharedTierRegions
-      summary: List shared tier regions
+      summary: List Shared Tier Regions
       description: >-
         Retrieves all cloud provider regions that support shared tier (starter)
         workspace creation within SingleStore Helios.
@@ -432,7 +432,7 @@ paths:
   /organizations/current:
     get:
       operationId: getCurrentOrganization
-      summary: Get current organization
+      summary: Get Current Organization
       description: >-
         Retrieves information about the organization associated with the current
         API key, including the organization ID, name, and creation timestamp.
@@ -450,7 +450,7 @@ paths:
   /jobs:
     get:
       operationId: listJobs
-      summary: List jobs
+      summary: List Jobs
       description: >-
         Retrieves all scheduled notebook jobs within the current organization,
         including job configuration, execution history metadata, and scheduling
@@ -472,7 +472,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createJob
-      summary: Create a job
+      summary: Create a Job
       description: >-
         Creates a new scheduled notebook job within the current organization.
         Jobs execute a specified notebook on a defined schedule or on demand,
@@ -499,7 +499,7 @@ paths:
   /jobs/{jobID}:
     get:
       operationId: getJob
-      summary: Get a job
+      summary: Get a Job
       description: >-
         Retrieves detailed information about a specific scheduled notebook job
         identified by its unique job ID, including its schedule configuration,
@@ -521,7 +521,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteJob
-      summary: Delete a job
+      summary: Delete a Job
       description: >-
         Permanently deletes a scheduled notebook job identified by its unique
         job ID. Any currently executing job instances are not affected; only
@@ -540,7 +540,7 @@ paths:
   /jobs/{jobID}/executions:
     get:
       operationId: listJobExecutions
-      summary: List job executions
+      summary: List Job Executions
       description: >-
         Retrieves the execution history for a specific job, with optional
         pagination by execution number range. Returns execution status,
@@ -575,7 +575,7 @@ paths:
   /secrets:
     get:
       operationId: listSecrets
-      summary: List secrets
+      summary: List Secrets
       description: >-
         Retrieves all secrets defined in the current organization, optionally
         filtered by name. Secret values are not returned in list responses;
@@ -605,7 +605,7 @@ paths:
   /stage/{deploymentID}/fs/{stagePath}:
     get:
       operationId: getStageFile
-      summary: Get or list stage file
+      summary: Get or List Stage File
       description: >-
         Retrieves a file from the stage filesystem at the specified path, or
         lists directory contents when the path points to a directory. Use the
@@ -633,7 +633,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: uploadStageFile
-      summary: Upload a stage file
+      summary: Upload a Stage File
       description: >-
         Uploads a file to the stage filesystem at the specified path, creating
         parent directories as needed. Existing files at the same path are
@@ -663,7 +663,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     patch:
       operationId: renameStageFile
-      summary: Rename or move a stage file
+      summary: Rename or Move a Stage File
       description: >-
         Renames or moves a file or directory within the stage filesystem from
         the specified old path to a new path provided in the request body.
@@ -693,7 +693,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteStageFile
-      summary: Delete a stage file
+      summary: Delete a Stage File
       description: >-
         Deletes a file or directory from the stage filesystem at the specified
         path. Directory deletion removes all contained files and subdirectories

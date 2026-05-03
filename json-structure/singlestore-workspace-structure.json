@@ -1,0 +1,80 @@
+{
+  "title": "SingleStore Workspace Structure",
+  "description": "Documentation of the workspace data structure returned by the SingleStore Management API",
+  "type": "object",
+  "fields": [
+    {
+      "name": "workspaceID",
+      "type": "string (UUID)",
+      "required": true,
+      "description": "Unique identifier for the workspace"
+    },
+    {
+      "name": "workspaceGroupID",
+      "type": "string (UUID)",
+      "required": true,
+      "description": "Identifier of the parent workspace group"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "Human-readable name for the workspace"
+    },
+    {
+      "name": "state",
+      "type": "enum",
+      "required": true,
+      "values": ["Active", "Suspended", "Pending", "Failed", "Terminated"],
+      "description": "Current operational state of the workspace"
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "required": false,
+      "description": "Compute size of the workspace (e.g., S-00, S-1, S-2)"
+    },
+    {
+      "name": "endpoint",
+      "type": "string",
+      "required": false,
+      "description": "Connection hostname for the workspace database"
+    },
+    {
+      "name": "createdAt",
+      "type": "string (ISO 8601 datetime)",
+      "required": false,
+      "description": "Timestamp when the workspace was created"
+    },
+    {
+      "name": "suspendedAt",
+      "type": "string (ISO 8601 datetime)",
+      "required": false,
+      "description": "Timestamp when the workspace was last suspended"
+    },
+    {
+      "name": "resumedAt",
+      "type": "string (ISO 8601 datetime)",
+      "required": false,
+      "description": "Timestamp when the workspace was last resumed"
+    },
+    {
+      "name": "autoSuspend",
+      "type": "object",
+      "required": false,
+      "description": "Auto-suspend configuration for cost management"
+    },
+    {
+      "name": "autoSuspend.enabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether auto-suspend is enabled"
+    },
+    {
+      "name": "autoSuspend.idleChangedIntervalMinutes",
+      "type": "integer",
+      "required": false,
+      "description": "Minutes of inactivity before auto-suspend triggers"
+    }
+  ]
+}
