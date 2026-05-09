@@ -3,11 +3,11 @@
   "feeds": [
     {
       "source": "https://www.singlestore.com/blog/",
-      "feed_url": "https://www.singlestore.com/blog/feed.xml",
-      "saved": 10,
-      "title": "SingleStore Blog"
+      "feed_url": "https://www.singlestore.com/blog/feed/",
+      "title": "SingleStore Blog",
+      "saved": 4
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-05-03T23:36:18Z"
+  "post_count": 14,
+  "fetched": "2026-05-09T20:17:51Z"
 }
