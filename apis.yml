@@ -90,6 +90,23 @@ common:
   - type: Support
     url: https://support.singlestore.com
 
+  - type: Integrations
+    url: https://www.singlestore.com/partners/
+integrations:
+  - name: SingleStore
+  - name: AWS
+  - name: Google Cloud
+  - name: Confluent
+  - name: Tableau
+  - name: OpenAI
+  - name: CData
+  - name: LangChain
+  - name: Redpanda
+  - name: Unstructured
+  - name: SingleStore Spaces
+  - name: SOC 2 Type II badge
+  - name: ISO 27001 badge
+  - name: Intercom
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
