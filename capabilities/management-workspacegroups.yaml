@@ -1,0 +1,206 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SingleStore Management API — WorkspaceGroups
+  description: 'SingleStore Management API — WorkspaceGroups. 5 operations. Lead operation: List Workspace Groups. Self-contained
+    Naftiko capability covering one Singlestore business surface.'
+  tags:
+  - Singlestore
+  - WorkspaceGroups
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SINGLESTORE_API_KEY: SINGLESTORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: management-workspacegroups
+    baseUri: https://api.singlestore.com/v1
+    description: SingleStore Management API — WorkspaceGroups business capability. Self-contained, no shared references.
+    resources:
+    - name: workspaceGroups
+      path: /workspaceGroups
+      operations:
+      - name: listworkspacegroups
+        method: GET
+        description: List Workspace Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createworkspacegroup
+        method: POST
+        description: Create a Workspace Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: workspaceGroups-workspaceGroupID
+      path: /workspaceGroups/{workspaceGroupID}
+      operations:
+      - name: getworkspacegroup
+        method: GET
+        description: Get a Workspace Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateworkspacegroup
+        method: PATCH
+        description: Update a Workspace Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: terminateworkspacegroup
+        method: DELETE
+        description: Terminate a Workspace Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: force
+          in: query
+          type: boolean
+          description: When set to true, terminates the workspace group even if it contains active workspaces.
+    authentication:
+      type: bearer
+      token: '{{env.SINGLESTORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: management-workspacegroups-rest
+    port: 8080
+    description: REST adapter for SingleStore Management API — WorkspaceGroups. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/workspacegroups
+      name: workspacegroups
+      description: REST surface for workspaceGroups.
+      operations:
+      - method: GET
+        name: listworkspacegroups
+        description: List Workspace Groups
+        call: management-workspacegroups.listworkspacegroups
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createworkspacegroup
+        description: Create a Workspace Group
+        call: management-workspacegroups.createworkspacegroup
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/workspacegroups/{workspacegroupid}
+      name: workspacegroups-workspacegroupid
+      description: REST surface for workspaceGroups-workspaceGroupID.
+      operations:
+      - method: GET
+        name: getworkspacegroup
+        description: Get a Workspace Group
+        call: management-workspacegroups.getworkspacegroup
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateworkspacegroup
+        description: Update a Workspace Group
+        call: management-workspacegroups.updateworkspacegroup
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: terminateworkspacegroup
+        description: Terminate a Workspace Group
+        call: management-workspacegroups.terminateworkspacegroup
+        with:
+          force: rest.force
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: management-workspacegroups-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SingleStore Management API — WorkspaceGroups. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-workspace-groups
+      description: List Workspace Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: management-workspacegroups.listworkspacegroups
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-workspace-group
+      description: Create a Workspace Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: management-workspacegroups.createworkspacegroup
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-workspace-group
+      description: Get a Workspace Group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: management-workspacegroups.getworkspacegroup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-workspace-group
+      description: Update a Workspace Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: management-workspacegroups.updateworkspacegroup
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: terminate-workspace-group
+      description: Terminate a Workspace Group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: management-workspacegroups.terminateworkspacegroup
+      with:
+        force: tools.force
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,180 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SingleStore Management API — Files
+  description: 'SingleStore Management API — Files. 4 operations. Lead operation: Get or List Stage File. Self-contained Naftiko
+    capability covering one Singlestore business surface.'
+  tags:
+  - Singlestore
+  - Files
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SINGLESTORE_API_KEY: SINGLESTORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: management-files
+    baseUri: https://api.singlestore.com/v1
+    description: SingleStore Management API — Files business capability. Self-contained, no shared references.
+    resources:
+    - name: stage-deploymentID-fs-stagePath
+      path: /stage/{deploymentID}/fs/{stagePath}
+      operations:
+      - name: getstagefile
+        method: GET
+        description: Get or List Stage File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: metadata
+          in: query
+          type: integer
+          description: When set to 1, returns file metadata (size, type, modified date) instead of file content.
+      - name: uploadstagefile
+        method: PUT
+        description: Upload a Stage File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: isFile
+          in: query
+          type: boolean
+          description: When set to false, creates a directory instead of uploading a file.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: renamestagefile
+        method: PATCH
+        description: Rename or Move a Stage File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletestagefile
+        method: DELETE
+        description: Delete a Stage File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SINGLESTORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: management-files-rest
+    port: 8080
+    description: REST adapter for SingleStore Management API — Files. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/stage/{deploymentid}/fs/{stagepath}
+      name: stage-deploymentid-fs-stagepath
+      description: REST surface for stage-deploymentID-fs-stagePath.
+      operations:
+      - method: GET
+        name: getstagefile
+        description: Get or List Stage File
+        call: management-files.getstagefile
+        with:
+          metadata: rest.metadata
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: uploadstagefile
+        description: Upload a Stage File
+        call: management-files.uploadstagefile
+        with:
+          isFile: rest.isFile
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: renamestagefile
+        description: Rename or Move a Stage File
+        call: management-files.renamestagefile
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletestagefile
+        description: Delete a Stage File
+        call: management-files.deletestagefile
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: management-files-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SingleStore Management API — Files. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-stage-file
+      description: Get or List Stage File
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: management-files.getstagefile
+      with:
+        metadata: tools.metadata
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-stage-file
+      description: Upload a Stage File
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: management-files.uploadstagefile
+      with:
+        isFile: tools.isFile
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rename-move-stage-file
+      description: Rename or Move a Stage File
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: management-files.renamestagefile
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-stage-file
+      description: Delete a Stage File
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: management-files.deletestagefile
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SingleStore Data API — Queries
+  description: 'SingleStore Data API — Queries. 3 operations. Lead operation: Execute a Sql Statement. Self-contained Naftiko
+    capability covering one Singlestore business surface.'
+  tags:
+  - Singlestore
+  - Queries
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SINGLESTORE_API_KEY: SINGLESTORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: data-queries
+    baseUri: https://{workspaceHost}
+    description: SingleStore Data API — Queries business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-exec
+      path: /api/v2/exec
+      operations:
+      - name: execsql
+        method: POST
+        description: Execute a Sql Statement
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-query-rows
+      path: /api/v2/query/rows
+      operations:
+      - name: queryrows
+        method: POST
+        description: Execute a Sql Query and Return Rows
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-query-tuples
+      path: /api/v2/query/tuples
+      operations:
+      - name: querytuples
+        method: POST
+        description: Execute a Sql Query and Return Tuples
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SINGLESTORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: data-queries-rest
+    port: 8080
+    description: REST adapter for SingleStore Data API — Queries. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v2/exec
+      name: api-v2-exec
+      description: REST surface for api-v2-exec.
+      operations:
+      - method: POST
+        name: execsql
+        description: Execute a Sql Statement
+        call: data-queries.execsql
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/query/rows
+      name: api-v2-query-rows
+      description: REST surface for api-v2-query-rows.
+      operations:
+      - method: POST
+        name: queryrows
+        description: Execute a Sql Query and Return Rows
+        call: data-queries.queryrows
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/query/tuples
+      name: api-v2-query-tuples
+      description: REST surface for api-v2-query-tuples.
+      operations:
+      - method: POST
+        name: querytuples
+        description: Execute a Sql Query and Return Tuples
+        call: data-queries.querytuples
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: data-queries-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SingleStore Data API — Queries. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: execute-sql-statement
+      description: Execute a Sql Statement
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: data-queries.execsql
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: execute-sql-query-and-return
+      description: Execute a Sql Query and Return Rows
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: data-queries.queryrows
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: execute-sql-query-and-return-2
+      description: Execute a Sql Query and Return Tuples
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: data-queries.querytuples
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
