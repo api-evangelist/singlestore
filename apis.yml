@@ -97,6 +97,8 @@ common:
   url: https://support.singlestore.com
 - type: Integrations
   url: https://www.singlestore.com/partners/
+- type: LLMsTxt
+  url: https://docs.singlestore.com/llms.txt
 integrations:
 - name: SingleStore
 - name: AWS
