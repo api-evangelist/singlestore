@@ -1,8 +1,8 @@
-# SingleStore
+# SingleStore (singlestore)
 
 SingleStore is a cloud-native distributed SQL database designed for real-time analytics and mixed workloads. It offers a management API for provisioning and managing cloud workspaces, and a data API for executing SQL statements over HTTP without requiring native database drivers. SingleStore Helios is the fully managed cloud service providing serverless database capabilities with elastic scaling.
 
-**URL:** [https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml)
 
 ## Scope
 
@@ -21,85 +21,71 @@ SingleStore is a cloud-native distributed SQL database designed for real-time an
 ## Timestamps
 
 - **Created:** 2025-01-01
-- **Modified:** 2026-05-02
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### SingleStore Data API
 
-The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over HTTP without requiring native database drivers.
+The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements via /api/v2/exec, and returns query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS.
 
-**Human URL:** https://docs.singlestore.com/cloud/reference/data-api/
-**Base URL:** https://{workspaceHost}
+- **Human URL:** [https://docs.singlestore.com/cloud/reference/data-api/](https://docs.singlestore.com/cloud/reference/data-api/)
+- **Base URL:** `https://{workspaceHost}`
+
+#### Tags
+
+- SQL
+- Database
+- Query
+- HTTP SQL
 
 #### Properties
 
 - [Documentation](https://docs.singlestore.com/cloud/reference/data-api/)
-- [OpenAPI](openapi/singlestore-data-api-openapi.yml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/openapi/singlestore-data-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/singlestore-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/singlestore-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/singlestore-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/singlestore-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### SingleStore Management API
 
-The SingleStore Management API provides programmatic control over workspace groups, workspaces, jobs, files, secrets, and organization settings.
+The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios. It supports provisioning, updating, suspending, resuming, and deleting workspaces, as well as managing private connections, regions, organizations, jobs, files, secrets, and teams.
 
-**Human URL:** https://docs.singlestore.com/cloud/reference/management-api/
-**Base URL:** https://api.singlestore.com/v1
+- **Human URL:** [https://docs.singlestore.com/cloud/reference/management-api/](https://docs.singlestore.com/cloud/reference/management-api/)
+- **Base URL:** `https://api.singlestore.com/v1`
+
+#### Tags
+
+- Management
+- Workspaces
+- Provisioning
+- Database
 
 #### Properties
 
 - [Documentation](https://docs.singlestore.com/cloud/reference/management-api/)
-- [OpenAPI](openapi/singlestore-management-api-openapi.yml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/openapi/singlestore-management-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/singlestore-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/singlestore-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/singlestore-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/singlestore-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## OpenAPI Specifications
+## Common Properties
 
-- [Data API](openapi/singlestore-data-api-openapi.yml)
-- [Management API](openapi/singlestore-management-api-openapi.yml)
-
-## Capabilities
-
-- [Database Operations](capabilities/database-operations.yaml) - Unified SQL execution and workspace management workflow
-
-### Shared Definitions
-
-- [Data API](capabilities/shared/data-api.yaml)
-- [Management API](capabilities/shared/management-api.yaml)
-
-## Rules
-
-- [SingleStore Rules](rules/singlestore-rules.yml)
-
-## JSON Schemas
-
-- [Query Schema](json-schema/singlestore-query-schema.json)
-- [Workspace Schema](json-schema/singlestore-workspace-schema.json)
-
-## JSON Structures
-
-- [Workspace Structure](json-structure/singlestore-workspace-structure.json)
-
-## JSON-LD
-
-- [SingleStore Context](json-ld/singlestore-context.jsonld)
-
-## Examples
-
-- [Execute SQL](examples/singlestore-execute-sql-example.json)
-- [Query Rows](examples/singlestore-query-rows-example.json)
-
-## Vocabulary
-
-- [SingleStore Vocabulary](vocabulary/singlestore-vocabulary.yml)
-
-## Common Links
-
-- **Website:** https://www.singlestore.com/
-- **Documentation:** https://docs.singlestore.com/
-- **Pricing:** https://www.singlestore.com/pricing/
-- **Blog:** https://www.singlestore.com/blog/
-- **GitHub:** https://github.com/singlestore-labs
-- **Sign Up:** https://www.singlestore.com/cloud-trial/
-- **Support:** https://support.singlestore.com
-- **Terms of Service:** https://www.singlestore.com/cloud-terms-and-conditions/
-- **Privacy Policy:** https://www.singlestore.com/privacy-policy/
+- [LinkedIn](https://www.linkedin.com/company/singlestore)
+- [Website](https://www.singlestore.com/)
+- [Developer Portal](https://docs.singlestore.com/)
+- [Documentation](https://docs.singlestore.com/cloud/)
+- [Pricing](https://www.singlestore.com/pricing/)
+- [Blog](https://www.singlestore.com/blog/)
+- [Git Hub Org](https://github.com/singlestore-labs)
+- [Sign Up](https://www.singlestore.com/cloud-trial/)
+- [Terms of Service](https://www.singlestore.com/cloud-terms-and-conditions/)
+- [Privacy Policy](https://www.singlestore.com/privacy-policy/)
+- [Support](https://support.singlestore.com)
+- [Integrations](https://www.singlestore.com/partners/)
+- [L L Ms Txt](https://docs.singlestore.com/llms.txt)
 
 ## Maintainers
 

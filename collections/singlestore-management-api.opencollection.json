@@ -1,0 +1,587 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Management API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WorkspaceGroups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Workspace Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/workspaceGroups",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations."
+              }
+            ]
+          },
+          "docs": "Retrieves all workspace groups accessible to the authenticated user within the current organization. Returns a list of workspace group objects including their IDs, names, regions, states, and configuration."
+        },
+        {
+          "info": {
+            "name": "Create a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singlestore.com/v1/workspaceGroups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace group in the specified cloud region for the authenticated user's organization. A workspace group defines the network boundary, region, and firewall configuration for workspaces deployed within it."
+        },
+        {
+          "info": {
+            "name": "Get a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/workspaceGroups/:workspaceGroupID",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace group."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific workspace group identified by its unique ID, including its current state, region, firewall configuration, and associated metadata."
+        },
+        {
+          "info": {
+            "name": "Update a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.singlestore.com/v1/workspaceGroups/:workspaceGroupID",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace group."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of an existing workspace group, such as its name or firewall IP allowlist rules. Only the fields provided in the request body are modified; omitted fields remain unchanged."
+        },
+        {
+          "info": {
+            "name": "Terminate a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.singlestore.com/v1/workspaceGroups/:workspaceGroupID",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace group."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, terminates the workspace group even if it contains active workspaces."
+              }
+            ]
+          },
+          "docs": "Terminates and permanently deletes the specified workspace group and all workspaces within it. This operation is irreversible. Use the force parameter to bypass safety checks when the group contains active workspaces."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/workspaces",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "query",
+                "description": "Filter workspaces by the unique ID of the workspace group they belong to."
+              }
+            ]
+          },
+          "docs": "Retrieves all workspaces accessible to the authenticated user, optionally filtered by workspace group ID. Returns workspace details including state, size, endpoint, and configuration."
+        },
+        {
+          "info": {
+            "name": "Create a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singlestore.com/v1/workspaces",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace within an existing workspace group. The workspace provides compute capacity connected to the SingleStore database engine. Workspace size determines the number of vCPUs and memory allocated."
+        },
+        {
+          "info": {
+            "name": "Get a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/workspaces/:workspaceID",
+            "params": [
+              {
+                "name": "workspaceID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific workspace identified by its unique ID, including its current state, endpoint hostname, size, auto-suspend settings, and cache configuration."
+        },
+        {
+          "info": {
+            "name": "Update a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.singlestore.com/v1/workspaces/:workspaceID",
+            "params": [
+              {
+                "name": "workspaceID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of an existing workspace, such as its auto-suspend settings, cache multiplier, size, or deployment type. Only the fields provided in the request body are modified."
+        },
+        {
+          "info": {
+            "name": "Terminate a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.singlestore.com/v1/workspaces/:workspaceID",
+            "params": [
+              {
+                "name": "workspaceID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, forces termination of the workspace even if it is in an intermediate state."
+              }
+            ]
+          },
+          "docs": "Terminates and permanently deletes the specified workspace. This operation is irreversible. The workspace must be in a non-transitional state before it can be terminated."
+        },
+        {
+          "info": {
+            "name": "Suspend a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singlestore.com/v1/workspaces/:workspaceID/suspend",
+            "params": [
+              {
+                "name": "workspaceID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace."
+              }
+            ]
+          },
+          "docs": "Suspends an active workspace, pausing compute billing while retaining the workspace configuration and associated data. The workspace can be resumed at any time using the resume endpoint."
+        },
+        {
+          "info": {
+            "name": "Resume a Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singlestore.com/v1/workspaces/:workspaceID/resume",
+            "params": [
+              {
+                "name": "workspaceID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resumes a suspended workspace, restoring compute capacity and making the workspace available for database connections. Optionally disables auto-suspend when resuming."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Regions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/regions"
+          },
+          "docs": "Retrieves all cloud provider regions that support workspace group creation within SingleStore Helios, including the cloud provider name and region identifier for each available region."
+        },
+        {
+          "info": {
+            "name": "List Shared Tier Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/regions/sharedtier"
+          },
+          "docs": "Retrieves all cloud provider regions that support shared tier (starter) workspace creation within SingleStore Helios."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/organizations/current"
+          },
+          "docs": "Retrieves information about the organization associated with the current API key, including the organization ID, name, and creation timestamp."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/jobs",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations."
+              }
+            ]
+          },
+          "docs": "Retrieves all scheduled notebook jobs within the current organization, including job configuration, execution history metadata, and scheduling details."
+        },
+        {
+          "info": {
+            "name": "Create a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singlestore.com/v1/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new scheduled notebook job within the current organization. Jobs execute a specified notebook on a defined schedule or on demand, targeting a specific workspace and optional database."
+        },
+        {
+          "info": {
+            "name": "Get a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/jobs/:jobID",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific scheduled notebook job identified by its unique job ID, including its schedule configuration, execution history, and current status."
+        },
+        {
+          "info": {
+            "name": "Delete a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.singlestore.com/v1/jobs/:jobID",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a scheduled notebook job identified by its unique job ID. Any currently executing job instances are not affected; only future executions are cancelled."
+        },
+        {
+          "info": {
+            "name": "List Job Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/jobs/:jobID/executions",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "The starting execution number for pagination."
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "The ending execution number for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves the execution history for a specific job, with optional pagination by execution number range. Returns execution status, timing, and any associated snapshot notebook paths."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Secrets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/secrets",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter secrets by exact name match."
+              }
+            ]
+          },
+          "docs": "Retrieves all secrets defined in the current organization, optionally filtered by name. Secret values are not returned in list responses; only metadata such as name, ID, and timestamps are included."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get or List Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singlestore.com/v1/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "When set to 1, returns file metadata (size, type, modified date) instead of file content."
+              }
+            ]
+          },
+          "docs": "Retrieves a file from the stage filesystem at the specified path, or lists directory contents when the path points to a directory. Use the metadata query parameter to return object metadata instead of file content."
+        },
+        {
+          "info": {
+            "name": "Upload a Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.singlestore.com/v1/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              },
+              {
+                "name": "isFile",
+                "value": "",
+                "type": "query",
+                "description": "When set to false, creates a directory instead of uploading a file."
+              }
+            ]
+          },
+          "docs": "Uploads a file to the stage filesystem at the specified path, creating parent directories as needed. Existing files at the same path are overwritten."
+        },
+        {
+          "info": {
+            "name": "Rename or Move a Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.singlestore.com/v1/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renames or moves a file or directory within the stage filesystem from the specified old path to a new path provided in the request body."
+        },
+        {
+          "info": {
+            "name": "Delete a Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.singlestore.com/v1/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              }
+            ]
+          },
+          "docs": "Deletes a file or directory from the stage filesystem at the specified path. Directory deletion removes all contained files and subdirectories recursively."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

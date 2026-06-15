@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Data API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a Sql Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{workspaceHost}/api/v2/exec",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a DDL or DML SQL statement against the target workspace and database. Use this endpoint for statements that do not return result sets, such as CREATE TABLE, INSERT, UPDATE, DELETE, and DROP. The endpoint returns execution metadata including the number of rows affected. The request body must not exceed 1 MB in size."
+        },
+        {
+          "info": {
+            "name": "Execute a Sql Query and Return Rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{workspaceHost}/api/v2/query/rows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a SQL SELECT statement against the target workspace and database, returning results as an array of JSON objects where each object represents one row with column names as keys. This format is convenient for most use cases but produces larger responses than the tuples format due to the repeated column name keys. The request body must not exceed 1 MB in size."
+        },
+        {
+          "info": {
+            "name": "Execute a Sql Query and Return Tuples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{workspaceHost}/api/v2/query/tuples",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a SQL SELECT statement against the target workspace and database, returning results as a separate columns array and a rows array of value arrays. This format offers better performance for queries with large result sets because column names are not repeated per row. Use this endpoint when response payload size is a concern."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping the Data Api",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/api/v2/ping"
+          },
+          "docs": "Health check endpoint that verifies the Data API is reachable and operational on the target workspace. This endpoint does not require authentication credentials and can be used to confirm network connectivity before making authenticated requests."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
