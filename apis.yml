@@ -74,7 +74,7 @@ common:
     url: https://www.singlestore.com/blog/
   - type: GitHubOrg
     url: https://github.com/singlestore-labs
-  - type: SignUp
+  - type: Signup
     url: https://www.singlestore.com/cloud-trial/
   - type: TermsOfService
     url: https://www.singlestore.com/cloud-terms-and-conditions/
@@ -84,7 +84,7 @@ common:
     url: https://support.singlestore.com
   - type: Integrations
     url: https://www.singlestore.com/partners/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.singlestore.com/llms.txt
 integrations:
   - name: SingleStore
