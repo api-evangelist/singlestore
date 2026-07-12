@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/singlestore-data-api-openapi.yml, openapi/singlestore-management-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic Authentication using SingleStore database credentials. Provide the
+    username and password as a Base-64 encoded username:password string in the Authorization
+    header.
+  sources:
+  - openapi/singlestore-data-api-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token authentication using a JWT token obtained from the SingleStore Cloud
+    Portal.
+  sources:
+  - openapi/singlestore-data-api-openapi.yml
+  - openapi/singlestore-management-api-openapi.yml

@@ -60,6 +60,12 @@ apis:
         url: >-
           https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/openapi/singlestore-management-api-openapi.yml
 common:
+  - type: VulnerabilityDisclosure
+    url: security/singlestore-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/singlestore-domain-security.yml
+  - type: Authentication
+    url: authentication/singlestore-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/singlestore
   - type: Website
