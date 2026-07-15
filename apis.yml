@@ -60,6 +60,8 @@ apis:
         url: >-
           https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/openapi/singlestore-management-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/singlestore-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/singlestore-vulnerability-disclosure.yml
   - type: DomainSecurity
