@@ -1,0 +1,361 @@
+openapi: 3.1.0
+info:
+  title: SingleStore Data Files Jobs API
+  description: The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.
+  version: v2
+  contact:
+    name: SingleStore Support
+    url: https://support.singlestore.com
+  termsOfService: https://www.singlestore.com/cloud-terms-and-conditions/
+servers:
+- url: https://{workspaceHost}
+  description: SingleStore Helios workspace endpoint. Replace workspaceHost with the hostname of the target workspace obtained from the Cloud Portal or Management API.
+  variables:
+    workspaceHost:
+      default: your-workspace.singlestore.com
+      description: Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Jobs
+  description: Create, retrieve, list, and delete scheduled notebook jobs within SingleStore Helios. Jobs enable automated execution of notebooks on configurable schedules.
+paths:
+  /jobs:
+    get:
+      operationId: listJobs
+      summary: List Jobs
+      description: Retrieves all scheduled notebook jobs within the current organization, including job configuration, execution history metadata, and scheduling details.
+      tags:
+      - Jobs
+      parameters:
+      - $ref: '#/components/parameters/organizationIDQuery'
+      responses:
+        '200':
+          description: List of jobs returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createJob
+      summary: Create a Job
+      description: Creates a new scheduled notebook job within the current organization. Jobs execute a specified notebook on a defined schedule or on demand, targeting a specific workspace and optional database.
+      tags:
+      - Jobs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobCreate'
+      responses:
+        '200':
+          description: Job created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /jobs/{jobID}:
+    get:
+      operationId: getJob
+      summary: Get a Job
+      description: Retrieves detailed information about a specific scheduled notebook job identified by its unique job ID, including its schedule configuration, execution history, and current status.
+      tags:
+      - Jobs
+      parameters:
+      - $ref: '#/components/parameters/jobIDPath'
+      responses:
+        '200':
+          description: Job returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteJob
+      summary: Delete a Job
+      description: Permanently deletes a scheduled notebook job identified by its unique job ID. Any currently executing job instances are not affected; only future executions are cancelled.
+      tags:
+      - Jobs
+      parameters:
+      - $ref: '#/components/parameters/jobIDPath'
+      responses:
+        '200':
+          description: Job deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /jobs/{jobID}/executions:
+    get:
+      operationId: listJobExecutions
+      summary: List Job Executions
+      description: Retrieves the execution history for a specific job, with optional pagination by execution number range. Returns execution status, timing, and any associated snapshot notebook paths.
+      tags:
+      - Jobs
+      parameters:
+      - $ref: '#/components/parameters/jobIDPath'
+      - name: start
+        in: query
+        description: The starting execution number for pagination.
+        schema:
+          type: integer
+      - name: end
+        in: query
+        description: The ending execution number for pagination.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Job executions returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobExecution'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    JobSchedule:
+      type: object
+      description: Schedule configuration defining when and how often a job runs.
+      properties:
+        mode:
+          type: string
+          description: Scheduling mode controlling execution frequency. Use Once for a single immediate execution or Recurring for interval-based scheduling.
+          enum:
+          - Once
+          - Recurring
+        startAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for when the job should first execute.
+        executionIntervalInMinutes:
+          type: integer
+          description: Number of minutes between recurring executions. Required when mode is Recurring.
+          minimum: 1
+    JobExecutionConfig:
+      type: object
+      description: Configuration specifying the notebook to execute and runtime environment.
+      required:
+      - notebookPath
+      properties:
+        notebookPath:
+          type: string
+          description: Path to the notebook file within SingleStore Spaces to execute.
+        runtimeName:
+          type: string
+          description: Name of the runtime environment to use for notebook execution.
+        createSnapshot:
+          type: boolean
+          description: When true, a snapshot of the executed notebook with outputs is saved after each execution.
+    JobExecution:
+      type: object
+      description: A single execution instance of a scheduled job, capturing its status and timing information.
+      properties:
+        executionID:
+          type: string
+          format: uuid
+          description: Unique identifier of this job execution.
+        jobID:
+          type: string
+          format: uuid
+          description: Unique identifier of the parent job.
+        status:
+          type: string
+          description: Current status of this execution.
+          enum:
+          - Queued
+          - Running
+          - Completed
+          - Failed
+          - Cancelled
+        executionNumber:
+          type: integer
+          description: Sequential execution number for this job, starting at 1.
+        scheduledStartTime:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when this execution was scheduled to start.
+        startedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when this execution actually started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when this execution completed or failed.
+        snapshotNotebookPath:
+          type: string
+          description: Path to the snapshot notebook created after execution, if snapshot creation was enabled.
+    JobCreate:
+      type: object
+      description: Request body for creating a new scheduled notebook job.
+      required:
+      - schedule
+      - executionConfig
+      - targetConfig
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        parameters:
+          type: array
+          description: Optional parameters to pass to the notebook at execution time.
+          items:
+            $ref: '#/components/schemas/JobParameter'
+    Job:
+      type: object
+      description: A scheduled notebook job that executes a specified notebook on a configurable schedule against a target workspace and database.
+      properties:
+        jobID:
+          type: string
+          format: uuid
+          description: Unique identifier of the job.
+        name:
+          type: string
+          description: Human-readable name of the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        completedExecutionsCount:
+          type: integer
+          description: Total number of completed executions for this job.
+        enqueuedBy:
+          type: string
+          description: Identifier of the user who created or last triggered the job.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the job was created.
+        terminatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the job was terminated, if applicable.
+    JobTargetConfig:
+      type: object
+      description: Configuration specifying the workspace and database the notebook job should connect to.
+      required:
+      - targetID
+      - targetType
+      properties:
+        targetID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace or workspace group to target.
+        targetType:
+          type: string
+          description: Type of target resource. Use Workspace to target a specific workspace.
+          enum:
+          - Workspace
+        databaseName:
+          type: string
+          description: Name of the database within the workspace to connect to during execution.
+        resumeTarget:
+          type: boolean
+          description: When true, automatically resumes a suspended workspace before executing the notebook.
+    JobParameter:
+      type: object
+      description: A parameter passed to a notebook at job execution time.
+      required:
+      - name
+      - value
+      properties:
+        name:
+          type: string
+          description: Parameter name as referenced in the notebook.
+        value:
+          type: string
+          description: Parameter value passed to the notebook.
+        type:
+          type: string
+          description: Data type of the parameter value.
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+  responses:
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    jobIDPath:
+      name: jobID
+      in: path
+      required: true
+      description: Unique identifier of the job.
+      schema:
+        type: string
+        format: uuid
+    organizationIDQuery:
+      name: organizationID
+      in: query
+      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using SingleStore database credentials. Provide the username and password as a Base-64 encoded username:password string in the Authorization header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication using a JWT token obtained from the SingleStore Cloud Portal.
+externalDocs:
+  description: SingleStore Data API Documentation
+  url: https://docs.singlestore.com/cloud/reference/data-api/

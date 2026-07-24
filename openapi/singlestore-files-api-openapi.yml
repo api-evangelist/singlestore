@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: SingleStore Data Files API
+  description: The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.
+  version: v2
+  contact:
+    name: SingleStore Support
+    url: https://support.singlestore.com
+  termsOfService: https://www.singlestore.com/cloud-terms-and-conditions/
+servers:
+- url: https://{workspaceHost}
+  description: SingleStore Helios workspace endpoint. Replace workspaceHost with the hostname of the target workspace obtained from the Cloud Portal or Management API.
+  variables:
+    workspaceHost:
+      default: your-workspace.singlestore.com
+      description: Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Files
+  description: Upload, download, list, and delete files in the personal, shared, or models space within SingleStore Helios Spaces (stage storage).
+paths:
+  /stage/{deploymentID}/fs/{stagePath}:
+    get:
+      operationId: getStageFile
+      summary: Get or List Stage File
+      description: Retrieves a file from the stage filesystem at the specified path, or lists directory contents when the path points to a directory. Use the metadata query parameter to return object metadata instead of file content.
+      tags:
+      - Files
+      parameters:
+      - $ref: '#/components/parameters/deploymentIDPath'
+      - $ref: '#/components/parameters/stagePathPath'
+      - name: metadata
+        in: query
+        description: When set to 1, returns file metadata (size, type, modified date) instead of file content.
+        schema:
+          type: integer
+          enum:
+          - 1
+      responses:
+        '200':
+          description: File content or metadata returned successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: uploadStageFile
+      summary: Upload a Stage File
+      description: Uploads a file to the stage filesystem at the specified path, creating parent directories as needed. Existing files at the same path are overwritten.
+      tags:
+      - Files
+      parameters:
+      - $ref: '#/components/parameters/deploymentIDPath'
+      - $ref: '#/components/parameters/stagePathPath'
+      - name: isFile
+        in: query
+        description: When set to false, creates a directory instead of uploading a file.
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: File uploaded successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      operationId: renameStageFile
+      summary: Rename or Move a Stage File
+      description: Renames or moves a file or directory within the stage filesystem from the specified old path to a new path provided in the request body.
+      tags:
+      - Files
+      parameters:
+      - $ref: '#/components/parameters/deploymentIDPath'
+      - $ref: '#/components/parameters/stagePathPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - newPath
+              properties:
+                newPath:
+                  type: string
+                  description: The new path for the file or directory within the stage filesystem.
+      responses:
+        '200':
+          description: File renamed or moved successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteStageFile
+      summary: Delete a Stage File
+      description: Deletes a file or directory from the stage filesystem at the specified path. Directory deletion removes all contained files and subdirectories recursively.
+      tags:
+      - Files
+      parameters:
+      - $ref: '#/components/parameters/deploymentIDPath'
+      - $ref: '#/components/parameters/stagePathPath'
+      responses:
+        '200':
+          description: File deleted successfully.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    deploymentIDPath:
+      name: deploymentID
+      in: path
+      required: true
+      description: Unique deployment identifier associated with a workspace group, used to address the stage filesystem.
+      schema:
+        type: string
+    stagePathPath:
+      name: stagePath
+      in: path
+      required: true
+      description: File or directory path within the stage filesystem.
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using SingleStore database credentials. Provide the username and password as a Base-64 encoded username:password string in the Authorization header.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication using a JWT token obtained from the SingleStore Cloud Portal.
+externalDocs:
+  description: SingleStore Data API Documentation
+  url: https://docs.singlestore.com/cloud/reference/data-api/
