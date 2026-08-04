@@ -1,0 +1,943 @@
+{
+  "info": {
+    "_postman_id": "b39453b4-d708-4b17-ab01-b573daf02361",
+    "name": "SingleStore Data Files API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:44.000Z",
+    "updatedAt": "2026-07-28T02:54:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b39453b4-d708-4b17-ab01-b573daf02361"
+  },
+  "item": [
+    {
+      "name": "stage",
+      "item": [
+        {
+          "name": "{deploymentID}",
+          "item": [
+            {
+              "name": "fs",
+              "item": [
+                {
+                  "name": "{stagePath}",
+                  "item": [
+                    {
+                      "name": "Get or List Stage File",
+                      "id": "032dbe20-eb6d-498c-a2f2-f6dbb14a414f",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?metadata=1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stage",
+                            ":deploymentID",
+                            "fs",
+                            ":stagePath"
+                          ],
+                          "query": [
+                            {
+                              "description": "When set to 1, returns file metadata (size, type, modified date) instead of file content.",
+                              "key": "metadata",
+                              "value": "1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "88a2cf54-62ef-44b4-9e30-daedd057830e",
+                              "key": "deploymentID",
+                              "value": "<string>",
+                              "description": "(Required) Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+                            },
+                            {
+                              "id": "e9f656e4-f2fb-4761-83d4-156aa3ae8a6c",
+                              "key": "stagePath",
+                              "value": "<string>",
+                              "description": "(Required) File or directory path within the stage filesystem."
+                            }
+                          ]
+                        },
+                        "description": "Retrieves a file from the stage filesystem at the specified path, or lists directory contents when the path points to a directory. Use the metadata query parameter to return object metadata instead of file content."
+                      },
+                      "response": [
+                        {
+                          "id": "c25c4343-6899-4964-aa9e-1330ada0fb47",
+                          "name": "File content or metadata returned successfully.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?metadata=1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "query": [
+                                {
+                                  "description": "When set to 1, returns file metadata (size, type, modified date) instead of file content.",
+                                  "key": "metadata",
+                                  "value": "1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-c25c4343-6899-4964-aa9e-1330ada0fb47"
+                        },
+                        {
+                          "id": "e6cebfd3-6728-4b19-be51-e9cf9d38f770",
+                          "name": "The request did not include a valid Bearer token.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?metadata=1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "query": [
+                                {
+                                  "description": "When set to 1, returns file metadata (size, type, modified date) instead of file content.",
+                                  "key": "metadata",
+                                  "value": "1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-e6cebfd3-6728-4b19-be51-e9cf9d38f770"
+                        },
+                        {
+                          "id": "8f2286aa-8b0c-49ce-86ee-148df4022517",
+                          "name": "The requested resource was not found.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?metadata=1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "query": [
+                                {
+                                  "description": "When set to 1, returns file metadata (size, type, modified date) instead of file content.",
+                                  "key": "metadata",
+                                  "value": "1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-8f2286aa-8b0c-49ce-86ee-148df4022517"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:54:44.000Z",
+                      "updatedAt": "2026-07-28T02:54:44.000Z",
+                      "uid": "35240-032dbe20-eb6d-498c-a2f2-f6dbb14a414f"
+                    },
+                    {
+                      "name": "Upload a Stage File",
+                      "id": "d250808c-ac4e-462c-9ade-6b3eb06058d1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/octet-stream"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "<binary>"
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?isFile=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stage",
+                            ":deploymentID",
+                            "fs",
+                            ":stagePath"
+                          ],
+                          "query": [
+                            {
+                              "description": "When set to false, creates a directory instead of uploading a file.",
+                              "key": "isFile",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "ad94f0fe-4166-4f5a-8db1-5bf2d44bf957",
+                              "key": "deploymentID",
+                              "value": "<string>",
+                              "description": "(Required) Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+                            },
+                            {
+                              "id": "2cf4a401-3b8e-48fb-a7a5-e04f667a991d",
+                              "key": "stagePath",
+                              "value": "<string>",
+                              "description": "(Required) File or directory path within the stage filesystem."
+                            }
+                          ]
+                        },
+                        "description": "Uploads a file to the stage filesystem at the specified path, creating parent directories as needed. Existing files at the same path are overwritten."
+                      },
+                      "response": [
+                        {
+                          "id": "560ed53c-ad18-4054-a4ee-9164d1beeaf6",
+                          "name": "File uploaded successfully.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/octet-stream"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<binary>"
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?isFile=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "query": [
+                                {
+                                  "description": "When set to false, creates a directory instead of uploading a file.",
+                                  "key": "isFile",
+                                  "value": "<boolean>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-560ed53c-ad18-4054-a4ee-9164d1beeaf6"
+                        },
+                        {
+                          "id": "52b0775d-53ac-4df2-8ce3-460501e062e1",
+                          "name": "The request did not include a valid Bearer token.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/octet-stream"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<binary>"
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath?isFile=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "query": [
+                                {
+                                  "description": "When set to false, creates a directory instead of uploading a file.",
+                                  "key": "isFile",
+                                  "value": "<boolean>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-52b0775d-53ac-4df2-8ce3-460501e062e1"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:54:44.000Z",
+                      "updatedAt": "2026-07-28T02:54:44.000Z",
+                      "uid": "35240-d250808c-ac4e-462c-9ade-6b3eb06058d1"
+                    },
+                    {
+                      "name": "Rename or Move a Stage File",
+                      "id": "f9f7886d-1dfe-4125-a674-2a96004652dc",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"newPath\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stage",
+                            ":deploymentID",
+                            "fs",
+                            ":stagePath"
+                          ],
+                          "variable": [
+                            {
+                              "id": "31e7fe6e-701b-46f1-adeb-6ffdc43c6d36",
+                              "key": "deploymentID",
+                              "value": "<string>",
+                              "description": "(Required) Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+                            },
+                            {
+                              "id": "07e521b3-1ea6-4d64-91c6-e1dbfe3a0f17",
+                              "key": "stagePath",
+                              "value": "<string>",
+                              "description": "(Required) File or directory path within the stage filesystem."
+                            }
+                          ]
+                        },
+                        "description": "Renames or moves a file or directory within the stage filesystem from the specified old path to a new path provided in the request body."
+                      },
+                      "response": [
+                        {
+                          "id": "713dcd2d-f68a-4103-a621-04dfd82f3fdd",
+                          "name": "File renamed or moved successfully.",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"newPath\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-713dcd2d-f68a-4103-a621-04dfd82f3fdd"
+                        },
+                        {
+                          "id": "ba40258a-c1ba-4fc5-b791-9eb65f89a530",
+                          "name": "The request did not include a valid Bearer token.",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"newPath\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-ba40258a-c1ba-4fc5-b791-9eb65f89a530"
+                        },
+                        {
+                          "id": "4336f27d-e3ab-4f79-8251-8aea28bf99f7",
+                          "name": "The requested resource was not found.",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"newPath\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-4336f27d-e3ab-4f79-8251-8aea28bf99f7"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:54:44.000Z",
+                      "updatedAt": "2026-07-28T02:54:44.000Z",
+                      "uid": "35240-f9f7886d-1dfe-4125-a674-2a96004652dc"
+                    },
+                    {
+                      "name": "Delete a Stage File",
+                      "id": "bfe31fcd-9c3c-42af-852b-532d62e44931",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "stage",
+                            ":deploymentID",
+                            "fs",
+                            ":stagePath"
+                          ],
+                          "variable": [
+                            {
+                              "id": "e283efd2-6162-45e3-b325-2731b5c892c0",
+                              "key": "deploymentID",
+                              "value": "<string>",
+                              "description": "(Required) Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+                            },
+                            {
+                              "id": "9188e2c6-0d4a-43da-a284-baabaac0bfa6",
+                              "key": "stagePath",
+                              "value": "<string>",
+                              "description": "(Required) File or directory path within the stage filesystem."
+                            }
+                          ]
+                        },
+                        "description": "Deletes a file or directory from the stage filesystem at the specified path. Directory deletion removes all contained files and subdirectories recursively."
+                      },
+                      "response": [
+                        {
+                          "id": "f7c67a70-aaaa-454c-9d33-668b07fffcd3",
+                          "name": "File deleted successfully.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-f7c67a70-aaaa-454c-9d33-668b07fffcd3"
+                        },
+                        {
+                          "id": "96e42dd4-8f67-42c5-afd8-a6913e930b15",
+                          "name": "The request did not include a valid Bearer token.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-96e42dd4-8f67-42c5-afd8-a6913e930b15"
+                        },
+                        {
+                          "id": "f7dc5982-e6c2-4f97-b2a6-dd3578576b89",
+                          "name": "The requested resource was not found.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/stage/:deploymentID/fs/:stagePath",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "stage",
+                                ":deploymentID",
+                                "fs",
+                                ":stagePath"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "deploymentID"
+                                },
+                                {
+                                  "key": "stagePath"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:54:44.000Z",
+                          "updatedAt": "2026-07-28T02:54:44.000Z",
+                          "uid": "35240-f7dc5982-e6c2-4f97-b2a6-dd3578576b89"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:54:44.000Z",
+                      "updatedAt": "2026-07-28T02:54:44.000Z",
+                      "uid": "35240-bfe31fcd-9c3c-42af-852b-532d62e44931"
+                    }
+                  ],
+                  "id": "4910a28d-1640-4450-bd27-31e8b4228fb7",
+                  "createdAt": "2026-07-28T02:54:44.000Z",
+                  "updatedAt": "2026-07-28T02:54:44.000Z",
+                  "uid": "35240-4910a28d-1640-4450-bd27-31e8b4228fb7"
+                }
+              ],
+              "id": "36d329d4-e9fe-449c-ac55-8c1fbb106522",
+              "createdAt": "2026-07-28T02:54:44.000Z",
+              "updatedAt": "2026-07-28T02:54:44.000Z",
+              "uid": "35240-36d329d4-e9fe-449c-ac55-8c1fbb106522"
+            }
+          ],
+          "id": "65ca3501-a158-49e9-8351-79fc35f60769",
+          "createdAt": "2026-07-28T02:54:44.000Z",
+          "updatedAt": "2026-07-28T02:54:44.000Z",
+          "uid": "35240-65ca3501-a158-49e9-8351-79fc35f60769"
+        }
+      ],
+      "id": "104f6a09-b2c3-42d9-a04e-1119abb1b73b",
+      "createdAt": "2026-07-28T02:54:44.000Z",
+      "updatedAt": "2026-07-28T02:54:44.000Z",
+      "uid": "35240-104f6a09-b2c3-42d9-a04e-1119abb1b73b"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "info": {
+    "_postman_id": "0fb909ac-3a03-4537-a65a-1ee4d1b73164",
+    "name": "SingleStore Data Files Organizations API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:48.000Z",
+    "updatedAt": "2026-07-28T02:54:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0fb909ac-3a03-4537-a65a-1ee4d1b73164"
+  },
+  "item": [
+    {
+      "name": "organizations",
+      "item": [
+        {
+          "name": "current",
+          "item": [
+            {
+              "name": "Get Current Organization",
+              "id": "b1c9d0f5-4b36-4b9f-a5d5-f6331f844d83",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/organizations/current",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organizations",
+                    "current"
+                  ]
+                },
+                "description": "Retrieves information about the organization associated with the current API key, including the organization ID, name, and creation timestamp."
+              },
+              "response": [
+                {
+                  "id": "c9b98701-ef3c-4622-a75a-d29ca4a298f3",
+                  "name": "Current organization returned successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/organizations/current",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "organizations",
+                        "current"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"orgID\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T02:54:48.000Z",
+                  "updatedAt": "2026-07-28T02:54:48.000Z",
+                  "uid": "35240-c9b98701-ef3c-4622-a75a-d29ca4a298f3"
+                },
+                {
+                  "id": "bb5177f8-ec71-4e28-84ae-7d6bf143940c",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/organizations/current",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "organizations",
+                        "current"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:48.000Z",
+                  "updatedAt": "2026-07-28T02:54:48.000Z",
+                  "uid": "35240-bb5177f8-ec71-4e28-84ae-7d6bf143940c"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:48.000Z",
+              "updatedAt": "2026-07-28T02:54:48.000Z",
+              "uid": "35240-b1c9d0f5-4b36-4b9f-a5d5-f6331f844d83"
+            }
+          ],
+          "id": "93f62b95-c4a9-4ebb-bd83-1da8f5a6b9bb",
+          "createdAt": "2026-07-28T02:54:48.000Z",
+          "updatedAt": "2026-07-28T02:54:48.000Z",
+          "uid": "35240-93f62b95-c4a9-4ebb-bd83-1da8f5a6b9bb"
+        }
+      ],
+      "id": "1c6352fd-8f97-4bc5-893d-053efc4ac442",
+      "createdAt": "2026-07-28T02:54:48.000Z",
+      "updatedAt": "2026-07-28T02:54:48.000Z",
+      "uid": "35240-1c6352fd-8f97-4bc5-893d-053efc4ac442"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}

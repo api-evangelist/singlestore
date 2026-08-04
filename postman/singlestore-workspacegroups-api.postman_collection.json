@@ -1,0 +1,1104 @@
+{
+  "info": {
+    "_postman_id": "31eaafcc-0d65-4a20-bdce-a699d8d63a2a",
+    "name": "SingleStore Data Files WorkspaceGroups API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:51.000Z",
+    "updatedAt": "2026-07-28T02:54:52.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-31eaafcc-0d65-4a20-bdce-a699d8d63a2a"
+  },
+  "item": [
+    {
+      "name": "workspaceGroups",
+      "item": [
+        {
+          "name": "{workspaceGroupID}",
+          "item": [
+            {
+              "name": "Get a Workspace Group",
+              "id": "e05e4979-3186-4290-94a4-00ff7e7fbc26",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f77f3fec-7d8b-48de-af67-984eb33574bf",
+                      "key": "workspaceGroupID",
+                      "value": "<uuid>",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    }
+                  ]
+                },
+                "description": "Retrieves detailed information about a specific workspace group identified by its unique ID, including its current state, region, firewall configuration, and associated metadata."
+              },
+              "response": [
+                {
+                  "id": "34d4fe70-b604-4cc5-bf12-4f344c9fd0bf",
+                  "name": "Workspace group returned successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workspaceGroupID\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"state\": \"Terminated\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-34d4fe70-b604-4cc5-bf12-4f344c9fd0bf"
+                },
+                {
+                  "id": "00f9744c-f271-4304-a074-c6a9247d685c",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-00f9744c-f271-4304-a074-c6a9247d685c"
+                },
+                {
+                  "id": "66ca0dc5-4d99-4e8d-9303-0e72b47e080a",
+                  "name": "The requested resource was not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-66ca0dc5-4d99-4e8d-9303-0e72b47e080a"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-e05e4979-3186-4290-94a4-00ff7e7fbc26"
+            },
+            {
+              "name": "Update a Workspace Group",
+              "id": "cc588276-312c-4cc9-b490-d648118388c0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "b9a0b026-bbbe-467a-8c93-ec4f40adc2d8",
+                      "key": "workspaceGroupID",
+                      "value": "<uuid>",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    }
+                  ]
+                },
+                "description": "Updates the configuration of an existing workspace group, such as its name or firewall IP allowlist rules. Only the fields provided in the request body are modified; omitted fields remain unchanged."
+              },
+              "response": [
+                {
+                  "id": "3f21541f-11c1-482b-9384-5cd61e3a8837",
+                  "name": "Workspace group updated successfully.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workspaceGroupID\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"state\": \"Terminated\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-3f21541f-11c1-482b-9384-5cd61e3a8837"
+                },
+                {
+                  "id": "ba71413f-2ef7-4dc5-abc3-d5510ddfc167",
+                  "name": "The request was malformed or contained invalid parameters.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-ba71413f-2ef7-4dc5-abc3-d5510ddfc167"
+                },
+                {
+                  "id": "d1fe158a-9060-46e6-8753-5f49bf3106a2",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-d1fe158a-9060-46e6-8753-5f49bf3106a2"
+                },
+                {
+                  "id": "d839fa3b-30ca-40f3-8819-7791d5ec98a4",
+                  "name": "The requested resource was not found.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-d839fa3b-30ca-40f3-8819-7791d5ec98a4"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-cc588276-312c-4cc9-b490-d648118388c0"
+            },
+            {
+              "name": "Terminate a Workspace Group",
+              "id": "93b4ab94-744e-402c-bc42-0e25a6adbaaf",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID?force=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "query": [
+                    {
+                      "description": "When set to true, terminates the workspace group even if it contains active workspaces.",
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "b4f83d0f-a9ac-40f3-b675-b4335443a76d",
+                      "key": "workspaceGroupID",
+                      "value": "<uuid>",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    }
+                  ]
+                },
+                "description": "Terminates and permanently deletes the specified workspace group and all workspaces within it. This operation is irreversible. Use the force parameter to bypass safety checks when the group contains active workspaces."
+              },
+              "response": [
+                {
+                  "id": "66918c07-3da0-476f-ad0c-e24d98014d68",
+                  "name": "Workspace group terminated successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID?force=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "query": [
+                        {
+                          "description": "When set to true, terminates the workspace group even if it contains active workspaces.",
+                          "key": "force",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"workspaceGroupID\": \"<uuid>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-66918c07-3da0-476f-ad0c-e24d98014d68"
+                },
+                {
+                  "id": "593e1ed1-fa8f-4867-a586-5a8bf4a17f00",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID?force=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "query": [
+                        {
+                          "description": "When set to true, terminates the workspace group even if it contains active workspaces.",
+                          "key": "force",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-593e1ed1-fa8f-4867-a586-5a8bf4a17f00"
+                },
+                {
+                  "id": "bc25e610-5afd-4b1c-8fa8-b783a8ab1c3a",
+                  "name": "The requested resource was not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/workspaceGroups/:workspaceGroupID?force=false",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "workspaceGroups",
+                        ":workspaceGroupID"
+                      ],
+                      "query": [
+                        {
+                          "description": "When set to true, terminates the workspace group even if it contains active workspaces.",
+                          "key": "force",
+                          "value": "false"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspaceGroupID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:52.000Z",
+                  "updatedAt": "2026-07-28T02:54:52.000Z",
+                  "uid": "35240-bc25e610-5afd-4b1c-8fa8-b783a8ab1c3a"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-93b4ab94-744e-402c-bc42-0e25a6adbaaf"
+            }
+          ],
+          "id": "68a2bbda-ee2a-45a1-bc64-6f0907d13eef",
+          "createdAt": "2026-07-28T02:54:52.000Z",
+          "updatedAt": "2026-07-28T02:54:52.000Z",
+          "uid": "35240-68a2bbda-ee2a-45a1-bc64-6f0907d13eef"
+        },
+        {
+          "name": "List Workspace Groups",
+          "id": "5f8ba2cf-90a1-4c49-9e74-89c48a22b489",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workspaceGroups?organizationID=<uuid>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workspaceGroups"
+              ],
+              "query": [
+                {
+                  "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations.",
+                  "key": "organizationID",
+                  "value": "<uuid>"
+                }
+              ]
+            },
+            "description": "Retrieves all workspace groups accessible to the authenticated user within the current organization. Returns a list of workspace group objects including their IDs, names, regions, states, and configuration."
+          },
+          "response": [
+            {
+              "id": "6def10e2-a67b-4da5-bd71-8d1821788440",
+              "name": "List of workspace groups returned successfully.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups?organizationID=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations.",
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"workspaceGroupID\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"state\": \"Failed\",\n    \"regionID\": \"<string>\",\n    \"firewallRanges\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"allowAllTraffic\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"expiresAt\": \"<dateTime>\"\n  },\n  {\n    \"workspaceGroupID\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"state\": \"Terminated\",\n    \"regionID\": \"<string>\",\n    \"firewallRanges\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"allowAllTraffic\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"expiresAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-6def10e2-a67b-4da5-bd71-8d1821788440"
+            },
+            {
+              "id": "2802b657-4128-414f-88c3-b91a1b86e471",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups?organizationID=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations.",
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-2802b657-4128-414f-88c3-b91a1b86e471"
+            }
+          ],
+          "createdAt": "2026-07-28T02:54:52.000Z",
+          "updatedAt": "2026-07-28T02:54:52.000Z",
+          "uid": "35240-5f8ba2cf-90a1-4c49-9e74-89c48a22b489"
+        },
+        {
+          "name": "Create a Workspace Group",
+          "id": "1f2cb476-7272-474c-a2fe-a0b44abf93da",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/workspaceGroups",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "workspaceGroups"
+              ]
+            },
+            "description": "Creates a new workspace group in the specified cloud region for the authenticated user's organization. A workspace group defines the network boundary, region, and firewall configuration for workspaces deployed within it."
+          },
+          "response": [
+            {
+              "id": "a54be718-7364-4017-8e48-d88cf93f28d0",
+              "name": "Workspace group created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"workspaceGroupID\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"state\": \"Terminated\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-a54be718-7364-4017-8e48-d88cf93f28d0"
+            },
+            {
+              "id": "c96c4da8-6304-4bf8-93bf-e525678bd4ef",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-c96c4da8-6304-4bf8-93bf-e525678bd4ef"
+            },
+            {
+              "id": "e4875e02-2178-481c-a84b-ce539aca4ba5",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/workspaceGroups",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "workspaceGroups"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:52.000Z",
+              "updatedAt": "2026-07-28T02:54:52.000Z",
+              "uid": "35240-e4875e02-2178-481c-a84b-ce539aca4ba5"
+            }
+          ],
+          "createdAt": "2026-07-28T02:54:52.000Z",
+          "updatedAt": "2026-07-28T02:54:52.000Z",
+          "uid": "35240-1f2cb476-7272-474c-a2fe-a0b44abf93da"
+        }
+      ],
+      "id": "63d9dec7-e58d-4963-a939-9226bec9f6c1",
+      "createdAt": "2026-07-28T02:54:52.000Z",
+      "updatedAt": "2026-07-28T02:54:52.000Z",
+      "uid": "35240-63d9dec7-e58d-4963-a939-9226bec9f6c1"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}

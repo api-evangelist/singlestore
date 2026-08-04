@@ -1,0 +1,143 @@
+{
+  "info": {
+    "_postman_id": "5a9bd60c-7223-430f-a9c0-b16cdf820b2a",
+    "name": "SingleStore Data Files Health API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:46.000Z",
+    "updatedAt": "2026-07-28T02:54:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5a9bd60c-7223-430f-a9c0-b16cdf820b2a"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "ping",
+              "item": [
+                {
+                  "name": "Ping the Data Api",
+                  "id": "f4b9a459-24a4-4092-a6c8-3d51006e5298",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/ping",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "ping"
+                      ]
+                    },
+                    "description": "Health check endpoint that verifies the Data API is reachable and operational on the target workspace. This endpoint does not require authentication credentials and can be used to confirm network connectivity before making authenticated requests."
+                  },
+                  "response": [
+                    {
+                      "id": "7cabd13a-ea38-4022-a937-de7a43754f56",
+                      "name": "Data API is reachable and operational.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/ping",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "ping"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:54:46.000Z",
+                      "updatedAt": "2026-07-28T02:54:46.000Z",
+                      "uid": "35240-7cabd13a-ea38-4022-a937-de7a43754f56"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:54:46.000Z",
+                  "updatedAt": "2026-07-28T02:54:46.000Z",
+                  "uid": "35240-f4b9a459-24a4-4092-a6c8-3d51006e5298"
+                }
+              ],
+              "id": "1b0b090c-c766-4add-a411-135153d7d3f0",
+              "createdAt": "2026-07-28T02:54:46.000Z",
+              "updatedAt": "2026-07-28T02:54:46.000Z",
+              "uid": "35240-1b0b090c-c766-4add-a411-135153d7d3f0"
+            }
+          ],
+          "id": "7809e3bf-2d26-4078-b99a-747d08273ca7",
+          "createdAt": "2026-07-28T02:54:46.000Z",
+          "updatedAt": "2026-07-28T02:54:46.000Z",
+          "uid": "35240-7809e3bf-2d26-4078-b99a-747d08273ca7"
+        }
+      ],
+      "id": "5a077195-0621-43ac-b355-1f3978d426ab",
+      "createdAt": "2026-07-28T02:54:46.000Z",
+      "updatedAt": "2026-07-28T02:54:46.000Z",
+      "uid": "35240-5a077195-0621-43ac-b355-1f3978d426ab"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}

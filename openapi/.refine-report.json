@@ -1,0 +1,30 @@
+{
+  "provider": "singlestore",
+  "sources": [
+    "singlestore-files-api-openapi.yml",
+    "singlestore-health-api-openapi.yml",
+    "singlestore-jobs-api-openapi.yml",
+    "singlestore-organizations-api-openapi.yml",
+    "singlestore-queries-api-openapi.yml",
+    "singlestore-regions-api-openapi.yml",
+    "singlestore-secrets-api-openapi.yml",
+    "singlestore-workspacegroups-api-openapi.yml",
+    "singlestore-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "singlestore-files-api-openapi.yml",
+    "singlestore-health-api-openapi.yml",
+    "singlestore-jobs-api-openapi.yml",
+    "singlestore-organizations-api-openapi.yml",
+    "singlestore-queries-api-openapi.yml",
+    "singlestore-regions-api-openapi.yml",
+    "singlestore-secrets-api-openapi.yml",
+    "singlestore-workspacegroups-api-openapi.yml",
+    "singlestore-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

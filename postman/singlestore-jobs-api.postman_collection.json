@@ -1,0 +1,1010 @@
+{
+  "info": {
+    "_postman_id": "856ddca7-5333-4246-8749-fce79e8b3f9a",
+    "name": "SingleStore Data Files Jobs API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:47.000Z",
+    "updatedAt": "2026-07-28T02:54:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-856ddca7-5333-4246-8749-fce79e8b3f9a"
+  },
+  "item": [
+    {
+      "name": "jobs",
+      "item": [
+        {
+          "name": "{jobID}",
+          "item": [
+            {
+              "name": "executions",
+              "item": [
+                {
+                  "name": "List Job Executions",
+                  "id": "0a18fcf1-3c9d-4336-b40f-0e81e8132bec",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID/executions?start=<integer>&end=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID",
+                        "executions"
+                      ],
+                      "query": [
+                        {
+                          "description": "The starting execution number for pagination.",
+                          "key": "start",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "The ending execution number for pagination.",
+                          "key": "end",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "2fa446ca-bfaf-45b8-add9-bf6953b69753",
+                          "key": "jobID",
+                          "value": "<uuid>",
+                          "description": "(Required) Unique identifier of the job."
+                        }
+                      ]
+                    },
+                    "description": "Retrieves the execution history for a specific job, with optional pagination by execution number range. Returns execution status, timing, and any associated snapshot notebook paths."
+                  },
+                  "response": [
+                    {
+                      "id": "145285e8-23cb-4275-9f23-ea7eb29151ab",
+                      "name": "Job executions returned successfully.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/jobs/:jobID/executions?start=<integer>&end=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "jobs",
+                            ":jobID",
+                            "executions"
+                          ],
+                          "query": [
+                            {
+                              "description": "The starting execution number for pagination.",
+                              "key": "start",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The ending execution number for pagination.",
+                              "key": "end",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "jobID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"executionID\": \"<uuid>\",\n    \"jobID\": \"<uuid>\",\n    \"status\": \"Cancelled\",\n    \"executionNumber\": \"<integer>\",\n    \"scheduledStartTime\": \"<dateTime>\",\n    \"startedAt\": \"<dateTime>\",\n    \"finishedAt\": \"<dateTime>\",\n    \"snapshotNotebookPath\": \"<string>\"\n  },\n  {\n    \"executionID\": \"<uuid>\",\n    \"jobID\": \"<uuid>\",\n    \"status\": \"Cancelled\",\n    \"executionNumber\": \"<integer>\",\n    \"scheduledStartTime\": \"<dateTime>\",\n    \"startedAt\": \"<dateTime>\",\n    \"finishedAt\": \"<dateTime>\",\n    \"snapshotNotebookPath\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-07-28T02:54:47.000Z",
+                      "updatedAt": "2026-07-28T02:54:47.000Z",
+                      "uid": "35240-145285e8-23cb-4275-9f23-ea7eb29151ab"
+                    },
+                    {
+                      "id": "33b55813-c783-4cbf-98fe-705e26c4baf8",
+                      "name": "The request did not include a valid Bearer token.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/jobs/:jobID/executions?start=<integer>&end=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "jobs",
+                            ":jobID",
+                            "executions"
+                          ],
+                          "query": [
+                            {
+                              "description": "The starting execution number for pagination.",
+                              "key": "start",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The ending execution number for pagination.",
+                              "key": "end",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "jobID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:54:47.000Z",
+                      "updatedAt": "2026-07-28T02:54:47.000Z",
+                      "uid": "35240-33b55813-c783-4cbf-98fe-705e26c4baf8"
+                    },
+                    {
+                      "id": "0825f3b2-8963-41aa-bdc8-e0f9a9ddb74f",
+                      "name": "The requested resource was not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/jobs/:jobID/executions?start=<integer>&end=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "jobs",
+                            ":jobID",
+                            "executions"
+                          ],
+                          "query": [
+                            {
+                              "description": "The starting execution number for pagination.",
+                              "key": "start",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "The ending execution number for pagination.",
+                              "key": "end",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "jobID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:54:47.000Z",
+                      "updatedAt": "2026-07-28T02:54:47.000Z",
+                      "uid": "35240-0825f3b2-8963-41aa-bdc8-e0f9a9ddb74f"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-0a18fcf1-3c9d-4336-b40f-0e81e8132bec"
+                }
+              ],
+              "id": "83ba143d-f625-4246-9608-40a5834bfcc1",
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-83ba143d-f625-4246-9608-40a5834bfcc1"
+            },
+            {
+              "name": "Get a Job",
+              "id": "ad77e0ff-d9b9-4a12-9ddd-5fc26f11948a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/jobs/:jobID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "11760f26-7219-4e61-9a9f-f2c2ab759482",
+                      "key": "jobID",
+                      "value": "<uuid>",
+                      "description": "(Required) Unique identifier of the job."
+                    }
+                  ]
+                },
+                "description": "Retrieves detailed information about a specific scheduled notebook job identified by its unique job ID, including its schedule configuration, execution history, and current status."
+              },
+              "response": [
+                {
+                  "id": "e7f88769-f2c4-4680-b841-259e98ec3124",
+                  "name": "Job returned successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "jobID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"jobID\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"completedExecutionsCount\": \"<integer>\",\n  \"enqueuedBy\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"terminatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-e7f88769-f2c4-4680-b841-259e98ec3124"
+                },
+                {
+                  "id": "baf9233b-2a42-4e37-b263-9baf6ed05d05",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "jobID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-baf9233b-2a42-4e37-b263-9baf6ed05d05"
+                },
+                {
+                  "id": "381830d1-36fb-4a3c-897a-b276c5759d75",
+                  "name": "The requested resource was not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "jobID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-381830d1-36fb-4a3c-897a-b276c5759d75"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-ad77e0ff-d9b9-4a12-9ddd-5fc26f11948a"
+            },
+            {
+              "name": "Delete a Job",
+              "id": "468813e4-c2dd-466f-a9cc-899d152e90cb",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/jobs/:jobID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d25a954d-31a1-428c-a490-38f29e89b861",
+                      "key": "jobID",
+                      "value": "<uuid>",
+                      "description": "(Required) Unique identifier of the job."
+                    }
+                  ]
+                },
+                "description": "Permanently deletes a scheduled notebook job identified by its unique job ID. Any currently executing job instances are not affected; only future executions are cancelled."
+              },
+              "response": [
+                {
+                  "id": "59c5b73f-93f8-4e20-a0fe-1b39116abe51",
+                  "name": "Job deleted successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "jobID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-59c5b73f-93f8-4e20-a0fe-1b39116abe51"
+                },
+                {
+                  "id": "b0ceb140-4b37-4f52-9eb0-46fe50558df3",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "jobID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-b0ceb140-4b37-4f52-9eb0-46fe50558df3"
+                },
+                {
+                  "id": "8f459e80-acc3-4d95-bcfb-722b72cb2082",
+                  "name": "The requested resource was not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/jobs/:jobID",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "jobs",
+                        ":jobID"
+                      ],
+                      "variable": [
+                        {
+                          "key": "jobID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:47.000Z",
+                  "updatedAt": "2026-07-28T02:54:47.000Z",
+                  "uid": "35240-8f459e80-acc3-4d95-bcfb-722b72cb2082"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-468813e4-c2dd-466f-a9cc-899d152e90cb"
+            }
+          ],
+          "id": "39a2041c-5de3-479c-9f8c-b464c6cca637",
+          "createdAt": "2026-07-28T02:54:47.000Z",
+          "updatedAt": "2026-07-28T02:54:47.000Z",
+          "uid": "35240-39a2041c-5de3-479c-9f8c-b464c6cca637"
+        },
+        {
+          "name": "List Jobs",
+          "id": "8196be51-0116-4812-ad60-1fe470dc1efb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/jobs?organizationID=<uuid>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ],
+              "query": [
+                {
+                  "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations.",
+                  "key": "organizationID",
+                  "value": "<uuid>"
+                }
+              ]
+            },
+            "description": "Retrieves all scheduled notebook jobs within the current organization, including job configuration, execution history metadata, and scheduling details."
+          },
+          "response": [
+            {
+              "id": "b5f113f2-ccaa-4741-b2ab-7e1717fd037c",
+              "name": "List of jobs returned successfully.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/jobs?organizationID=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations.",
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"jobID\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"schedule\": {\n      \"mode\": \"Recurring\",\n      \"startAt\": \"<dateTime>\",\n      \"executionIntervalInMinutes\": \"<integer>\"\n    },\n    \"executionConfig\": {\n      \"notebookPath\": \"<string>\",\n      \"runtimeName\": \"<string>\",\n      \"createSnapshot\": \"<boolean>\"\n    },\n    \"targetConfig\": {\n      \"targetID\": \"<uuid>\",\n      \"targetType\": \"Workspace\",\n      \"databaseName\": \"<string>\",\n      \"resumeTarget\": \"<boolean>\"\n    },\n    \"completedExecutionsCount\": \"<integer>\",\n    \"enqueuedBy\": \"<string>\",\n    \"createdAt\": \"<dateTime>\",\n    \"terminatedAt\": \"<dateTime>\"\n  },\n  {\n    \"jobID\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"schedule\": {\n      \"mode\": \"Recurring\",\n      \"startAt\": \"<dateTime>\",\n      \"executionIntervalInMinutes\": \"<integer>\"\n    },\n    \"executionConfig\": {\n      \"notebookPath\": \"<string>\",\n      \"runtimeName\": \"<string>\",\n      \"createSnapshot\": \"<boolean>\"\n    },\n    \"targetConfig\": {\n      \"targetID\": \"<uuid>\",\n      \"targetType\": \"Workspace\",\n      \"databaseName\": \"<string>\",\n      \"resumeTarget\": \"<boolean>\"\n    },\n    \"completedExecutionsCount\": \"<integer>\",\n    \"enqueuedBy\": \"<string>\",\n    \"createdAt\": \"<dateTime>\",\n    \"terminatedAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-b5f113f2-ccaa-4741-b2ab-7e1717fd037c"
+            },
+            {
+              "id": "5d2e69ed-e51a-4835-bf70-aa9d2987f76b",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/jobs?organizationID=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations.",
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-5d2e69ed-e51a-4835-bf70-aa9d2987f76b"
+            }
+          ],
+          "createdAt": "2026-07-28T02:54:47.000Z",
+          "updatedAt": "2026-07-28T02:54:47.000Z",
+          "uid": "35240-8196be51-0116-4812-ad60-1fe470dc1efb"
+        },
+        {
+          "name": "Create a Job",
+          "id": "0930c407-0469-4207-89b5-4c37fd48db9d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule\": {\n    \"mode\": \"Once\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/jobs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jobs"
+              ]
+            },
+            "description": "Creates a new scheduled notebook job within the current organization. Jobs execute a specified notebook on a defined schedule or on demand, targeting a specific workspace and optional database."
+          },
+          "response": [
+            {
+              "id": "435e9ca6-f66c-4526-a47e-e4d313e30c71",
+              "name": "Job created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"mode\": \"Once\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/jobs",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"jobID\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"completedExecutionsCount\": \"<integer>\",\n  \"enqueuedBy\": \"<string>\",\n  \"createdAt\": \"<dateTime>\",\n  \"terminatedAt\": \"<dateTime>\"\n}",
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-435e9ca6-f66c-4526-a47e-e4d313e30c71"
+            },
+            {
+              "id": "84f44e93-b447-4c56-bce0-6dd4f65b566e",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"mode\": \"Once\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/jobs",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-84f44e93-b447-4c56-bce0-6dd4f65b566e"
+            },
+            {
+              "id": "0230a61e-0dec-4e5c-9b4f-b94434594ef6",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"mode\": \"Once\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/jobs",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "jobs"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:47.000Z",
+              "updatedAt": "2026-07-28T02:54:47.000Z",
+              "uid": "35240-0230a61e-0dec-4e5c-9b4f-b94434594ef6"
+            }
+          ],
+          "createdAt": "2026-07-28T02:54:47.000Z",
+          "updatedAt": "2026-07-28T02:54:47.000Z",
+          "uid": "35240-0930c407-0469-4207-89b5-4c37fd48db9d"
+        }
+      ],
+      "id": "0f4e033e-045b-4b14-bd68-96350dcf32b8",
+      "createdAt": "2026-07-28T02:54:47.000Z",
+      "updatedAt": "2026-07-28T02:54:47.000Z",
+      "uid": "35240-0f4e033e-045b-4b14-bd68-96350dcf32b8"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}

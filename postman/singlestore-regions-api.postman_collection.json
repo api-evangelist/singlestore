@@ -1,0 +1,290 @@
+{
+  "info": {
+    "_postman_id": "a772c154-23fa-44a3-9edb-84907b23dd2a",
+    "name": "SingleStore Data Files Regions API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:50.000Z",
+    "updatedAt": "2026-07-28T02:54:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a772c154-23fa-44a3-9edb-84907b23dd2a"
+  },
+  "item": [
+    {
+      "name": "regions",
+      "item": [
+        {
+          "name": "sharedtier",
+          "item": [
+            {
+              "name": "List Shared Tier Regions",
+              "id": "6ff3650d-b838-42eb-9368-bd571472db1a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/regions/sharedtier",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "regions",
+                    "sharedtier"
+                  ]
+                },
+                "description": "Retrieves all cloud provider regions that support shared tier (starter) workspace creation within SingleStore Helios."
+              },
+              "response": [
+                {
+                  "id": "a37a68ed-a977-4648-96ae-bbf8b4b335a2",
+                  "name": "List of shared tier regions returned successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/regions/sharedtier",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "regions",
+                        "sharedtier"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"regionID\": \"<string>\",\n    \"region\": \"<string>\",\n    \"provider\": \"AWS\",\n    \"country\": \"<string>\"\n  },\n  {\n    \"regionID\": \"<string>\",\n    \"region\": \"<string>\",\n    \"provider\": \"GCP\",\n    \"country\": \"<string>\"\n  }\n]",
+                  "createdAt": "2026-07-28T02:54:50.000Z",
+                  "updatedAt": "2026-07-28T02:54:50.000Z",
+                  "uid": "35240-a37a68ed-a977-4648-96ae-bbf8b4b335a2"
+                },
+                {
+                  "id": "ecb2c7b9-a3d5-4ce0-9a40-58708a522442",
+                  "name": "The request did not include a valid Bearer token.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/regions/sharedtier",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "regions",
+                        "sharedtier"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:54:50.000Z",
+                  "updatedAt": "2026-07-28T02:54:50.000Z",
+                  "uid": "35240-ecb2c7b9-a3d5-4ce0-9a40-58708a522442"
+                }
+              ],
+              "createdAt": "2026-07-28T02:54:50.000Z",
+              "updatedAt": "2026-07-28T02:54:50.000Z",
+              "uid": "35240-6ff3650d-b838-42eb-9368-bd571472db1a"
+            }
+          ],
+          "id": "08035654-97f0-45cd-8984-8cc17cdb72fe",
+          "createdAt": "2026-07-28T02:54:50.000Z",
+          "updatedAt": "2026-07-28T02:54:50.000Z",
+          "uid": "35240-08035654-97f0-45cd-8984-8cc17cdb72fe"
+        },
+        {
+          "name": "List Regions",
+          "id": "789908e9-adbe-46c3-9df9-01e680a0a2f8",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/regions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "regions"
+              ]
+            },
+            "description": "Retrieves all cloud provider regions that support workspace group creation within SingleStore Helios, including the cloud provider name and region identifier for each available region."
+          },
+          "response": [
+            {
+              "id": "7ccfa98e-002f-4588-aa2b-91795bdaa4b5",
+              "name": "List of regions returned successfully.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/regions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "regions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"regionID\": \"<string>\",\n    \"region\": \"<string>\",\n    \"provider\": \"AWS\",\n    \"country\": \"<string>\"\n  },\n  {\n    \"regionID\": \"<string>\",\n    \"region\": \"<string>\",\n    \"provider\": \"GCP\",\n    \"country\": \"<string>\"\n  }\n]",
+              "createdAt": "2026-07-28T02:54:50.000Z",
+              "updatedAt": "2026-07-28T02:54:50.000Z",
+              "uid": "35240-7ccfa98e-002f-4588-aa2b-91795bdaa4b5"
+            },
+            {
+              "id": "cf1b4dfb-3476-43f7-bd4c-7722b81208fa",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/regions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "regions"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T02:54:50.000Z",
+              "updatedAt": "2026-07-28T02:54:50.000Z",
+              "uid": "35240-cf1b4dfb-3476-43f7-bd4c-7722b81208fa"
+            }
+          ],
+          "createdAt": "2026-07-28T02:54:50.000Z",
+          "updatedAt": "2026-07-28T02:54:50.000Z",
+          "uid": "35240-789908e9-adbe-46c3-9df9-01e680a0a2f8"
+        }
+      ],
+      "id": "bad81239-9ba6-4730-82e3-ed15d128c78b",
+      "createdAt": "2026-07-28T02:54:50.000Z",
+      "updatedAt": "2026-07-28T02:54:50.000Z",
+      "uid": "35240-bad81239-9ba6-4730-82e3-ed15d128c78b"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}

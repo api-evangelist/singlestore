@@ -1,0 +1,940 @@
+{
+  "info": {
+    "_postman_id": "6b216561-bf28-4310-9f39-af4591fd4928",
+    "name": "SingleStore Data Files Queries API",
+    "description": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:54:49.000Z",
+    "updatedAt": "2026-07-28T02:54:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6b216561-bf28-4310-9f39-af4591fd4928"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "exec",
+              "item": [
+                {
+                  "name": "Execute a Sql Statement",
+                  "id": "60ddf06b-9e49-4f61-bd73-0d395cf78244",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/exec",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "exec"
+                      ]
+                    },
+                    "description": "Executes a DDL or DML SQL statement against the target workspace and database. Use this endpoint for statements that do not return result sets, such as CREATE TABLE, INSERT, UPDATE, DELETE, and DROP. The endpoint returns execution metadata including the number of rows affected. The request body must not exceed 1 MB in size."
+                  },
+                  "response": [
+                    {
+                      "id": "0618313d-5533-4be3-9cb1-153b8812d0c4",
+                      "name": "SQL statement executed successfully.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/exec",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "exec"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"results\": [\n    {\n      \"lastInsertId\": \"<integer>\",\n      \"rowsAffected\": \"<integer>\"\n    },\n    {\n      \"lastInsertId\": \"<integer>\",\n      \"rowsAffected\": \"<integer>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:54:49.000Z",
+                      "updatedAt": "2026-07-28T02:54:49.000Z",
+                      "uid": "35240-0618313d-5533-4be3-9cb1-153b8812d0c4"
+                    },
+                    {
+                      "id": "a2bedc52-b9d1-4d23-afc7-3fc8dbbd9079",
+                      "name": "The SQL statement or request body was malformed or invalid.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/exec",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "exec"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T02:54:49.000Z",
+                      "updatedAt": "2026-07-28T02:54:49.000Z",
+                      "uid": "35240-a2bedc52-b9d1-4d23-afc7-3fc8dbbd9079"
+                    },
+                    {
+                      "id": "8244d6f0-47c2-44f8-be1e-4c0797fa8e7a",
+                      "name": "The request did not include valid authentication credentials.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/exec",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "exec"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T02:54:49.000Z",
+                      "updatedAt": "2026-07-28T02:54:49.000Z",
+                      "uid": "35240-8244d6f0-47c2-44f8-be1e-4c0797fa8e7a"
+                    },
+                    {
+                      "id": "8386f6f6-76af-4ac6-95d1-d34ef911af85",
+                      "name": "The SQL statement failed to execute due to a database or server-side error.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/exec",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "exec"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T02:54:49.000Z",
+                      "updatedAt": "2026-07-28T02:54:49.000Z",
+                      "uid": "35240-8386f6f6-76af-4ac6-95d1-d34ef911af85"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:54:49.000Z",
+                  "updatedAt": "2026-07-28T02:54:49.000Z",
+                  "uid": "35240-60ddf06b-9e49-4f61-bd73-0d395cf78244"
+                }
+              ],
+              "id": "d9420f3d-9ff6-4c69-9214-e2fc8ea455fe",
+              "createdAt": "2026-07-28T02:54:49.000Z",
+              "updatedAt": "2026-07-28T02:54:49.000Z",
+              "uid": "35240-d9420f3d-9ff6-4c69-9214-e2fc8ea455fe"
+            },
+            {
+              "name": "query",
+              "item": [
+                {
+                  "name": "rows",
+                  "item": [
+                    {
+                      "name": "Execute a Sql Query and Return Rows",
+                      "id": "3a37cd5a-89e2-4386-9e86-54cb5823cc78",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/query/rows",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "query",
+                            "rows"
+                          ]
+                        },
+                        "description": "Executes a SQL SELECT statement against the target workspace and database, returning results as an array of JSON objects where each object represents one row with column names as keys. This format is convenient for most use cases but produces larger responses than the tuples format due to the repeated column name keys. The request body must not exceed 1 MB in size."
+                      },
+                      "response": [
+                        {
+                          "id": "bd3928be-e850-4146-8376-c638f6643da5",
+                          "name": "Query executed successfully; results returned as row objects.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/rows",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "rows"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"results\": [\n    {\n      \"rows\": [\n        {\n          \"do_be\": 46853824,\n          \"in_12\": true\n        },\n        {\n          \"nostrud718\": -91084284.03751834,\n          \"in_2a9\": 6486058.838020578,\n          \"qui654\": false\n        }\n      ]\n    },\n    {\n      \"rows\": [\n        {\n          \"etf\": 291875.80330213904\n        },\n        {\n          \"velit_72\": -37778785.13694466\n        }\n      ]\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-bd3928be-e850-4146-8376-c638f6643da5"
+                        },
+                        {
+                          "id": "4b5486c2-6746-4336-937d-08f67896adfe",
+                          "name": "The SQL statement or request body was malformed or invalid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/rows",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "rows"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-4b5486c2-6746-4336-937d-08f67896adfe"
+                        },
+                        {
+                          "id": "8d2c20bb-6786-4fbe-8739-cf19b3ed7446",
+                          "name": "The request did not include valid authentication credentials.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/rows",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "rows"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-8d2c20bb-6786-4fbe-8739-cf19b3ed7446"
+                        },
+                        {
+                          "id": "bcb3a80b-6c4c-4ab3-bcb1-49a61dfffb64",
+                          "name": "The SQL statement failed to execute due to a database or server-side error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/rows",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "rows"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-bcb3a80b-6c4c-4ab3-bcb1-49a61dfffb64"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:54:49.000Z",
+                      "updatedAt": "2026-07-28T02:54:49.000Z",
+                      "uid": "35240-3a37cd5a-89e2-4386-9e86-54cb5823cc78"
+                    }
+                  ],
+                  "id": "567a9614-362b-41ce-8e6d-27e664b06365",
+                  "createdAt": "2026-07-28T02:54:49.000Z",
+                  "updatedAt": "2026-07-28T02:54:49.000Z",
+                  "uid": "35240-567a9614-362b-41ce-8e6d-27e664b06365"
+                },
+                {
+                  "name": "tuples",
+                  "item": [
+                    {
+                      "name": "Execute a Sql Query and Return Tuples",
+                      "id": "bfe579d3-69ca-48e7-93e9-00b58fdd2571",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/query/tuples",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "query",
+                            "tuples"
+                          ]
+                        },
+                        "description": "Executes a SQL SELECT statement against the target workspace and database, returning results as a separate columns array and a rows array of value arrays. This format offers better performance for queries with large result sets because column names are not repeated per row. Use this endpoint when response payload size is a concern."
+                      },
+                      "response": [
+                        {
+                          "id": "8853f8f6-fa25-42af-8637-f04025ea113d",
+                          "name": "Query executed successfully; results returned as column/tuple arrays.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/tuples",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "tuples"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"results\": [\n    {\n      \"columns\": [\n        {\n          \"name\": \"<string>\",\n          \"dataType\": \"<string>\",\n          \"nullable\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"dataType\": \"<string>\",\n          \"nullable\": \"<boolean>\"\n        }\n      ],\n      \"rows\": [\n        [],\n        []\n      ]\n    },\n    {\n      \"columns\": [\n        {\n          \"name\": \"<string>\",\n          \"dataType\": \"<string>\",\n          \"nullable\": \"<boolean>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"dataType\": \"<string>\",\n          \"nullable\": \"<boolean>\"\n        }\n      ],\n      \"rows\": [\n        [],\n        []\n      ]\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-8853f8f6-fa25-42af-8637-f04025ea113d"
+                        },
+                        {
+                          "id": "e24c6d83-af04-4d8a-be76-7d2112c6b220",
+                          "name": "The SQL statement or request body was malformed or invalid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/tuples",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "tuples"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-e24c6d83-af04-4d8a-be76-7d2112c6b220"
+                        },
+                        {
+                          "id": "3d3d10c4-6919-4bc6-8ebc-35e63af202ec",
+                          "name": "The request did not include valid authentication credentials.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/tuples",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "tuples"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-3d3d10c4-6919-4bc6-8ebc-35e63af202ec"
+                        },
+                        {
+                          "id": "5350256e-a8cc-467b-a01b-5f0440ddd29b",
+                          "name": "The SQL statement failed to execute due to a database or server-side error.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/query/tuples",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "query",
+                                "tuples"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T02:54:49.000Z",
+                          "updatedAt": "2026-07-28T02:54:49.000Z",
+                          "uid": "35240-5350256e-a8cc-467b-a01b-5f0440ddd29b"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:54:49.000Z",
+                      "updatedAt": "2026-07-28T02:54:49.000Z",
+                      "uid": "35240-bfe579d3-69ca-48e7-93e9-00b58fdd2571"
+                    }
+                  ],
+                  "id": "94af90ee-cb12-4912-ba23-31da7c886ad3",
+                  "createdAt": "2026-07-28T02:54:49.000Z",
+                  "updatedAt": "2026-07-28T02:54:49.000Z",
+                  "uid": "35240-94af90ee-cb12-4912-ba23-31da7c886ad3"
+                }
+              ],
+              "id": "133af0fd-567d-42c0-83e6-bcc0c5a0e069",
+              "createdAt": "2026-07-28T02:54:49.000Z",
+              "updatedAt": "2026-07-28T02:54:49.000Z",
+              "uid": "35240-133af0fd-567d-42c0-83e6-bcc0c5a0e069"
+            }
+          ],
+          "id": "740f5ed1-f969-4a9f-bae1-d1ecf7203765",
+          "createdAt": "2026-07-28T02:54:49.000Z",
+          "updatedAt": "2026-07-28T02:54:49.000Z",
+          "uid": "35240-740f5ed1-f969-4a9f-bae1-d1ecf7203765"
+        }
+      ],
+      "id": "9bd53989-cffc-47ae-8c77-b838e6623ba3",
+      "createdAt": "2026-07-28T02:54:49.000Z",
+      "updatedAt": "2026-07-28T02:54:49.000Z",
+      "uid": "35240-9bd53989-cffc-47ae-8c77-b838e6623ba3"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "workspaceHost",
+      "value": "your-workspace.singlestore.com"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://{{workspaceHost}}"
+    }
+  ]
+}
