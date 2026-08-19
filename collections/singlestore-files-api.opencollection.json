@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Data Files API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get or List Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "When set to 1, returns file metadata (size, type, modified date) instead of file content."
+              }
+            ]
+          },
+          "docs": "Retrieves a file from the stage filesystem at the specified path, or lists directory contents when the path points to a directory. Use the metadata query parameter to return object metadata instead of file content."
+        },
+        {
+          "info": {
+            "name": "Upload a Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{workspaceHost}/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              },
+              {
+                "name": "isFile",
+                "value": "",
+                "type": "query",
+                "description": "When set to false, creates a directory instead of uploading a file."
+              }
+            ]
+          },
+          "docs": "Uploads a file to the stage filesystem at the specified path, creating parent directories as needed. Existing files at the same path are overwritten."
+        },
+        {
+          "info": {
+            "name": "Rename or Move a Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{workspaceHost}/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renames or moves a file or directory within the stage filesystem from the specified old path to a new path provided in the request body."
+        },
+        {
+          "info": {
+            "name": "Delete a Stage File",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{workspaceHost}/stage/:deploymentID/fs/:stagePath",
+            "params": [
+              {
+                "name": "deploymentID",
+                "value": "",
+                "type": "path",
+                "description": "Unique deployment identifier associated with a workspace group, used to address the stage filesystem."
+              },
+              {
+                "name": "stagePath",
+                "value": "",
+                "type": "path",
+                "description": "File or directory path within the stage filesystem."
+              }
+            ]
+          },
+          "docs": "Deletes a file or directory from the stage filesystem at the specified path. Directory deletion removes all contained files and subdirectories recursively."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

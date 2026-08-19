@@ -1,0 +1,1154 @@
+{
+  "item": [
+    {
+      "id": "7c866fa2-ed22-4754-9e7e-464fffcce2ea",
+      "name": "Jobs",
+      "description": {
+        "content": "Create, retrieve, list, and delete scheduled notebook jobs within SingleStore Helios. Jobs enable automated execution of notebooks on configurable schedules.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a77629f-daef-4962-b1ab-6ec0ad2e47e7",
+          "name": "List Jobs",
+          "request": {
+            "name": "List Jobs",
+            "description": {
+              "content": "Retrieves all scheduled notebook jobs within the current organization, including job configuration, execution history metadata, and scheduling details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "organizationID",
+                  "value": "<uuid>",
+                  "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37fe8a0f-8ac5-4e16-a98c-b678dca522c8",
+              "name": "List of jobs returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"jobID\": \"61f95cd8-9098-0bbb-38d5-eed20d937c5c\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"schedule\": {\n      \"mode\": \"Recurring\",\n      \"startAt\": \"2024-12-06T12:32:58.707Z\",\n      \"executionIntervalInMinutes\": 6276\n    },\n    \"executionConfig\": {\n      \"notebookPath\": \"string\",\n      \"runtimeName\": \"string\",\n      \"createSnapshot\": false\n    },\n    \"targetConfig\": {\n      \"targetID\": \"f256d355-c30b-d152-0470-ff331bc9ce4d\",\n      \"targetType\": \"Workspace\",\n      \"databaseName\": \"string\",\n      \"resumeTarget\": true\n    },\n    \"completedExecutionsCount\": 9559,\n    \"enqueuedBy\": \"string\",\n    \"createdAt\": \"1952-12-26T14:53:41.279Z\",\n    \"terminatedAt\": \"2023-05-19T03:16:02.369Z\"\n  },\n  {\n    \"jobID\": \"8e6631e0-12f1-33a7-b190-7dc12953c259\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"schedule\": {\n      \"mode\": \"Recurring\",\n      \"startAt\": \"1967-02-01T01:41:06.288Z\",\n      \"executionIntervalInMinutes\": 6767\n    },\n    \"executionConfig\": {\n      \"notebookPath\": \"string\",\n      \"runtimeName\": \"string\",\n      \"createSnapshot\": false\n    },\n    \"targetConfig\": {\n      \"targetID\": \"50982668-c49c-cde6-3044-b14c9aa1d1a4\",\n      \"targetType\": \"Workspace\",\n      \"databaseName\": \"string\",\n      \"resumeTarget\": false\n    },\n    \"completedExecutionsCount\": 9386,\n    \"enqueuedBy\": \"string\",\n    \"createdAt\": \"2000-02-05T09:19:45.633Z\",\n    \"terminatedAt\": \"2004-11-15T13:25:08.507Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e945af0-f888-498c-bcf5-908d7732ffee",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4a8a40f-2e63-4005-9ed1-c8f60ea6ef75",
+          "name": "Create a Job",
+          "request": {
+            "name": "Create a Job",
+            "description": {
+              "content": "Creates a new scheduled notebook job within the current organization. Jobs execute a specified notebook on a defined schedule or on demand, targeting a specific workspace and optional database.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schedule\": {\n    \"mode\": \"<string>\",\n    \"startAt\": \"<dateTime>\",\n    \"executionIntervalInMinutes\": \"<integer>\"\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"<string>\",\n    \"runtimeName\": \"<string>\",\n    \"createSnapshot\": \"<boolean>\"\n  },\n  \"targetConfig\": {\n    \"targetID\": \"<uuid>\",\n    \"targetType\": \"<string>\",\n    \"databaseName\": \"<string>\",\n    \"resumeTarget\": \"<boolean>\"\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60873364-6599-4ab3-990f-cde253e2424d",
+              "name": "Job created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"1959-07-25T10:22:43.940Z\",\n    \"executionIntervalInMinutes\": 9321\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"string\",\n    \"runtimeName\": \"string\",\n    \"createSnapshot\": false\n  },\n  \"targetConfig\": {\n    \"targetID\": \"1985d148-2a7d-ca19-6d82-6d4fb0a46abd\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"string\",\n    \"resumeTarget\": true\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobID\": \"cdff0996-4554-8723-0904-d1eb634a443a\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"2011-05-12T21:42:25.115Z\",\n    \"executionIntervalInMinutes\": 6290\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"string\",\n    \"runtimeName\": \"string\",\n    \"createSnapshot\": false\n  },\n  \"targetConfig\": {\n    \"targetID\": \"ce183c8d-a81f-466a-2b01-06eaa7a681c1\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"string\",\n    \"resumeTarget\": true\n  },\n  \"completedExecutionsCount\": 6029,\n  \"enqueuedBy\": \"string\",\n  \"createdAt\": \"1996-10-20T06:09:00.018Z\",\n  \"terminatedAt\": \"1956-10-01T15:09:41.204Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b25fee8-0fba-4e77-9930-d42d7fdd9191",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"1959-07-25T10:22:43.940Z\",\n    \"executionIntervalInMinutes\": 9321\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"string\",\n    \"runtimeName\": \"string\",\n    \"createSnapshot\": false\n  },\n  \"targetConfig\": {\n    \"targetID\": \"1985d148-2a7d-ca19-6d82-6d4fb0a46abd\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"string\",\n    \"resumeTarget\": true\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8eb9c092-85fe-4803-b065-674a082b6cb2",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"1959-07-25T10:22:43.940Z\",\n    \"executionIntervalInMinutes\": 9321\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"string\",\n    \"runtimeName\": \"string\",\n    \"createSnapshot\": false\n  },\n  \"targetConfig\": {\n    \"targetID\": \"1985d148-2a7d-ca19-6d82-6d4fb0a46abd\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"string\",\n    \"resumeTarget\": true\n  },\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"parameters\": [\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"value\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "233437e6-a49c-45ea-b8a6-d61681f5aa01",
+          "name": "Get a Job",
+          "request": {
+            "name": "Get a Job",
+            "description": {
+              "content": "Retrieves detailed information about a specific scheduled notebook job identified by its unique job ID, including its schedule configuration, execution history, and current status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "jobID",
+                  "description": "(Required) Unique identifier of the job."
+                },
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc5a1f2f-f6e5-48eb-9c81-77d211a1d9b3",
+              "name": "Job returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobID\": \"cdff0996-4554-8723-0904-d1eb634a443a\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"schedule\": {\n    \"mode\": \"Recurring\",\n    \"startAt\": \"2011-05-12T21:42:25.115Z\",\n    \"executionIntervalInMinutes\": 6290\n  },\n  \"executionConfig\": {\n    \"notebookPath\": \"string\",\n    \"runtimeName\": \"string\",\n    \"createSnapshot\": false\n  },\n  \"targetConfig\": {\n    \"targetID\": \"ce183c8d-a81f-466a-2b01-06eaa7a681c1\",\n    \"targetType\": \"Workspace\",\n    \"databaseName\": \"string\",\n    \"resumeTarget\": true\n  },\n  \"completedExecutionsCount\": 6029,\n  \"enqueuedBy\": \"string\",\n  \"createdAt\": \"1996-10-20T06:09:00.018Z\",\n  \"terminatedAt\": \"1956-10-01T15:09:41.204Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8215109-a6f3-4f13-b226-a542d8f49d3f",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d45ee11e-734d-4dd1-963a-88b6a0557a8c",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a12acb3-fb8f-48c9-9b8b-1476768bb7e7",
+          "name": "Delete a Job",
+          "request": {
+            "name": "Delete a Job",
+            "description": {
+              "content": "Permanently deletes a scheduled notebook job identified by its unique job ID. Any currently executing job instances are not affected; only future executions are cancelled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "jobID",
+                  "description": "(Required) Unique identifier of the job."
+                },
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3728f896-86ef-4b9f-8c6d-88734d8994be",
+              "name": "Job deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "355a66bd-586e-41f8-933c-0859557f7b69",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cec29d4-0089-4cf5-9e6f-f08ecbdee156",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5d4791e-7d13-4aab-96ac-6252119973cd",
+          "name": "List Job Executions",
+          "request": {
+            "name": "List Job Executions",
+            "description": {
+              "content": "Retrieves the execution history for a specific job, with optional pagination by execution number range. Returns execution status, timing, and any associated snapshot notebook paths.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobID",
+                "executions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<integer>",
+                  "description": "The starting execution number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<integer>",
+                  "description": "The ending execution number for pagination."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "jobID",
+                  "description": "(Required) Unique identifier of the job."
+                },
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6855606-63db-47ff-a903-0f28ff43c708",
+              "name": "Job executions returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"executionID\": \"d6a2868a-a0bc-a41d-2681-58ea069a8753\",\n    \"jobID\": \"f109990c-c504-d980-a73d-7ca8781ac1c0\",\n    \"status\": \"Completed\",\n    \"executionNumber\": 7056,\n    \"scheduledStartTime\": \"2007-04-09T10:29:52.533Z\",\n    \"startedAt\": \"1956-09-13T21:56:12.715Z\",\n    \"finishedAt\": \"1957-07-26T11:08:03.146Z\",\n    \"snapshotNotebookPath\": \"string\"\n  },\n  {\n    \"executionID\": \"8569d457-d6d4-f72e-b1cf-1bc8aac21edd\",\n    \"jobID\": \"f515a5f1-8fb8-370a-efda-1304399c9736\",\n    \"status\": \"Queued\",\n    \"executionNumber\": 5904,\n    \"scheduledStartTime\": \"1974-12-07T20:52:30.921Z\",\n    \"startedAt\": \"1992-11-02T13:16:38.428Z\",\n    \"finishedAt\": \"1994-06-18T02:28:42.006Z\",\n    \"snapshotNotebookPath\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "943c1740-712f-47a5-9c7c-84d33fa2c82a",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0716acc7-6ed2-4ce3-b163-a98b840cbe6c",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobID",
+                    "executions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "jobID",
+                      "description": "(Required) Unique identifier of the job."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 969,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-workspace.singlestore.com",
+      "key": "workspaceHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{workspaceHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dd2cdccb-ce4f-43e5-87ae-e4e3d007eb27",
+    "name": "SingleStore Data Files Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+      "type": "text/plain"
+    }
+  }
+}

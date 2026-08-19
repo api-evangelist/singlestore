@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Data Files Jobs API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/jobs",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations."
+              }
+            ]
+          },
+          "docs": "Retrieves all scheduled notebook jobs within the current organization, including job configuration, execution history metadata, and scheduling details."
+        },
+        {
+          "info": {
+            "name": "Create a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{workspaceHost}/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new scheduled notebook job within the current organization. Jobs execute a specified notebook on a defined schedule or on demand, targeting a specific workspace and optional database."
+        },
+        {
+          "info": {
+            "name": "Get a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/jobs/:jobID",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific scheduled notebook job identified by its unique job ID, including its schedule configuration, execution history, and current status."
+        },
+        {
+          "info": {
+            "name": "Delete a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{workspaceHost}/jobs/:jobID",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a scheduled notebook job identified by its unique job ID. Any currently executing job instances are not affected; only future executions are cancelled."
+        },
+        {
+          "info": {
+            "name": "List Job Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/jobs/:jobID/executions",
+            "params": [
+              {
+                "name": "jobID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the job."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "The starting execution number for pagination."
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "The ending execution number for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves the execution history for a specific job, with optional pagination by execution number range. Returns execution status, timing, and any associated snapshot notebook paths."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

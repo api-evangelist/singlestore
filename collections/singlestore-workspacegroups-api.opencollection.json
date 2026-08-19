@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Data Files WorkspaceGroups API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WorkspaceGroups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Workspace Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/workspaceGroups",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "query",
+                "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations."
+              }
+            ]
+          },
+          "docs": "Retrieves all workspace groups accessible to the authenticated user within the current organization. Returns a list of workspace group objects including their IDs, names, regions, states, and configuration."
+        },
+        {
+          "info": {
+            "name": "Create a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{workspaceHost}/workspaceGroups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace group in the specified cloud region for the authenticated user's organization. A workspace group defines the network boundary, region, and firewall configuration for workspaces deployed within it."
+        },
+        {
+          "info": {
+            "name": "Get a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/workspaceGroups/:workspaceGroupID",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace group."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific workspace group identified by its unique ID, including its current state, region, firewall configuration, and associated metadata."
+        },
+        {
+          "info": {
+            "name": "Update a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{workspaceHost}/workspaceGroups/:workspaceGroupID",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace group."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of an existing workspace group, such as its name or firewall IP allowlist rules. Only the fields provided in the request body are modified; omitted fields remain unchanged."
+        },
+        {
+          "info": {
+            "name": "Terminate a Workspace Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{workspaceHost}/workspaceGroups/:workspaceGroupID",
+            "params": [
+              {
+                "name": "workspaceGroupID",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the workspace group."
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, terminates the workspace group even if it contains active workspaces."
+              }
+            ]
+          },
+          "docs": "Terminates and permanently deletes the specified workspace group and all workspaces within it. This operation is irreversible. Use the force parameter to bypass safety checks when the group contains active workspaces."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,955 @@
+{
+  "item": [
+    {
+      "id": "1046c00d-7869-4ba1-9f07-4188d482d486",
+      "name": "Queries",
+      "description": {
+        "content": "Execute SQL statements against a SingleStore Helios workspace over HTTP. Supports DDL, DML, and SELECT statements returning results as JSON.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b5e56eb9-f834-479e-9c79-4ea5c7db8303",
+          "name": "Execute a Sql Statement",
+          "request": {
+            "name": "Execute a Sql Statement",
+            "description": {
+              "content": "Executes a DDL or DML SQL statement against the target workspace and database. Use this endpoint for statements that do not return result sets, such as CREATE TABLE, INSERT, UPDATE, DELETE, and DROP. The endpoint returns execution metadata including the number of rows affected. The request body must not exceed 1 MB in size.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "exec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "19420d6d-c855-4d20-bd56-288f93840f4a",
+              "name": "SQL statement executed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"lastInsertId\": 9826,\n      \"rowsAffected\": 9743\n    },\n    {\n      \"lastInsertId\": 5654,\n      \"rowsAffected\": 35\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa2c4817-5732-418e-83b3-7cc5f2cbeb97",
+              "name": "The SQL statement or request body was malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cd0946b-4e87-490b-b853-3e886258e766",
+              "name": "The request did not include valid authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9bc13ca-ea28-44e5-9b32-7adfb8d82fca",
+              "name": "The SQL statement failed to execute due to a database or server-side error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "exec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08208102-a111-41c8-a1a7-f10d4ae29a28",
+          "name": "Execute a Sql Query and Return Rows",
+          "request": {
+            "name": "Execute a Sql Query and Return Rows",
+            "description": {
+              "content": "Executes a SQL SELECT statement against the target workspace and database, returning results as an array of JSON objects where each object represents one row with column names as keys. This format is convenient for most use cases but produces larger responses than the tuples format due to the repeated column name keys. The request body must not exceed 1 MB in size.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "query",
+                "rows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d23358f-81b4-4c64-ab98-6dfb6b043630",
+              "name": "Query executed successfully; results returned as row objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "rows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"rows\": [\n        {\n          \"key_0\": false,\n          \"key_1\": 5715.253666527013\n        },\n        {\n          \"key_0\": 4076.458168383048,\n          \"key_1\": true\n        }\n      ]\n    },\n    {\n      \"rows\": [\n        {\n          \"key_0\": 6468.469678679986,\n          \"key_1\": 5014.346232431028\n        },\n        {\n          \"key_0\": 6560.1952193077805,\n          \"key_1\": 1233.6330671887863,\n          \"key_2\": 3849.399114123995\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97c2cfa7-1fae-4560-aff0-e73c14d947f7",
+              "name": "The SQL statement or request body was malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "rows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7b9b66d-7a57-4a12-a749-e0c9e7f9b7e9",
+              "name": "The request did not include valid authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "rows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79e3c21c-32d6-4444-b1a9-50106b334ee3",
+              "name": "The SQL statement failed to execute due to a database or server-side error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "rows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9da51a36-3312-4025-8006-e0d35e2a4585",
+          "name": "Execute a Sql Query and Return Tuples",
+          "request": {
+            "name": "Execute a Sql Query and Return Tuples",
+            "description": {
+              "content": "Executes a SQL SELECT statement against the target workspace and database, returning results as a separate columns array and a rows array of value arrays. This format offers better performance for queries with large result sets because column names are not repeated per row. Use this endpoint when response payload size is a concern.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "query",
+                "tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa73d17a-b604-40e9-b529-94b299aec5cf",
+              "name": "Query executed successfully; results returned as column/tuple arrays.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"columns\": [\n        {\n          \"name\": \"string\",\n          \"dataType\": \"string\",\n          \"nullable\": false\n        },\n        {\n          \"name\": \"string\",\n          \"dataType\": \"string\",\n          \"nullable\": false\n        }\n      ],\n      \"rows\": [\n        [],\n        []\n      ]\n    },\n    {\n      \"columns\": [\n        {\n          \"name\": \"string\",\n          \"dataType\": \"string\",\n          \"nullable\": false\n        },\n        {\n          \"name\": \"string\",\n          \"dataType\": \"string\",\n          \"nullable\": true\n        }\n      ],\n      \"rows\": [\n        [],\n        []\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5626bf76-a194-4eb6-b22a-30b2df83b2bc",
+              "name": "The SQL statement or request body was malformed or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0719469-761a-42b1-b249-449e8c2911f0",
+              "name": "The request did not include valid authentication credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c74cfab-280d-4d83-928a-58f358aa787b",
+              "name": "The SQL statement failed to execute due to a database or server-side error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "query",
+                    "tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sql\": \"<string>\",\n  \"database\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-workspace.singlestore.com",
+      "key": "workspaceHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{workspaceHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fe69fb82-1755-46d5-90d0-b7409e5da047",
+    "name": "SingleStore Data Files Queries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+      "type": "text/plain"
+    }
+  }
+}

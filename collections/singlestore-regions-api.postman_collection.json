@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "42b1d651-c69c-4c70-83a2-b4584cffeaa3",
+      "name": "Regions",
+      "description": {
+        "content": "List available cloud provider regions that support workspace group creation, including shared tier regions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a0cbbb2-8c96-43b8-bfc2-ac83ad21a42d",
+          "name": "List Regions",
+          "request": {
+            "name": "List Regions",
+            "description": {
+              "content": "Retrieves all cloud provider regions that support workspace group creation within SingleStore Helios, including the cloud provider name and region identifier for each available region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed183fa3-f196-4b0e-afa7-e07fb81c871c",
+              "name": "List of regions returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"regionID\": \"string\",\n    \"region\": \"string\",\n    \"provider\": \"GCP\",\n    \"country\": \"string\"\n  },\n  {\n    \"regionID\": \"string\",\n    \"region\": \"string\",\n    \"provider\": \"GCP\",\n    \"country\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8b29e08-1e6f-438d-b8a7-9213ea40ca30",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 855,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "755a1aec-a598-4eee-befa-5386dd56ab3d",
+          "name": "List Shared Tier Regions",
+          "request": {
+            "name": "List Shared Tier Regions",
+            "description": {
+              "content": "Retrieves all cloud provider regions that support shared tier (starter) workspace creation within SingleStore Helios.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "regions",
+                "sharedtier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "884997aa-3afe-404c-83ea-e424edb5b881",
+              "name": "List of shared tier regions returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions",
+                    "sharedtier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"regionID\": \"string\",\n    \"region\": \"string\",\n    \"provider\": \"GCP\",\n    \"country\": \"string\"\n  },\n  {\n    \"regionID\": \"string\",\n    \"region\": \"string\",\n    \"provider\": \"GCP\",\n    \"country\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4024aaf-6133-4da2-bcc3-a2f2579bc221",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions",
+                    "sharedtier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 855,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-workspace.singlestore.com",
+      "key": "workspaceHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{workspaceHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fc49640f-91eb-4097-be56-2f3b464551a7",
+    "name": "SingleStore Data Files Regions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+      "type": "text/plain"
+    }
+  }
+}

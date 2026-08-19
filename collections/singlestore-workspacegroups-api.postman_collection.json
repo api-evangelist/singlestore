@@ -1,0 +1,1239 @@
+{
+  "item": [
+    {
+      "id": "8ab6a3f0-27d9-4b31-b405-ad02870b2c4a",
+      "name": "WorkspaceGroups",
+      "description": {
+        "content": "Create, list, retrieve, update, and delete workspace groups within a SingleStore Helios organization. Workspace groups are logical containers that group workspaces by region and network configuration.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "75ead96d-bc28-474a-bcdf-a386d9b62960",
+          "name": "List Workspace Groups",
+          "request": {
+            "name": "List Workspace Groups",
+            "description": {
+              "content": "Retrieves all workspace groups accessible to the authenticated user within the current organization. Returns a list of workspace group objects including their IDs, names, regions, states, and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspaceGroups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "organizationID",
+                  "value": "<uuid>",
+                  "description": "Filter results to a specific organization when the authenticated user belongs to multiple organizations."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e628d19a-00d9-45b7-860a-efeaaeb0e95c",
+              "name": "List of workspace groups returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"workspaceGroupID\": \"89a30b26-a6b5-3e93-cefb-b5526ad6ee28\",\n    \"name\": \"string\",\n    \"state\": \"Pending\",\n    \"regionID\": \"string\",\n    \"firewallRanges\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allowAllTraffic\": false,\n    \"createdAt\": \"1982-05-06T06:08:38.388Z\",\n    \"expiresAt\": \"1972-10-05T23:50:29.310Z\"\n  },\n  {\n    \"workspaceGroupID\": \"3e9e0f31-abcb-f2cc-2d53-7a8ee872602d\",\n    \"name\": \"string\",\n    \"state\": \"Active\",\n    \"regionID\": \"string\",\n    \"firewallRanges\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allowAllTraffic\": true,\n    \"createdAt\": \"1979-09-11T21:24:17.499Z\",\n    \"expiresAt\": \"1966-08-05T03:09:54.122Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dfa7af0-2f6e-499b-8bcb-7e4aa74b6293",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organizationID",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9aa457f0-bcf0-4f38-a62f-fee758ab72da",
+          "name": "Create a Workspace Group",
+          "request": {
+            "name": "Create a Workspace Group",
+            "description": {
+              "content": "Creates a new workspace group in the specified cloud region for the authenticated user's organization. A workspace group defines the network boundary, region, and firewall configuration for workspaces deployed within it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspaceGroups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6a2e6404-c8a7-4c40-8334-b7dd8e7687ae",
+              "name": "Workspace group created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workspaceGroupID\": \"9807590b-8b99-9112-cfff-815722486be6\",\n  \"name\": \"string\",\n  \"state\": \"Failed\",\n  \"regionID\": \"string\",\n  \"firewallRanges\": [\n    \"string\",\n    \"string\"\n  ],\n  \"allowAllTraffic\": false,\n  \"createdAt\": \"1950-08-09T04:30:16.200Z\",\n  \"expiresAt\": \"2025-12-21T11:40:24.755Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35afef84-e347-41b1-88d1-59837759f1f5",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec1751ce-df48-4ee0-a186-f8020ab8c4ab",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"regionID\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"adminPassword\": \"<string>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "603f753e-b375-42cc-b5cb-1b8fee68ba68",
+          "name": "Get a Workspace Group",
+          "request": {
+            "name": "Get a Workspace Group",
+            "description": {
+              "content": "Retrieves detailed information about a specific workspace group identified by its unique ID, including its current state, region, firewall configuration, and associated metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspaceGroups",
+                ":workspaceGroupID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "workspaceGroupID",
+                  "description": "(Required) Unique identifier of the workspace group."
+                },
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f85fd478-7436-44b7-9363-511be4c599ca",
+              "name": "Workspace group returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workspaceGroupID\": \"9807590b-8b99-9112-cfff-815722486be6\",\n  \"name\": \"string\",\n  \"state\": \"Failed\",\n  \"regionID\": \"string\",\n  \"firewallRanges\": [\n    \"string\",\n    \"string\"\n  ],\n  \"allowAllTraffic\": false,\n  \"createdAt\": \"1950-08-09T04:30:16.200Z\",\n  \"expiresAt\": \"2025-12-21T11:40:24.755Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eba5addf-9849-4867-9d5d-c90b312be367",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44d751b5-94ba-4c49-8468-b073300536b4",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d46a799-b6d6-4d9a-a671-27e6086ad143",
+          "name": "Update a Workspace Group",
+          "request": {
+            "name": "Update a Workspace Group",
+            "description": {
+              "content": "Updates the configuration of an existing workspace group, such as its name or firewall IP allowlist rules. Only the fields provided in the request body are modified; omitted fields remain unchanged.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspaceGroups",
+                ":workspaceGroupID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "workspaceGroupID",
+                  "description": "(Required) Unique identifier of the workspace group."
+                },
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3cc071c0-5188-462f-bac1-8288f2c9473e",
+              "name": "Workspace group updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workspaceGroupID\": \"9807590b-8b99-9112-cfff-815722486be6\",\n  \"name\": \"string\",\n  \"state\": \"Failed\",\n  \"regionID\": \"string\",\n  \"firewallRanges\": [\n    \"string\",\n    \"string\"\n  ],\n  \"allowAllTraffic\": false,\n  \"createdAt\": \"1950-08-09T04:30:16.200Z\",\n  \"expiresAt\": \"2025-12-21T11:40:24.755Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb62efc7-a31b-438a-a87a-de4876def90c",
+              "name": "The request was malformed or contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6fb0262-c575-488b-91e1-2269926cfcf9",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bbe36f10-dcbe-4de3-ab99-b4ee021ca6aa",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"firewallRanges\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowAllTraffic\": \"<boolean>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e7093ed-66b9-43c5-ae1e-8fb925a60d16",
+          "name": "Terminate a Workspace Group",
+          "request": {
+            "name": "Terminate a Workspace Group",
+            "description": {
+              "content": "Terminates and permanently deletes the specified workspace group and all workspaces within it. This operation is irreversible. Use the force parameter to bypass safety checks when the group contains active workspaces.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workspaceGroups",
+                ":workspaceGroupID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force",
+                  "value": "false",
+                  "description": "When set to true, terminates the workspace group even if it contains active workspaces."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "workspaceGroupID",
+                  "description": "(Required) Unique identifier of the workspace group."
+                },
+                {
+                  "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                  "type": "any",
+                  "value": "{{workspaceHost}}",
+                  "key": "workspaceHost"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6767fcab-78df-455e-a32b-fd61169ddef6",
+              "name": "Workspace group terminated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workspaceGroupID\": \"85143484-ce74-dc63-450d-d8c83cf034da\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cb019fa-bfaf-4b44-a950-8e28d3c19c79",
+              "name": "The request did not include a valid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "679560e1-49b1-4b35-b5fe-d864b9d0edb2",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workspaceGroups",
+                    ":workspaceGroupID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "workspaceGroupID",
+                      "description": "(Required) Unique identifier of the workspace group."
+                    },
+                    {
+                      "description": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+                      "type": "any",
+                      "value": "{{workspaceHost}}",
+                      "key": "workspaceHost"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8731,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Hostname of the SingleStore Helios workspace to query. Obtain this value from the workspace endpoint field in the Cloud Portal or via the Management API.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-workspace.singlestore.com",
+      "key": "workspaceHost"
+    },
+    {
+      "type": "string",
+      "value": "https://{{workspaceHost}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "033b890b-f59a-4711-9bc6-5ed311e76b78",
+    "name": "SingleStore Data Files WorkspaceGroups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements available through a direct database connection, returning results as JSON-encoded responses using standard HTTP methods and response codes. The API exposes endpoints for executing DDL and DML statements via /api/v2/exec and returning query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS. The API supports up to 192 parallel requests per aggregator, making it suitable for serverless architectures and custom application integrations.\n\nContact Support:\n Name: SingleStore Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Data Files Health API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ping the Data Api",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/api/v2/ping"
+          },
+          "docs": "Health check endpoint that verifies the Data API is reachable and operational on the target workspace. This endpoint does not require authentication credentials and can be used to confirm network connectivity before making authenticated requests."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SingleStore Data Files Regions API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Regions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/regions"
+          },
+          "docs": "Retrieves all cloud provider regions that support workspace group creation within SingleStore Helios, including the cloud provider name and region identifier for each available region."
+        },
+        {
+          "info": {
+            "name": "List Shared Tier Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{workspaceHost}/regions/sharedtier"
+          },
+          "docs": "Retrieves all cloud provider regions that support shared tier (starter) workspace creation within SingleStore Helios."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
