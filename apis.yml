@@ -41,6 +41,8 @@ apis:
   humanURL: https://docs.singlestore.com/cloud/reference/data-api/
   baseURL: https://{workspaceHost}
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -73,6 +75,8 @@ apis:
   humanURL: https://docs.singlestore.com/cloud/reference/data-api/
   baseURL: https://{workspaceHost}
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -87,6 +91,8 @@ apis:
   humanURL: https://docs.singlestore.com/cloud/reference/data-api/
   baseURL: https://{workspaceHost}
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -103,6 +109,8 @@ apis:
   humanURL: https://docs.singlestore.com/cloud/reference/data-api/
   baseURL: https://{workspaceHost}
   tags:
+  - Query
+  tags_raw:
   - Queries
   properties:
   - type: OpenAPI
