@@ -164,24 +164,6 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
-- aid: singlestore:singlestore-workspacegroups-api
-  name: SingleStore WorkspaceGroups API
-  description: >-
-    Create, list, retrieve, update, and delete workspace groups within a SingleStore Helios organization.
-    Workspace groups are logical containers that group workspaces by region and network configuration.
-  humanURL: https://docs.singlestore.com/cloud/reference/data-api/
-  baseURL: https://{workspaceHost}
-  tags:
-  - Workspace Groups
-  tags_raw:
-  - WorkspaceGroups
-  properties:
-  - type: OpenAPI
-    url: openapi/singlestore-workspacegroups-api-openapi.yml
-  - type: Documentation
-    url: https://docs.singlestore.com/cloud/reference/data-api/
-  - type: Documentation
-    url: https://docs.singlestore.com/cloud/reference/management-api/
 - aid: singlestore:singlestore-workspaces-api
   name: SingleStore Workspaces API
   description: >-
@@ -194,6 +176,22 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/singlestore-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://docs.singlestore.com/cloud/reference/data-api/
+  - type: Documentation
+    url: https://docs.singlestore.com/cloud/reference/management-api/
+- aid: singlestore:singlestore-workspace-groups-api
+  name: SingleStore Workspace Groups API
+  description: >-
+    Create, list, retrieve, update, and delete workspace groups within a SingleStore Helios organization.
+    Workspace groups are logical containers that group workspaces by region and network configuration.
+  humanURL: https://docs.singlestore.com/cloud/reference/data-api/
+  baseURL: https://{workspaceHost}
+  tags:
+  - Workspace Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/singlestore-workspace-groups-api-openapi.yml
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
