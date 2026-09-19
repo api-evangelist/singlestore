@@ -172,6 +172,8 @@ apis:
   humanURL: https://docs.singlestore.com/cloud/reference/data-api/
   baseURL: https://{workspaceHost}
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
