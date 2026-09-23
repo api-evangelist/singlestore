@@ -15,13 +15,17 @@
     "singlestore-workspacegroups-api-openapi.yml",
     "singlestore-workspaces-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "singlestore-data-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "singlestore-management-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+    "singlestore-management-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: singlestore-workspace-groups-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 9 total)"
   ],
   "skipped": [
     "singlestore-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -31,7 +35,7 @@
     "singlestore-queries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "singlestore-regions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "singlestore-secrets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "singlestore-workspacegroups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "singlestore-workspace-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "singlestore-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

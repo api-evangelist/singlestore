@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: SingleStore Management Workspaces API
-  description: The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios, the cloud-managed distributed SQL database service. It supports operations for provisioning, updating, suspending, resuming, and deleting workspaces, as well as managing private connections, regions, organizations, jobs, files, secrets, and teams. Authentication uses HTTP Bearer tokens generated from the Cloud Portal, and all requests must be made over HTTPS. An OpenAPI specification is provided alongside the API to facilitate client SDK generation in multiple languages.
+  description: The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios, the cloud-managed distributed SQL database service.
   version: v1
   contact:
     name: SingleStore Support
@@ -187,6 +187,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -198,6 +217,48 @@ components:
         message:
           type: string
           description: Human-readable description of the error.
+    WorkspaceCreate:
+      type: object
+      description: Request body for creating a new workspace.
+      required:
+      - workspaceGroupID
+      - name
+      - size
+      properties:
+        workspaceGroupID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace group to create the workspace in.
+        name:
+          type: string
+          description: Human-readable name for the new workspace.
+        size:
+          type: string
+          description: Size designation for the workspace controlling vCPUs and memory (e.g., S-00, S-1, S-2).
+        autoSuspend:
+          $ref: '#/components/schemas/AutoSuspendConfig'
+        cacheConfig:
+          type: integer
+          description: Cache multiplier for the workspace. Valid values are 1, 2, or 4.
+          enum:
+          - 1
+          - 2
+          - 4
+        expiresAt:
+          type: string
+          format: date-time
+          description: Optional ISO 8601 timestamp after which the workspace will be automatically terminated.
+    AutoSuspendConfig:
+      type: object
+      description: Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce compute costs.
+      properties:
+        suspended:
+          type: boolean
+          description: When true, auto-suspend is enabled and the workspace will suspend after the specified idle interval.
+        suspendAfterSeconds:
+          type: integer
+          description: Number of seconds of inactivity after which the workspace is automatically suspended.
+          minimum: 60
     Workspace:
       type: object
       description: A workspace provides compute capacity for running SQL queries against the SingleStore Helios database engine. It connects to a shared database within a workspace group and can be suspended and resumed independently.
@@ -247,6 +308,14 @@ components:
           type: string
           format: date-time
           description: Optional ISO 8601 timestamp when the workspace is scheduled to be automatically terminated.
+    WorkspaceDeleteResponse:
+      type: object
+      description: Response returned after initiating workspace termination.
+      properties:
+        workspaceID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace that was terminated.
     WorkspaceUpdate:
       type: object
       description: Request body for updating an existing workspace.
@@ -263,75 +332,6 @@ components:
           - 1
           - 2
           - 4
-    AutoSuspendConfig:
-      type: object
-      description: Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce compute costs.
-      properties:
-        suspended:
-          type: boolean
-          description: When true, auto-suspend is enabled and the workspace will suspend after the specified idle interval.
-        suspendAfterSeconds:
-          type: integer
-          description: Number of seconds of inactivity after which the workspace is automatically suspended.
-          minimum: 60
-    WorkspaceDeleteResponse:
-      type: object
-      description: Response returned after initiating workspace termination.
-      properties:
-        workspaceID:
-          type: string
-          format: uuid
-          description: Unique identifier of the workspace that was terminated.
-    WorkspaceCreate:
-      type: object
-      description: Request body for creating a new workspace.
-      required:
-      - workspaceGroupID
-      - name
-      - size
-      properties:
-        workspaceGroupID:
-          type: string
-          format: uuid
-          description: Unique identifier of the workspace group to create the workspace in.
-        name:
-          type: string
-          description: Human-readable name for the new workspace.
-        size:
-          type: string
-          description: Size designation for the workspace controlling vCPUs and memory (e.g., S-00, S-1, S-2).
-        autoSuspend:
-          $ref: '#/components/schemas/AutoSuspendConfig'
-        cacheConfig:
-          type: integer
-          description: Cache multiplier for the workspace. Valid values are 1, 2, or 4.
-          enum:
-          - 1
-          - 2
-          - 4
-        expiresAt:
-          type: string
-          format: date-time
-          description: Optional ISO 8601 timestamp after which the workspace will be automatically terminated.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     workspaceIDPath:
       name: workspaceID

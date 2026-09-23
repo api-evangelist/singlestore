@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: SingleStore Management Workspace Groups API
-  description: The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios, the cloud-managed distributed SQL database service. It supports operations for provisioning, updating, suspending, resuming, and deleting workspaces, as well as managing private connections, regions, organizations, jobs, files, secrets, and teams. Authentication uses HTTP Bearer tokens generated from the Cloud Portal, and all requests must be made over HTTPS. An OpenAPI specification is provided alongside the API to facilitate client SDK generation in multiple languages.
+  description: The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios, the cloud-managed distributed SQL database service.
   version: v1
   contact:
     name: SingleStore Support
@@ -13,7 +13,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: WorkspaceGroups
+- name: Workspace Groups
   description: Create, list, retrieve, update, and delete workspace groups within a SingleStore Helios organization. Workspace groups are logical containers that group workspaces by region and network configuration.
 paths:
   /workspaceGroups:
@@ -22,7 +22,7 @@ paths:
       summary: List Workspace Groups
       description: Retrieves all workspace groups accessible to the authenticated user within the current organization. Returns a list of workspace group objects including their IDs, names, regions, states, and configuration.
       tags:
-      - WorkspaceGroups
+      - Workspace Groups
       parameters:
       - $ref: '#/components/parameters/organizationIDQuery'
       responses:
@@ -41,7 +41,7 @@ paths:
       summary: Create a Workspace Group
       description: Creates a new workspace group in the specified cloud region for the authenticated user's organization. A workspace group defines the network boundary, region, and firewall configuration for workspaces deployed within it.
       tags:
-      - WorkspaceGroups
+      - Workspace Groups
       requestBody:
         required: true
         content:
@@ -65,7 +65,7 @@ paths:
       summary: Get a Workspace Group
       description: Retrieves detailed information about a specific workspace group identified by its unique ID, including its current state, region, firewall configuration, and associated metadata.
       tags:
-      - WorkspaceGroups
+      - Workspace Groups
       parameters:
       - $ref: '#/components/parameters/workspaceGroupIDPath'
       responses:
@@ -84,7 +84,7 @@ paths:
       summary: Update a Workspace Group
       description: Updates the configuration of an existing workspace group, such as its name or firewall IP allowlist rules. Only the fields provided in the request body are modified; omitted fields remain unchanged.
       tags:
-      - WorkspaceGroups
+      - Workspace Groups
       parameters:
       - $ref: '#/components/parameters/workspaceGroupIDPath'
       requestBody:
@@ -111,7 +111,7 @@ paths:
       summary: Terminate a Workspace Group
       description: Terminates and permanently deletes the specified workspace group and all workspaces within it. This operation is irreversible. Use the force parameter to bypass safety checks when the group contains active workspaces.
       tags:
-      - WorkspaceGroups
+      - Workspace Groups
       parameters:
       - $ref: '#/components/parameters/workspaceGroupIDPath'
       - name: force
@@ -132,25 +132,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    WorkspaceGroupDeleteResponse:
-      type: object
-      description: Response returned after initiating workspace group termination.
-      properties:
-        workspaceGroupID:
-          type: string
-          format: uuid
-          description: Unique identifier of the workspace group that was terminated.
-    Error:
-      type: object
-      description: Standard error response returned when an API request fails.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     WorkspaceGroupCreate:
       type: object
       description: Request body for creating a new workspace group.
@@ -179,25 +180,16 @@ components:
           type: string
           format: date-time
           description: Optional ISO 8601 timestamp after which the workspace group will be automatically terminated.
-    WorkspaceGroupUpdate:
+    Error:
       type: object
-      description: Request body for updating an existing workspace group.
+      description: Standard error response returned when an API request fails.
       properties:
-        name:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
           type: string
-          description: Updated name for the workspace group.
-        firewallRanges:
-          type: array
-          description: Updated list of CIDR IP ranges permitted to connect to workspaces.
-          items:
-            type: string
-        allowAllTraffic:
-          type: boolean
-          description: When true, allows all inbound traffic regardless of firewall range configuration.
-        expiresAt:
-          type: string
-          format: date-time
-          description: Updated expiration timestamp after which the workspace group is automatically terminated.
+          description: Human-readable description of the error.
     WorkspaceGroup:
       type: object
       description: A workspace group is a logical container that groups workspaces sharing a common cloud region, network configuration, and firewall rules within a SingleStore Helios organization.
@@ -236,6 +228,33 @@ components:
           type: string
           format: date-time
           description: Optional ISO 8601 timestamp when the workspace group is scheduled to expire and be automatically terminated.
+    WorkspaceGroupDeleteResponse:
+      type: object
+      description: Response returned after initiating workspace group termination.
+      properties:
+        workspaceGroupID:
+          type: string
+          format: uuid
+          description: Unique identifier of the workspace group that was terminated.
+    WorkspaceGroupUpdate:
+      type: object
+      description: Request body for updating an existing workspace group.
+      properties:
+        name:
+          type: string
+          description: Updated name for the workspace group.
+        firewallRanges:
+          type: array
+          description: Updated list of CIDR IP ranges permitted to connect to workspaces.
+          items:
+            type: string
+        allowAllTraffic:
+          type: boolean
+          description: When true, allows all inbound traffic regardless of firewall range configuration.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Updated expiration timestamp after which the workspace group is automatically terminated.
   parameters:
     workspaceGroupIDPath:
       name: workspaceGroupID
@@ -252,25 +271,6 @@ components:
       schema:
         type: string
         format: uuid
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

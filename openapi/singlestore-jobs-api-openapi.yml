@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: SingleStore Management Jobs API
-  description: The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios, the cloud-managed distributed SQL database service. It supports operations for provisioning, updating, suspending, resuming, and deleting workspaces, as well as managing private connections, regions, organizations, jobs, files, secrets, and teams. Authentication uses HTTP Bearer tokens generated from the Cloud Portal, and all requests must be made over HTTPS. An OpenAPI specification is provided alongside the API to facilitate client SDK generation in multiple languages.
+  description: The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios, the cloud-managed distributed SQL database service.
   version: v1
   contact:
     name: SingleStore Support
@@ -128,87 +128,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      description: Standard error response returned when an API request fails.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
-          type: string
-          description: Human-readable description of the error.
-    JobExecutionConfig:
-      type: object
-      description: Configuration specifying the notebook to execute and runtime environment.
-      required:
-      - notebookPath
-      properties:
-        notebookPath:
-          type: string
-          description: Path to the notebook file within SingleStore Spaces to execute.
-        runtimeName:
-          type: string
-          description: Name of the runtime environment to use for notebook execution.
-        createSnapshot:
-          type: boolean
-          description: When true, a snapshot of the executed notebook with outputs is saved after each execution.
-    JobSchedule:
-      type: object
-      description: Schedule configuration defining when and how often a job runs.
-      properties:
-        mode:
-          type: string
-          description: Scheduling mode controlling execution frequency. Use Once for a single immediate execution or Recurring for interval-based scheduling.
-          enum:
-          - Once
-          - Recurring
-        startAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp for when the job should first execute.
-        executionIntervalInMinutes:
-          type: integer
-          description: Number of minutes between recurring executions. Required when mode is Recurring.
-          minimum: 1
-    JobTargetConfig:
-      type: object
-      description: Configuration specifying the workspace and database the notebook job should connect to.
-      required:
-      - targetID
-      - targetType
-      properties:
-        targetID:
-          type: string
-          format: uuid
-          description: Unique identifier of the workspace or workspace group to target.
-        targetType:
-          type: string
-          description: Type of target resource. Use Workspace to target a specific workspace.
-          enum:
-          - Workspace
-        databaseName:
-          type: string
-          description: Name of the database within the workspace to connect to during execution.
-        resumeTarget:
-          type: boolean
-          description: When true, automatically resumes a suspended workspace before executing the notebook.
-    JobParameter:
-      type: object
-      description: A parameter passed to a notebook at job execution time.
-      required:
-      - name
-      - value
-      properties:
-        name:
-          type: string
-          description: Parameter name as referenced in the notebook.
-        value:
-          type: string
-          description: Parameter value passed to the notebook.
-        type:
-          type: string
-          description: Data type of the parameter value.
     Job:
       type: object
       description: A scheduled notebook job that executes a specified notebook on a configurable schedule against a target workspace and database.
@@ -243,6 +162,75 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp when the job was terminated, if applicable.
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    JobSchedule:
+      type: object
+      description: Schedule configuration defining when and how often a job runs.
+      properties:
+        mode:
+          type: string
+          description: Scheduling mode controlling execution frequency. Use Once for a single immediate execution or Recurring for interval-based scheduling.
+          enum:
+          - Once
+          - Recurring
+        startAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for when the job should first execute.
+        executionIntervalInMinutes:
+          type: integer
+          description: Number of minutes between recurring executions. Required when mode is Recurring.
+          minimum: 1
+    JobParameter:
+      type: object
+      description: A parameter passed to a notebook at job execution time.
+      required:
+      - name
+      - value
+      properties:
+        name:
+          type: string
+          description: Parameter name as referenced in the notebook.
+        value:
+          type: string
+          description: Parameter value passed to the notebook.
+        type:
+          type: string
+          description: Data type of the parameter value.
+    JobCreate:
+      type: object
+      description: Request body for creating a new scheduled notebook job.
+      required:
+      - schedule
+      - executionConfig
+      - targetConfig
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        parameters:
+          type: array
+          description: Optional parameters to pass to the notebook at execution time.
+          items:
+            $ref: '#/components/schemas/JobParameter'
     JobExecution:
       type: object
       description: A single execution instance of a scheduled job, capturing its status and timing information.
@@ -282,31 +270,43 @@ components:
         snapshotNotebookPath:
           type: string
           description: Path to the snapshot notebook created after execution, if snapshot creation was enabled.
-    JobCreate:
+    JobTargetConfig:
       type: object
-      description: Request body for creating a new scheduled notebook job.
+      description: Configuration specifying the workspace and database the notebook job should connect to.
       required:
-      - schedule
-      - executionConfig
-      - targetConfig
+      - targetID
+      - targetType
       properties:
-        name:
+        targetID:
           type: string
-          description: Human-readable name for the job.
-        description:
+          format: uuid
+          description: Unique identifier of the workspace or workspace group to target.
+        targetType:
           type: string
-          description: Optional description of the job's purpose.
-        schedule:
-          $ref: '#/components/schemas/JobSchedule'
-        executionConfig:
-          $ref: '#/components/schemas/JobExecutionConfig'
-        targetConfig:
-          $ref: '#/components/schemas/JobTargetConfig'
-        parameters:
-          type: array
-          description: Optional parameters to pass to the notebook at execution time.
-          items:
-            $ref: '#/components/schemas/JobParameter'
+          description: Type of target resource. Use Workspace to target a specific workspace.
+          enum:
+          - Workspace
+        databaseName:
+          type: string
+          description: Name of the database within the workspace to connect to during execution.
+        resumeTarget:
+          type: boolean
+          description: When true, automatically resumes a suspended workspace before executing the notebook.
+    JobExecutionConfig:
+      type: object
+      description: Configuration specifying the notebook to execute and runtime environment.
+      required:
+      - notebookPath
+      properties:
+        notebookPath:
+          type: string
+          description: Path to the notebook file within SingleStore Spaces to execute.
+        runtimeName:
+          type: string
+          description: Name of the runtime environment to use for notebook execution.
+        createSnapshot:
+          type: boolean
+          description: When true, a snapshot of the executed notebook with outputs is saved after each execution.
   parameters:
     jobIDPath:
       name: jobID
@@ -330,14 +330,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
       content:
         application/json:
           schema:
