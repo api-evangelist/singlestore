@@ -187,36 +187,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      description: Standard error response returned when an API request fails.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
-          type: string
-          description: Human-readable description of the error.
     WorkspaceCreate:
       type: object
       description: Request body for creating a new workspace.
@@ -248,6 +219,22 @@ components:
           type: string
           format: date-time
           description: Optional ISO 8601 timestamp after which the workspace will be automatically terminated.
+    WorkspaceUpdate:
+      type: object
+      description: Request body for updating an existing workspace.
+      properties:
+        size:
+          type: string
+          description: Updated size designation for the workspace. Changing size causes a brief workspace restart.
+        autoSuspend:
+          $ref: '#/components/schemas/AutoSuspendConfig'
+        cacheConfig:
+          type: integer
+          description: Updated cache multiplier. Valid values are 1, 2, or 4.
+          enum:
+          - 1
+          - 2
+          - 4
     AutoSuspendConfig:
       type: object
       description: Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce compute costs.
@@ -259,6 +246,16 @@ components:
           type: integer
           description: Number of seconds of inactivity after which the workspace is automatically suspended.
           minimum: 60
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     Workspace:
       type: object
       description: A workspace provides compute capacity for running SQL queries against the SingleStore Helios database engine. It connects to a shared database within a workspace group and can be suspended and resumed independently.
@@ -316,22 +313,25 @@ components:
           type: string
           format: uuid
           description: Unique identifier of the workspace that was terminated.
-    WorkspaceUpdate:
-      type: object
-      description: Request body for updating an existing workspace.
-      properties:
-        size:
-          type: string
-          description: Updated size designation for the workspace. Changing size causes a brief workspace restart.
-        autoSuspend:
-          $ref: '#/components/schemas/AutoSuspendConfig'
-        cacheConfig:
-          type: integer
-          description: Updated cache multiplier. Valid values are 1, 2, or 4.
-          enum:
-          - 1
-          - 2
-          - 4
+  responses:
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     workspaceIDPath:
       name: workspaceID

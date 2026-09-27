@@ -127,6 +127,41 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    jobIDPath:
+      name: jobID
+      in: path
+      required: true
+      description: Unique identifier of the job.
+      schema:
+        type: string
+        format: uuid
+    organizationIDQuery:
+      name: organizationID
+      in: query
+      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
+      schema:
+        type: string
+        format: uuid
+  responses:
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Job:
       type: object
@@ -162,16 +197,21 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp when the job was terminated, if applicable.
-    Error:
+    JobExecutionConfig:
       type: object
-      description: Standard error response returned when an API request fails.
+      description: Configuration specifying the notebook to execute and runtime environment.
+      required:
+      - notebookPath
       properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
+        notebookPath:
           type: string
-          description: Human-readable description of the error.
+          description: Path to the notebook file within SingleStore Spaces to execute.
+        runtimeName:
+          type: string
+          description: Name of the runtime environment to use for notebook execution.
+        createSnapshot:
+          type: boolean
+          description: When true, a snapshot of the executed notebook with outputs is saved after each execution.
     JobSchedule:
       type: object
       description: Schedule configuration defining when and how often a job runs.
@@ -206,31 +246,6 @@ components:
         type:
           type: string
           description: Data type of the parameter value.
-    JobCreate:
-      type: object
-      description: Request body for creating a new scheduled notebook job.
-      required:
-      - schedule
-      - executionConfig
-      - targetConfig
-      properties:
-        name:
-          type: string
-          description: Human-readable name for the job.
-        description:
-          type: string
-          description: Optional description of the job's purpose.
-        schedule:
-          $ref: '#/components/schemas/JobSchedule'
-        executionConfig:
-          $ref: '#/components/schemas/JobExecutionConfig'
-        targetConfig:
-          $ref: '#/components/schemas/JobTargetConfig'
-        parameters:
-          type: array
-          description: Optional parameters to pass to the notebook at execution time.
-          items:
-            $ref: '#/components/schemas/JobParameter'
     JobExecution:
       type: object
       description: A single execution instance of a scheduled job, capturing its status and timing information.
@@ -270,6 +285,41 @@ components:
         snapshotNotebookPath:
           type: string
           description: Path to the snapshot notebook created after execution, if snapshot creation was enabled.
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
+    JobCreate:
+      type: object
+      description: Request body for creating a new scheduled notebook job.
+      required:
+      - schedule
+      - executionConfig
+      - targetConfig
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        parameters:
+          type: array
+          description: Optional parameters to pass to the notebook at execution time.
+          items:
+            $ref: '#/components/schemas/JobParameter'
     JobTargetConfig:
       type: object
       description: Configuration specifying the workspace and database the notebook job should connect to.
@@ -292,56 +342,6 @@ components:
         resumeTarget:
           type: boolean
           description: When true, automatically resumes a suspended workspace before executing the notebook.
-    JobExecutionConfig:
-      type: object
-      description: Configuration specifying the notebook to execute and runtime environment.
-      required:
-      - notebookPath
-      properties:
-        notebookPath:
-          type: string
-          description: Path to the notebook file within SingleStore Spaces to execute.
-        runtimeName:
-          type: string
-          description: Name of the runtime environment to use for notebook execution.
-        createSnapshot:
-          type: boolean
-          description: When true, a snapshot of the executed notebook with outputs is saved after each execution.
-  parameters:
-    jobIDPath:
-      name: jobID
-      in: path
-      required: true
-      description: Unique identifier of the job.
-      schema:
-        type: string
-        format: uuid
-    organizationIDQuery:
-      name: organizationID
-      in: query
-      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
-      schema:
-        type: string
-        format: uuid
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
