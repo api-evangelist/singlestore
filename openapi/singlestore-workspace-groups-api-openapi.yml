@@ -133,14 +133,63 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    WorkspaceGroupDeleteResponse:
+    WorkspaceGroupCreate:
       type: object
-      description: Response returned after initiating workspace group termination.
+      description: Request body for creating a new workspace group.
+      required:
+      - name
+      - regionID
       properties:
-        workspaceGroupID:
+        name:
           type: string
-          format: uuid
-          description: Unique identifier of the workspace group that was terminated.
+          description: Human-readable name for the new workspace group.
+        regionID:
+          type: string
+          description: Cloud provider region where the workspace group will be deployed.
+        firewallRanges:
+          type: array
+          description: CIDR IP ranges permitted to connect to workspaces in this group. Use 0.0.0.0/0 to allow all traffic.
+          items:
+            type: string
+        allowAllTraffic:
+          type: boolean
+          description: When true, allows all inbound traffic to workspaces in this group.
+        adminPassword:
+          type: string
+          description: Initial administrator password for the workspace group database. Must meet SingleStore password complexity requirements.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Optional ISO 8601 timestamp after which the workspace group will be automatically terminated.
+    WorkspaceGroupUpdate:
+      type: object
+      description: Request body for updating an existing workspace group.
+      properties:
+        name:
+          type: string
+          description: Updated name for the workspace group.
+        firewallRanges:
+          type: array
+          description: Updated list of CIDR IP ranges permitted to connect to workspaces.
+          items:
+            type: string
+        allowAllTraffic:
+          type: boolean
+          description: When true, allows all inbound traffic regardless of firewall range configuration.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Updated expiration timestamp after which the workspace group is automatically terminated.
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     WorkspaceGroup:
       type: object
       description: A workspace group is a logical container that groups workspaces sharing a common cloud region, network configuration, and firewall rules within a SingleStore Helios organization.
@@ -179,72 +228,33 @@ components:
           type: string
           format: date-time
           description: Optional ISO 8601 timestamp when the workspace group is scheduled to expire and be automatically terminated.
-    WorkspaceGroupCreate:
+    WorkspaceGroupDeleteResponse:
       type: object
-      description: Request body for creating a new workspace group.
-      required:
-      - name
-      - regionID
+      description: Response returned after initiating workspace group termination.
       properties:
-        name:
+        workspaceGroupID:
           type: string
-          description: Human-readable name for the new workspace group.
-        regionID:
-          type: string
-          description: Cloud provider region where the workspace group will be deployed.
-        firewallRanges:
-          type: array
-          description: CIDR IP ranges permitted to connect to workspaces in this group. Use 0.0.0.0/0 to allow all traffic.
-          items:
-            type: string
-        allowAllTraffic:
-          type: boolean
-          description: When true, allows all inbound traffic to workspaces in this group.
-        adminPassword:
-          type: string
-          description: Initial administrator password for the workspace group database. Must meet SingleStore password complexity requirements.
-        expiresAt:
-          type: string
-          format: date-time
-          description: Optional ISO 8601 timestamp after which the workspace group will be automatically terminated.
-    Error:
-      type: object
-      description: Standard error response returned when an API request fails.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
-          type: string
-          description: Human-readable description of the error.
-    WorkspaceGroupUpdate:
-      type: object
-      description: Request body for updating an existing workspace group.
-      properties:
-        name:
-          type: string
-          description: Updated name for the workspace group.
-        firewallRanges:
-          type: array
-          description: Updated list of CIDR IP ranges permitted to connect to workspaces.
-          items:
-            type: string
-        allowAllTraffic:
-          type: boolean
-          description: When true, allows all inbound traffic regardless of firewall range configuration.
-        expiresAt:
-          type: string
-          format: date-time
-          description: Updated expiration timestamp after which the workspace group is automatically terminated.
+          format: uuid
+          description: Unique identifier of the workspace group that was terminated.
+  parameters:
+    workspaceGroupIDPath:
+      name: workspaceGroupID
+      in: path
+      required: true
+      description: Unique identifier of the workspace group.
+      schema:
+        type: string
+        format: uuid
+    organizationIDQuery:
+      name: organizationID
+      in: query
+      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
+      schema:
+        type: string
+        format: uuid
   responses:
     BadRequest:
       description: The request was malformed or contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
       content:
         application/json:
           schema:
@@ -255,22 +265,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    organizationIDQuery:
-      name: organizationID
-      in: query
-      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
-      schema:
-        type: string
-        format: uuid
-    workspaceGroupIDPath:
-      name: workspaceGroupID
-      in: path
-      required: true
-      description: Unique identifier of the workspace group.
-      schema:
-        type: string
-        format: uuid
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

@@ -101,6 +101,19 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
+    Column:
+      type: object
+      description: Descriptor for a single column in a query result set.
+      properties:
+        name:
+          type: string
+          description: Name of the column as defined in the SQL query or table schema.
+        dataType:
+          type: string
+          description: SingleStore data type of the column (e.g., INT, VARCHAR, DATETIME).
+        nullable:
+          type: boolean
+          description: When true, the column may contain NULL values.
     ExecRequest:
       type: object
       description: Request body for executing a DDL or DML SQL statement that does not return a result set.
@@ -117,6 +130,22 @@ components:
           type: array
           description: Positional arguments for parameterized SQL statements. Use ? placeholders in the sql field and provide values in order here.
           items: {}
+    ExecResponse:
+      type: object
+      description: Response returned after successfully executing a DDL or DML statement.
+      properties:
+        results:
+          type: array
+          description: Array of result metadata objects, one per statement executed.
+          items:
+            type: object
+            properties:
+              lastInsertId:
+                type: integer
+                description: Auto-increment ID of the last row inserted by an INSERT statement, if applicable.
+              rowsAffected:
+                type: integer
+                description: Number of rows affected by the executed statement.
     QueryTuplesResponse:
       type: object
       description: Response returned after a successful SELECT query using the tuples format, where columns are described once and rows are arrays of values.
@@ -138,51 +167,6 @@ components:
                 items:
                   type: array
                   items: {}
-    ExecResponse:
-      type: object
-      description: Response returned after successfully executing a DDL or DML statement.
-      properties:
-        results:
-          type: array
-          description: Array of result metadata objects, one per statement executed.
-          items:
-            type: object
-            properties:
-              lastInsertId:
-                type: integer
-                description: Auto-increment ID of the last row inserted by an INSERT statement, if applicable.
-              rowsAffected:
-                type: integer
-                description: Number of rows affected by the executed statement.
-    Column:
-      type: object
-      description: Descriptor for a single column in a query result set.
-      properties:
-        name:
-          type: string
-          description: Name of the column as defined in the SQL query or table schema.
-        dataType:
-          type: string
-          description: SingleStore data type of the column (e.g., INT, VARCHAR, DATETIME).
-        nullable:
-          type: boolean
-          description: When true, the column may contain NULL values.
-    QueryRowsResponse:
-      type: object
-      description: Response returned after a successful SELECT query using the rows format, where each result row is a JSON object with column names as keys.
-      properties:
-        results:
-          type: array
-          description: Array of result sets, one per statement in the request.
-          items:
-            type: object
-            properties:
-              rows:
-                type: array
-                description: Array of row objects where each object maps column names to their corresponding values for that row.
-                items:
-                  type: object
-                  additionalProperties: true
     Error:
       type: object
       description: Standard error response returned when a Data API request fails.
@@ -209,9 +193,25 @@ components:
           type: array
           description: Positional arguments for parameterized SQL queries. Use ? placeholders in the sql field and provide values in order here.
           items: {}
+    QueryRowsResponse:
+      type: object
+      description: Response returned after a successful SELECT query using the rows format, where each result row is a JSON object with column names as keys.
+      properties:
+        results:
+          type: array
+          description: Array of result sets, one per statement in the request.
+          items:
+            type: object
+            properties:
+              rows:
+                type: array
+                description: Array of row objects where each object maps column names to their corresponding values for that row.
+                items:
+                  type: object
+                  additionalProperties: true
   responses:
-    Unauthorized:
-      description: The request did not include valid authentication credentials.
+    InternalServerError:
+      description: The SQL statement failed to execute due to a database or server-side error.
       content:
         application/json:
           schema:
@@ -222,8 +222,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: The SQL statement failed to execute due to a database or server-side error.
+    Unauthorized:
+      description: The request did not include valid authentication credentials.
       content:
         application/json:
           schema:
