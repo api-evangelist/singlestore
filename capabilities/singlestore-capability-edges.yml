@@ -1,0 +1,36 @@
+slug: singlestore
+provider: SingleStore
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Workspaces
+  spec_file: singlestore-workspaces-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: POST /workspaces  createWorkspace  Create a Workspace; POST /workspaces/{workspaceID}/suspend  suspendWorkspace;
+    POST /workspaces/{workspaceID}/resume
+  reason: Create, update, suspend, resume and terminate elastic cloud database workspaces — provisioning
+    and lifecycle of cloud compute infrastructure. IT Infrastructure Management is the honest reading
+    for a database-platform devtool.
+- tag: Workspace Groups
+  spec_file: singlestore-workspace-groups-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: POST /workspaceGroups  createWorkspaceGroup  Create a Workspace Group ... DELETE /workspaceGroups/{workspaceGroupID}  terminateWorkspaceGroup
+  reason: Full CRUD/terminate lifecycle for cloud workspace groups in the managed database service — provisioning
+    and stewardship of cloud compute/storage infrastructure. Maps best to IT Infrastructure Management;
+    could arguably be read as tenant provisioning, hence not higher.

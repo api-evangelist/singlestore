@@ -199,6 +199,9 @@ apis:
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
 common:
+  - type: CapabilityMap
+    url: capabilities/singlestore-capability-edges.yml
+    name: SingleStore Business Capability Map
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/singlestore/overview
   - type: AgenticAccess
