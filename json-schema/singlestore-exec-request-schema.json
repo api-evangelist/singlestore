@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-exec-request-schema.json",
+  "title": "ExecRequest",
+  "description": "Request body for executing a DDL or DML SQL statement that does not return a result set.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-queries-api-openapi.yml#/components/schemas/ExecRequest",
+  "type": "object",
+  "required": [
+    "sql"
+  ],
+  "properties": {
+    "sql": {
+      "type": "string",
+      "description": "The SQL statement to execute. Supports all DDL and DML statement types including CREATE, INSERT, UPDATE, DELETE, and DROP."
+    },
+    "database": {
+      "type": "string",
+      "description": "Name of the database to use when executing the statement. If not provided, the default database for the authenticated user is used."
+    },
+    "args": {
+      "type": "array",
+      "description": "Positional arguments for parameterized SQL statements. Use ? placeholders in the sql field and provide values in order here.",
+      "items": {}
+    }
+  }
+}

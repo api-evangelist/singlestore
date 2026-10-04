@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-workspace-create-schema.json",
+  "title": "WorkspaceCreate",
+  "description": "Request body for creating a new workspace.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-workspaces-api-openapi.yml#/components/schemas/WorkspaceCreate",
+  "type": "object",
+  "required": [
+    "workspaceGroupID",
+    "name",
+    "size"
+  ],
+  "properties": {
+    "workspaceGroupID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the workspace group to create the workspace in."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the new workspace."
+    },
+    "size": {
+      "type": "string",
+      "description": "Size designation for the workspace controlling vCPUs and memory (e.g., S-00, S-1, S-2)."
+    },
+    "autoSuspend": {
+      "$ref": "#/$defs/AutoSuspendConfig"
+    },
+    "cacheConfig": {
+      "type": "integer",
+      "description": "Cache multiplier for the workspace. Valid values are 1, 2, or 4.",
+      "enum": [
+        1,
+        2,
+        4
+      ]
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional ISO 8601 timestamp after which the workspace will be automatically terminated."
+    }
+  },
+  "$defs": {
+    "AutoSuspendConfig": {
+      "type": "object",
+      "description": "Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce compute costs.",
+      "properties": {
+        "suspended": {
+          "type": "boolean",
+          "description": "When true, auto-suspend is enabled and the workspace will suspend after the specified idle interval."
+        },
+        "suspendAfterSeconds": {
+          "type": "integer",
+          "description": "Number of seconds of inactivity after which the workspace is automatically suspended.",
+          "minimum": 60
+        }
+      }
+    }
+  }
+}

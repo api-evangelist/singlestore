@@ -1,11 +1,13 @@
 aid: singlestore
+
 name: SingleStore
-description: >-
-  SingleStore is a cloud-native distributed SQL database designed for real-time analytics and mixed workloads. It offers
-  a management API for provisioning and managing cloud workspaces, and a data API for executing SQL statements over HTTP
-  without requiring native database drivers. SingleStore Helios is the fully managed cloud service providing serverless
-  database capabilities with elastic scaling.
+
+description: SingleStore is a cloud-native distributed SQL database designed for real-time analytics and mixed workloads. It offers a management
+  API for provisioning and managing cloud workspaces, and a data API for executing SQL statements over HTTP without requiring native database
+  drivers. SingleStore Helios is the fully managed cloud service providing serverless database capabilities with elastic scaling.
+
 type: Index
+
 deliveryModel:
   model: saas
   open_source: false
@@ -18,6 +20,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -32,19 +35,116 @@ accessModel:
   - security
   generated: '2026-09-03'
   method: derived
+
 position: Consuming
+
 access: 3rd-Party
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/singlestore.png
+
 tags:
-  - Database
-  - SQL
-  - Analytics
-  - Cloud
-  - Distributed SQL
+- Database
+- SQL
+- Analytics
+- Cloud
+- Distributed SQL
+
 created: '2025-01-01'
+
 modified: '2026-05-19'
+
 url: https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml
+
 specificationVersion: '0.23'
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
+common:
+- type: TermsOfService
+  url: https://www.singlestore.com/terms/
+- type: FinOps
+  url: finops/singlestore-finops.yml
+- type: RateLimits
+  url: rate-limits/singlestore-rate-limits.yml
+- type: Plans
+  url: plans/singlestore-plans-pricing.yml
+- type: Spectral
+  url: rules/singlestore-rules.yml
+- type: Spectral
+  url: rules/singlestore-jsonschema-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/singlestore-context.jsonld
+- type: Vocabulary
+  url: vocabulary/singlestore-vocabulary.yml
+- type: DataModel
+  url: data-model/singlestore-data-model.yml
+- type: Security
+  url: security/singlestore-vulnerability-disclosure.yml
+- type: ErrorCatalog
+  url: errors/singlestore-problem-types.yml
+- type: Conformance
+  url: conformance/singlestore-conformance.yml
+- type: Overlay
+  url: overlays/singlestore-files-api-overlay.yml
+- type: LLMsTxt
+  url: llms/singlestore-llms.txt
+- type: SecurityTxt
+  url: well-known/singlestore-training-security.txt
+- type: SecurityTxt
+  url: well-known/singlestore-partner-security.txt
+- type: WellKnown
+  url: well-known/singlestore-well-known.yml
+- type: Hosts
+  url: hosts/singlestore-hosts.yml
+- type: Vendors
+  url: vendors/singlestore-vendors.yml
+- type: SDKs
+  url: packages/singlestore-packages.yml
+- type: Packages
+  url: packages/singlestore-packages.yml
+- type: StatusPage
+  url: https://status.singlestore.com/
+- type: ChangeLog
+  url: https://docs.singlestore.com/cloud/release-notes/
+- type: APIReference
+  url: https://docs.singlestore.com/cloud/reference/
+- type: GettingStarted
+  url: https://docs.singlestore.com/cloud/getting-started-with-singlestore-helios/compute-clusters
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/singlestore/overview
+- type: AgenticAccess
+  url: agentic-access/singlestore-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/singlestore-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/singlestore-domain-security.yml
+- type: Authentication
+  url: authentication/singlestore-authentication.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/singlestore
+- type: Website
+  url: https://www.singlestore.com/
+- type: DeveloperPortal
+  url: https://docs.singlestore.com/
+- type: Pricing
+  url: https://www.singlestore.com/pricing/
+- type: Blog
+  url: https://www.singlestore.com/blog/
+- type: GitHubOrg
+  url: https://github.com/singlestore-labs
+- type: Signup
+  url: https://www.singlestore.com/cloud-trial/
+- type: PrivacyPolicy
+  url: https://www.singlestore.com/privacy-policy/
+- type: Support
+  url: https://support.singlestore.com
+- type: Integrations
+  url: https://www.singlestore.com/partners/
+- type: LlmsText
+  url: https://docs.singlestore.com/llms.txt
+
 apis:
 - aid: singlestore:singlestore-files-api
   name: SingleStore Files API
@@ -98,6 +198,12 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
+  - type: JSONSchema
+    url: json-schema/singlestore-job-execution-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-job-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-job-create-schema.json
 - aid: singlestore:singlestore-organizations-api
   name: SingleStore Organizations API
   description: Retrieve information about the current user's organization within SingleStore Helios.
@@ -114,6 +220,8 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
+  - type: JSONSchema
+    url: json-schema/singlestore-organization-schema.json
 - aid: singlestore:singlestore-queries-api
   name: SingleStore Queries API
   description: >-
@@ -132,6 +240,16 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
+  - type: JSONSchema
+    url: json-schema/singlestore-query-tuples-response-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-exec-request-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-query-request-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-query-rows-response-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-exec-response-schema.json
 - aid: singlestore:singlestore-regions-api
   name: SingleStore Regions API
   description: >-
@@ -148,6 +266,8 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
+  - type: JSONSchema
+    url: json-schema/singlestore-region-schema.json
 - aid: singlestore:singlestore-secrets-api
   name: SingleStore Secrets API
   description: >-
@@ -164,6 +284,8 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
+  - type: JSONSchema
+    url: json-schema/singlestore-secret-schema.json
 - aid: singlestore:singlestore-workspaces-api
   name: SingleStore Workspaces API
   description: >-
@@ -182,6 +304,14 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-create-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-update-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-delete-response-schema.json
 - aid: singlestore:singlestore-workspace-groups-api
   name: SingleStore Workspace Groups API
   description: >-
@@ -198,58 +328,32 @@ apis:
     url: https://docs.singlestore.com/cloud/reference/data-api/
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
-common:
-  - type: PostmanWorkspace
-    url: https://www.postman.com/kinlaneapi/singlestore/overview
-  - type: AgenticAccess
-    url: agentic-access/singlestore-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/singlestore-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/singlestore-domain-security.yml
-  - type: Authentication
-    url: authentication/singlestore-authentication.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/singlestore
-  - type: Website
-    url: https://www.singlestore.com/
-  - type: DeveloperPortal
-    url: https://docs.singlestore.com/
-  - type: Documentation
-    url: https://docs.singlestore.com/cloud/
-  - type: Pricing
-    url: https://www.singlestore.com/pricing/
-  - type: Blog
-    url: https://www.singlestore.com/blog/
-  - type: GitHubOrg
-    url: https://github.com/singlestore-labs
-  - type: Signup
-    url: https://www.singlestore.com/cloud-trial/
-  - type: TermsOfService
-    url: https://www.singlestore.com/cloud-terms-and-conditions/
-  - type: PrivacyPolicy
-    url: https://www.singlestore.com/privacy-policy/
-  - type: Support
-    url: https://support.singlestore.com
-  - type: Integrations
-    url: https://www.singlestore.com/partners/
-  - type: LlmsText
-    url: https://docs.singlestore.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-group-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-group-create-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-group-update-schema.json
+  - type: JSONSchema
+    url: json-schema/singlestore-workspace-group-delete-response-schema.json
 integrations:
-  - name: SingleStore
-  - name: AWS
-  - name: Google Cloud
-  - name: Confluent
-  - name: Tableau
-  - name: OpenAI
-  - name: CData
-  - name: LangChain
-  - name: Redpanda
-  - name: Unstructured
-  - name: SingleStore Spaces
-  - name: SOC 2 Type II badge
-  - name: ISO 27001 badge
-  - name: Intercom
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: SingleStore
+- name: AWS
+- name: Google Cloud
+- name: Confluent
+- name: Tableau
+- name: OpenAI
+- name: CData
+- name: LangChain
+- name: Redpanda
+- name: Unstructured
+- name: SingleStore Spaces
+- name: SOC 2 Type II badge
+- name: ISO 27001 badge
+- name: Intercom
+x-enrichment:
+  date: '2026-10-04'
+  status: enriched
+  artifacts_added: 32
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

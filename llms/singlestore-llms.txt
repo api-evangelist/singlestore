@@ -94,7 +94,7 @@ SingleStore is fast and scalable, supporting both high-performance transaction p
 * [Point in Time Recovery (PITR)](https://docs.singlestore.com/cloud/manage-data/database-storage/online-point-in-time-recovery-pitr.md): Restores a database to an exact state at a chosen moment.
 * [Query History](https://docs.singlestore.com/cloud/query-data/query-tuning/query-history.md): Provides a searchable record of executed queries for tracking, auditing, and analysis of database activity.
 * [Secrets](https://docs.singlestore.com/cloud/developer-resources/secrets.md): A cloud service for securely managing sensitive data like access tokens and API keys without hard-coding credentials in your code or notebooks.
-* [Smart Disaster Recovery (DR): SmartDR](https://docs.singlestore.com/cloud/manage-data/smart-disaster-recovery-dr-smartdr.md): Continuously replicates data and configurations across geographically separate regions to enable rapid failover with minimal downtime.
+* [Smart Disaster Recovery (DR): Smart DR](https://docs.singlestore.com/cloud/manage-data/smart-disaster-recovery-dr-smart-dr.md): Continuously replicates data and configurations across geographically separate regions to enable rapid failover with minimal downtime.
 * [Spaces](https://www.singlestore.com/spaces/): Collaborative environments to discover, create, and share interactive notebooks.
 * [Stage](https://docs.singlestore.com/cloud/load-data/load-data-from-files/stage.md): A secure, managed area for temporarily storing and processing files.
 * [Universal Storage](https://docs.singlestore.com/cloud/create-a-database/columnstore/universal-storage.md): Seamlessly combines row-based and column-based data models within a single database engine.

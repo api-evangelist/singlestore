@@ -127,57 +127,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    jobIDPath:
-      name: jobID
-      in: path
-      required: true
-      description: Unique identifier of the job.
-      schema:
-        type: string
-        format: uuid
-    organizationIDQuery:
-      name: organizationID
-      in: query
-      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
-      schema:
-        type: string
-        format: uuid
   schemas:
-    Job:
-      type: object
-      description: A scheduled notebook job that executes a specified notebook on a configurable schedule against a target workspace and database.
-      properties:
-        jobID:
-          type: string
-          format: uuid
-          description: Unique identifier of the job.
-        name:
-          type: string
-          description: Human-readable name of the job.
-        description:
-          type: string
-          description: Optional description of the job's purpose.
-        schedule:
-          $ref: '#/components/schemas/JobSchedule'
-        executionConfig:
-          $ref: '#/components/schemas/JobExecutionConfig'
-        targetConfig:
-          $ref: '#/components/schemas/JobTargetConfig'
-        completedExecutionsCount:
-          type: integer
-          description: Total number of completed executions for this job.
-        enqueuedBy:
-          type: string
-          description: Identifier of the user who created or last triggered the job.
-        createdAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the job was created.
-        terminatedAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the job was terminated, if applicable.
     JobExecutionConfig:
       type: object
       description: Configuration specifying the notebook to execute and runtime environment.
@@ -193,6 +143,34 @@ components:
         createSnapshot:
           type: boolean
           description: When true, a snapshot of the executed notebook with outputs is saved after each execution.
+    JobSchedule:
+      type: object
+      description: Schedule configuration defining when and how often a job runs.
+      properties:
+        mode:
+          type: string
+          description: Scheduling mode controlling execution frequency. Use Once for a single immediate execution or Recurring for interval-based scheduling.
+          enum:
+          - Once
+          - Recurring
+        startAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for when the job should first execute.
+        executionIntervalInMinutes:
+          type: integer
+          description: Number of minutes between recurring executions. Required when mode is Recurring.
+          minimum: 1
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     JobExecution:
       type: object
       description: A single execution instance of a scheduled job, capturing its status and timing information.
@@ -232,34 +210,22 @@ components:
         snapshotNotebookPath:
           type: string
           description: Path to the snapshot notebook created after execution, if snapshot creation was enabled.
-    Error:
+    JobParameter:
       type: object
-      description: Standard error response returned when an API request fails.
+      description: A parameter passed to a notebook at job execution time.
+      required:
+      - name
+      - value
       properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
+        name:
           type: string
-          description: Human-readable description of the error.
-    JobSchedule:
-      type: object
-      description: Schedule configuration defining when and how often a job runs.
-      properties:
-        mode:
+          description: Parameter name as referenced in the notebook.
+        value:
           type: string
-          description: Scheduling mode controlling execution frequency. Use Once for a single immediate execution or Recurring for interval-based scheduling.
-          enum:
-          - Once
-          - Recurring
-        startAt:
+          description: Parameter value passed to the notebook.
+        type:
           type: string
-          format: date-time
-          description: ISO 8601 timestamp for when the job should first execute.
-        executionIntervalInMinutes:
-          type: integer
-          description: Number of minutes between recurring executions. Required when mode is Recurring.
-          minimum: 1
+          description: Data type of the parameter value.
     JobTargetConfig:
       type: object
       description: Configuration specifying the workspace and database the notebook job should connect to.
@@ -282,22 +248,6 @@ components:
         resumeTarget:
           type: boolean
           description: When true, automatically resumes a suspended workspace before executing the notebook.
-    JobParameter:
-      type: object
-      description: A parameter passed to a notebook at job execution time.
-      required:
-      - name
-      - value
-      properties:
-        name:
-          type: string
-          description: Parameter name as referenced in the notebook.
-        value:
-          type: string
-          description: Parameter value passed to the notebook.
-        type:
-          type: string
-          description: Data type of the parameter value.
     JobCreate:
       type: object
       description: Request body for creating a new scheduled notebook job.
@@ -323,9 +273,59 @@ components:
           description: Optional parameters to pass to the notebook at execution time.
           items:
             $ref: '#/components/schemas/JobParameter'
+    Job:
+      type: object
+      description: A scheduled notebook job that executes a specified notebook on a configurable schedule against a target workspace and database.
+      properties:
+        jobID:
+          type: string
+          format: uuid
+          description: Unique identifier of the job.
+        name:
+          type: string
+          description: Human-readable name of the job.
+        description:
+          type: string
+          description: Optional description of the job's purpose.
+        schedule:
+          $ref: '#/components/schemas/JobSchedule'
+        executionConfig:
+          $ref: '#/components/schemas/JobExecutionConfig'
+        targetConfig:
+          $ref: '#/components/schemas/JobTargetConfig'
+        completedExecutionsCount:
+          type: integer
+          description: Total number of completed executions for this job.
+        enqueuedBy:
+          type: string
+          description: Identifier of the user who created or last triggered the job.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the job was created.
+        terminatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the job was terminated, if applicable.
+  parameters:
+    jobIDPath:
+      name: jobID
+      in: path
+      required: true
+      description: Unique identifier of the job.
+      schema:
+        type: string
+        format: uuid
+    organizationIDQuery:
+      name: organizationID
+      in: query
+      description: Filter results to a specific organization when the authenticated user belongs to multiple organizations.
+      schema:
+        type: string
+        format: uuid
   responses:
-    BadRequest:
-      description: The request was malformed or contained invalid parameters.
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
       content:
         application/json:
           schema:
@@ -336,8 +336,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
+    BadRequest:
+      description: The request was malformed or contained invalid parameters.
       content:
         application/json:
           schema:

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-workspace-update-schema.json",
+  "title": "WorkspaceUpdate",
+  "description": "Request body for updating an existing workspace.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-workspaces-api-openapi.yml#/components/schemas/WorkspaceUpdate",
+  "type": "object",
+  "properties": {
+    "size": {
+      "type": "string",
+      "description": "Updated size designation for the workspace. Changing size causes a brief workspace restart."
+    },
+    "autoSuspend": {
+      "$ref": "#/$defs/AutoSuspendConfig"
+    },
+    "cacheConfig": {
+      "type": "integer",
+      "description": "Updated cache multiplier. Valid values are 1, 2, or 4.",
+      "enum": [
+        1,
+        2,
+        4
+      ]
+    }
+  },
+  "$defs": {
+    "AutoSuspendConfig": {
+      "type": "object",
+      "description": "Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce compute costs.",
+      "properties": {
+        "suspended": {
+          "type": "boolean",
+          "description": "When true, auto-suspend is enabled and the workspace will suspend after the specified idle interval."
+        },
+        "suspendAfterSeconds": {
+          "type": "integer",
+          "description": "Number of seconds of inactivity after which the workspace is automatically suspended.",
+          "minimum": 60
+        }
+      }
+    }
+  }
+}

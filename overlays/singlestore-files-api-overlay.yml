@@ -1,0 +1,12 @@
+generated: '2026-10-04'
+method: derived
+source: openapi/singlestore-files-api-openapi.yml
+coverage:
+  coverage: partial
+  scope: ["paths"]
+actions:
+  - op: add
+    path: $.components.schemas.NewField
+    value:
+      type: string
+      description: Added by pipeline for documentation purposes

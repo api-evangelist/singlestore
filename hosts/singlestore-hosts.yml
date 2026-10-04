@@ -1,0 +1,171 @@
+generated: '2026-10-04'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 12
+  own: 9
+  other_domain: 0
+  platform: 3
+  roles:
+  - api
+  - other
+  - partner
+  - portal
+  - status
+  - support
+  - website
+hosts:
+- host: api.singlestore.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: singlestore.com
+  role: api
+  relation: own
+- host: developers.singlestore.com
+  found_by:
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types: []
+  serves: []
+  status: 200
+  registrable_domain: singlestore.com
+  role: portal
+  relation: own
+- host: docs.singlestore.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - ChangeLog
+  - APIReference
+  - GettingStarted
+  - DeveloperPortal
+  - LlmsText
+  serves:
+  - docs
+  registrable_domain: singlestore.com
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrg
+  serves: []
+  registrable_domain: github.com
+  role: other
+  relation: platform
+- host: partner.singlestore.com
+  found_by:
+  - probed
+  - site-links
+  - namespace-probe
+  - well-known
+  types: []
+  serves: []
+  title: Loading
+  status: 200
+  registrable_domain: singlestore.com
+  role: partner
+  relation: own
+- host: portal.singlestore.com
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - docs
+  registrable_domain: singlestore.com
+  role: other
+  relation: own
+- host: status.singlestore.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: singlestore.com
+  role: status
+  relation: own
+- host: support.singlestore.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Support
+  serves:
+  - support
+  vendor: zendesk
+  registrable_domain: singlestore.com
+  role: support
+  relation: own
+- host: training.singlestore.com
+  found_by:
+  - probed
+  - site-links
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: singlestore.com
+  role: other
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.postman.com
+  found_by:
+  - pointer
+  types:
+  - PostmanWorkspace
+  serves: []
+  registrable_domain: postman.com
+  role: other
+  relation: platform
+- host: www.singlestore.com
+  found_by:
+  - pointer
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Pricing
+  - Blog
+  - Signup
+  - PrivacyPolicy
+  - Integrations
+  serves:
+  - docs
+  - cdn
+  vendor: cloudfront
+  registrable_domain: singlestore.com
+  role: website
+  relation: own

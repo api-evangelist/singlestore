@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-job-execution-schema.json",
+  "title": "JobExecution",
+  "description": "A single execution instance of a scheduled job, capturing its status and timing information.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-jobs-api-openapi.yml#/components/schemas/JobExecution",
+  "type": "object",
+  "properties": {
+    "executionID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of this job execution."
+    },
+    "jobID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the parent job."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of this execution.",
+      "enum": [
+        "Queued",
+        "Running",
+        "Completed",
+        "Failed",
+        "Cancelled"
+      ]
+    },
+    "executionNumber": {
+      "type": "integer",
+      "description": "Sequential execution number for this job, starting at 1."
+    },
+    "scheduledStartTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this execution was scheduled to start."
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this execution actually started."
+    },
+    "finishedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this execution completed or failed."
+    },
+    "snapshotNotebookPath": {
+      "type": "string",
+      "description": "Path to the snapshot notebook created after execution, if snapshot creation was enabled."
+    }
+  }
+}

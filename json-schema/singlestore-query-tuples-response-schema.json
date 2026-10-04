@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-query-tuples-response-schema.json",
+  "title": "QueryTuplesResponse",
+  "description": "Response returned after a successful SELECT query using the tuples format, where columns are described once and rows are arrays of values.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-queries-api-openapi.yml#/components/schemas/QueryTuplesResponse",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "description": "Array of result sets, one per statement in the request.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "columns": {
+            "type": "array",
+            "description": "Array of column descriptor objects defining the name and data type of each column in the result set.",
+            "items": {
+              "$ref": "#/$defs/Column"
+            }
+          },
+          "rows": {
+            "type": "array",
+            "description": "Array of value arrays where each inner array contains the column values for one result row in the same order as the columns array.",
+            "items": {
+              "type": "array",
+              "items": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Column": {
+      "type": "object",
+      "description": "Descriptor for a single column in a query result set.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the column as defined in the SQL query or table schema."
+        },
+        "dataType": {
+          "type": "string",
+          "description": "SingleStore data type of the column (e.g., INT, VARCHAR, DATETIME)."
+        },
+        "nullable": {
+          "type": "boolean",
+          "description": "When true, the column may contain NULL values."
+        }
+      }
+    }
+  }
+}

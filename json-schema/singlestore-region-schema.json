@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-region-schema.json",
+  "title": "Region",
+  "description": "A cloud provider region that supports workspace group creation within SingleStore Helios.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-regions-api-openapi.yml#/components/schemas/Region",
+  "type": "object",
+  "properties": {
+    "regionID": {
+      "type": "string",
+      "description": "Unique identifier string for the region used in API requests."
+    },
+    "region": {
+      "type": "string",
+      "description": "Cloud provider region code (e.g., us-east-1)."
+    },
+    "provider": {
+      "type": "string",
+      "description": "Cloud provider hosting this region.",
+      "enum": [
+        "AWS",
+        "GCP",
+        "Azure"
+      ]
+    },
+    "country": {
+      "type": "string",
+      "description": "Country where the region is located."
+    }
+  }
+}
