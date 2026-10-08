@@ -199,6 +199,12 @@ apis:
   - type: Documentation
     url: https://docs.singlestore.com/cloud/reference/management-api/
 common:
+  - type: Plans
+    url: plans/singlestore-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/singlestore-rate-limits.yml
+  - type: FinOps
+    url: finops/singlestore-finops.yml
   - type: CapabilityMap
     url: capabilities/singlestore-capability-edges.yml
     name: SingleStore Business Capability Map
