@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-workspace-group-schema.json",
+  "title": "WorkspaceGroup",
+  "description": "A workspace group is a logical container that groups workspaces sharing a common cloud region, network configuration, and firewall rules within a SingleStore Helios organization.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-workspace-groups-api-openapi.yml#/components/schemas/WorkspaceGroup",
+  "type": "object",
+  "properties": {
+    "workspaceGroupID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the workspace group."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the workspace group."
+    },
+    "state": {
+      "type": "string",
+      "description": "Current lifecycle state of the workspace group.",
+      "enum": [
+        "Active",
+        "Pending",
+        "Terminated",
+        "Failed"
+      ]
+    },
+    "regionID": {
+      "type": "string",
+      "description": "Identifier of the cloud provider region where the workspace group is deployed."
+    },
+    "firewallRanges": {
+      "type": "array",
+      "description": "List of CIDR IP ranges permitted to connect to workspaces in this group.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowAllTraffic": {
+      "type": "boolean",
+      "description": "When true, all inbound traffic is allowed regardless of firewall ranges."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the workspace group was created."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional ISO 8601 timestamp when the workspace group is scheduled to expire and be automatically terminated."
+    }
+  }
+}

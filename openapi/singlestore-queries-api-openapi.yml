@@ -101,6 +101,22 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
+    QueryRowsResponse:
+      type: object
+      description: Response returned after a successful SELECT query using the rows format, where each result row is a JSON object with column names as keys.
+      properties:
+        results:
+          type: array
+          description: Array of result sets, one per statement in the request.
+          items:
+            type: object
+            properties:
+              rows:
+                type: array
+                description: Array of row objects where each object maps column names to their corresponding values for that row.
+                items:
+                  type: object
+                  additionalProperties: true
     Column:
       type: object
       description: Descriptor for a single column in a query result set.
@@ -114,6 +130,53 @@ components:
         nullable:
           type: boolean
           description: When true, the column may contain NULL values.
+    QueryRequest:
+      type: object
+      description: Request body for executing a SQL SELECT statement and returning a result set.
+      required:
+      - sql
+      properties:
+        sql:
+          type: string
+          description: The SQL SELECT statement to execute. Any valid SingleStore SQL SELECT syntax is supported.
+        database:
+          type: string
+          description: Name of the database to query. If not provided, the default database for the authenticated user is used.
+        args:
+          type: array
+          description: Positional arguments for parameterized SQL queries. Use ? placeholders in the sql field and provide values in order here.
+          items: {}
+    QueryTuplesResponse:
+      type: object
+      description: Response returned after a successful SELECT query using the tuples format, where columns are described once and rows are arrays of values.
+      properties:
+        results:
+          type: array
+          description: Array of result sets, one per statement in the request.
+          items:
+            type: object
+            properties:
+              columns:
+                type: array
+                description: Array of column descriptor objects defining the name and data type of each column in the result set.
+                items:
+                  $ref: '#/components/schemas/Column'
+              rows:
+                type: array
+                description: Array of value arrays where each inner array contains the column values for one result row in the same order as the columns array.
+                items:
+                  type: array
+                  items: {}
+    Error:
+      type: object
+      description: Standard error response returned when a Data API request fails.
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+        code:
+          type: integer
+          description: HTTP status code associated with the error.
     ExecRequest:
       type: object
       description: Request body for executing a DDL or DML SQL statement that does not return a result set.
@@ -146,70 +209,13 @@ components:
               rowsAffected:
                 type: integer
                 description: Number of rows affected by the executed statement.
-    QueryTuplesResponse:
-      type: object
-      description: Response returned after a successful SELECT query using the tuples format, where columns are described once and rows are arrays of values.
-      properties:
-        results:
-          type: array
-          description: Array of result sets, one per statement in the request.
-          items:
-            type: object
-            properties:
-              columns:
-                type: array
-                description: Array of column descriptor objects defining the name and data type of each column in the result set.
-                items:
-                  $ref: '#/components/schemas/Column'
-              rows:
-                type: array
-                description: Array of value arrays where each inner array contains the column values for one result row in the same order as the columns array.
-                items:
-                  type: array
-                  items: {}
-    Error:
-      type: object
-      description: Standard error response returned when a Data API request fails.
-      properties:
-        message:
-          type: string
-          description: Human-readable description of the error.
-        code:
-          type: integer
-          description: HTTP status code associated with the error.
-    QueryRequest:
-      type: object
-      description: Request body for executing a SQL SELECT statement and returning a result set.
-      required:
-      - sql
-      properties:
-        sql:
-          type: string
-          description: The SQL SELECT statement to execute. Any valid SingleStore SQL SELECT syntax is supported.
-        database:
-          type: string
-          description: Name of the database to query. If not provided, the default database for the authenticated user is used.
-        args:
-          type: array
-          description: Positional arguments for parameterized SQL queries. Use ? placeholders in the sql field and provide values in order here.
-          items: {}
-    QueryRowsResponse:
-      type: object
-      description: Response returned after a successful SELECT query using the rows format, where each result row is a JSON object with column names as keys.
-      properties:
-        results:
-          type: array
-          description: Array of result sets, one per statement in the request.
-          items:
-            type: object
-            properties:
-              rows:
-                type: array
-                description: Array of row objects where each object maps column names to their corresponding values for that row.
-                items:
-                  type: object
-                  additionalProperties: true
   responses:
+    Unauthorized:
+      description: The request did not include valid authentication credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     InternalServerError:
       description: The SQL statement failed to execute due to a database or server-side error.
       content:
@@ -218,12 +224,6 @@ components:
             $ref: '#/components/schemas/Error'
     BadRequest:
       description: The SQL statement or request body was malformed or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include valid authentication credentials.
       content:
         application/json:
           schema:

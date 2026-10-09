@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-workspace-group-update-schema.json",
+  "title": "WorkspaceGroupUpdate",
+  "description": "Request body for updating an existing workspace group.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-workspace-groups-api-openapi.yml#/components/schemas/WorkspaceGroupUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Updated name for the workspace group."
+    },
+    "firewallRanges": {
+      "type": "array",
+      "description": "Updated list of CIDR IP ranges permitted to connect to workspaces.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowAllTraffic": {
+      "type": "boolean",
+      "description": "When true, allows all inbound traffic regardless of firewall range configuration."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated expiration timestamp after which the workspace group is automatically terminated."
+    }
+  }
+}

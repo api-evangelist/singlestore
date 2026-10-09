@@ -112,13 +112,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    deploymentIDPath:
-      name: deploymentID
-      in: path
-      required: true
-      description: Unique deployment identifier associated with a workspace group, used to address the stage filesystem.
-      schema:
-        type: string
     stagePathPath:
       name: stagePath
       in: path
@@ -126,15 +119,22 @@ components:
       description: File or directory path within the stage filesystem.
       schema:
         type: string
+    deploymentIDPath:
+      name: deploymentID
+      in: path
+      required: true
+      description: Unique deployment identifier associated with a workspace group, used to address the stage filesystem.
+      schema:
+        type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: The request did not include a valid Bearer token.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The request did not include a valid Bearer token.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-workspace-group-delete-response-schema.json",
+  "title": "WorkspaceGroupDeleteResponse",
+  "description": "Response returned after initiating workspace group termination.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-workspace-groups-api-openapi.yml#/components/schemas/WorkspaceGroupDeleteResponse",
+  "type": "object",
+  "properties": {
+    "workspaceGroupID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the workspace group that was terminated."
+    }
+  }
+}

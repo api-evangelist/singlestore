@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-job-schema.json",
+  "title": "Job",
+  "description": "A scheduled notebook job that executes a specified notebook on a configurable schedule against a target workspace and database.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-jobs-api-openapi.yml#/components/schemas/Job",
+  "type": "object",
+  "properties": {
+    "jobID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the job."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the job."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description of the job's purpose."
+    },
+    "schedule": {
+      "$ref": "#/$defs/JobSchedule"
+    },
+    "executionConfig": {
+      "$ref": "#/$defs/JobExecutionConfig"
+    },
+    "targetConfig": {
+      "$ref": "#/$defs/JobTargetConfig"
+    },
+    "completedExecutionsCount": {
+      "type": "integer",
+      "description": "Total number of completed executions for this job."
+    },
+    "enqueuedBy": {
+      "type": "string",
+      "description": "Identifier of the user who created or last triggered the job."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the job was created."
+    },
+    "terminatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the job was terminated, if applicable."
+    }
+  },
+  "$defs": {
+    "JobExecutionConfig": {
+      "type": "object",
+      "description": "Configuration specifying the notebook to execute and runtime environment.",
+      "required": [
+        "notebookPath"
+      ],
+      "properties": {
+        "notebookPath": {
+          "type": "string",
+          "description": "Path to the notebook file within SingleStore Spaces to execute."
+        },
+        "runtimeName": {
+          "type": "string",
+          "description": "Name of the runtime environment to use for notebook execution."
+        },
+        "createSnapshot": {
+          "type": "boolean",
+          "description": "When true, a snapshot of the executed notebook with outputs is saved after each execution."
+        }
+      }
+    },
+    "JobSchedule": {
+      "type": "object",
+      "description": "Schedule configuration defining when and how often a job runs.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "Scheduling mode controlling execution frequency. Use Once for a single immediate execution or Recurring for interval-based scheduling.",
+          "enum": [
+            "Once",
+            "Recurring"
+          ]
+        },
+        "startAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp for when the job should first execute."
+        },
+        "executionIntervalInMinutes": {
+          "type": "integer",
+          "description": "Number of minutes between recurring executions. Required when mode is Recurring.",
+          "minimum": 1
+        }
+      }
+    },
+    "JobTargetConfig": {
+      "type": "object",
+      "description": "Configuration specifying the workspace and database the notebook job should connect to.",
+      "required": [
+        "targetID",
+        "targetType"
+      ],
+      "properties": {
+        "targetID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the workspace or workspace group to target."
+        },
+        "targetType": {
+          "type": "string",
+          "description": "Type of target resource. Use Workspace to target a specific workspace.",
+          "enum": [
+            "Workspace"
+          ]
+        },
+        "databaseName": {
+          "type": "string",
+          "description": "Name of the database within the workspace to connect to during execution."
+        },
+        "resumeTarget": {
+          "type": "boolean",
+          "description": "When true, automatically resumes a suspended workspace before executing the notebook."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/singlestore/main/json-schema/singlestore-workspace-group-create-schema.json",
+  "title": "WorkspaceGroupCreate",
+  "description": "Request body for creating a new workspace group.",
+  "x-generated": "2026-10-04",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/singlestore-workspace-groups-api-openapi.yml#/components/schemas/WorkspaceGroupCreate",
+  "type": "object",
+  "required": [
+    "name",
+    "regionID"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the new workspace group."
+    },
+    "regionID": {
+      "type": "string",
+      "description": "Cloud provider region where the workspace group will be deployed."
+    },
+    "firewallRanges": {
+      "type": "array",
+      "description": "CIDR IP ranges permitted to connect to workspaces in this group. Use 0.0.0.0/0 to allow all traffic.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowAllTraffic": {
+      "type": "boolean",
+      "description": "When true, allows all inbound traffic to workspaces in this group."
+    },
+    "adminPassword": {
+      "type": "string",
+      "description": "Initial administrator password for the workspace group database. Must meet SingleStore password complexity requirements."
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional ISO 8601 timestamp after which the workspace group will be automatically terminated."
+    }
+  }
+}

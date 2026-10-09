@@ -1,0 +1,174 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-data-model.py
+source:
+- openapi/singlestore-files-api-openapi.yml
+- openapi/singlestore-health-api-openapi.yml
+- openapi/singlestore-jobs-api-openapi.yml
+- openapi/singlestore-organizations-api-openapi.yml
+- openapi/singlestore-queries-api-openapi.yml
+- openapi/singlestore-regions-api-openapi.yml
+- openapi/singlestore-secrets-api-openapi.yml
+- openapi/singlestore-workspace-groups-api-openapi.yml
+- openapi/singlestore-workspaces-api-openapi.yml
+notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
+summary:
+  entities: 26
+  entities_in_spec: 26
+  relationships: 17
+entities:
+- name: AutoSuspendConfig
+  fields: 2
+  description: Configuration controlling automatic suspension of a workspace after a period of inactivity to reduce
+    compute costs.
+- name: Column
+  fields: 3
+  description: Descriptor for a single column in a query result set.
+- name: Error
+  fields: 2
+  description: Standard error response returned when an API request fails.
+- name: ExecRequest
+  fields: 3
+  description: Request body for executing a DDL or DML SQL statement that does not return a result set.
+- name: ExecResponse
+  fields: 1
+  description: Response returned after successfully executing a DDL or DML statement.
+- name: Job
+  fields: 10
+  description: A scheduled notebook job that executes a specified notebook on a configurable schedule against a
+    target workspace and database.
+- name: JobCreate
+  fields: 6
+  description: Request body for creating a new scheduled notebook job.
+- name: JobExecution
+  fields: 8
+  description: A single execution instance of a scheduled job, capturing its status and timing information.
+- name: JobExecutionConfig
+  fields: 3
+  description: Configuration specifying the notebook to execute and runtime environment.
+- name: JobParameter
+  fields: 3
+  description: A parameter passed to a notebook at job execution time.
+- name: JobSchedule
+  fields: 3
+  description: Schedule configuration defining when and how often a job runs.
+- name: JobTargetConfig
+  fields: 4
+  description: Configuration specifying the workspace and database the notebook job should connect to.
+- name: Organization
+  fields: 3
+  description: An organization is the top-level account entity within SingleStore Helios, grouping users, workspace
+    groups, and billing.
+- name: QueryRequest
+  fields: 3
+  description: Request body for executing a SQL SELECT statement and returning a result set.
+- name: QueryRowsResponse
+  fields: 1
+  description: Response returned after a successful SELECT query using the rows format, where each result row is
+    a JSON object with column names as keys.
+- name: QueryTuplesResponse
+  fields: 1
+  description: Response returned after a successful SELECT query using the tuples format, where columns are described
+    once and rows are arrays of values.
+- name: Region
+  fields: 4
+  description: A cloud provider region that supports workspace group creation within SingleStore Helios.
+- name: Secret
+  fields: 6
+  description: An organization-level secret that stores sensitive values such as API keys or passwords, which can
+    be referenced in notebooks and jobs without exposing plaintext credentials.
+- name: Workspace
+  fields: 10
+  description: A workspace provides compute capacity for running SQL queries against the SingleStore Helios database
+    engine. It connects to a shared database within a workspace group and can be suspended and resumed
+- name: WorkspaceCreate
+  fields: 6
+  description: Request body for creating a new workspace.
+- name: WorkspaceDeleteResponse
+  fields: 1
+  description: Response returned after initiating workspace termination.
+- name: WorkspaceGroup
+  fields: 8
+  description: A workspace group is a logical container that groups workspaces sharing a common cloud region, network
+    configuration, and firewall rules within a SingleStore Helios organization.
+- name: WorkspaceGroupCreate
+  fields: 6
+  description: Request body for creating a new workspace group.
+- name: WorkspaceGroupDeleteResponse
+  fields: 1
+  description: Response returned after initiating workspace group termination.
+- name: WorkspaceGroupUpdate
+  fields: 4
+  description: Request body for updating an existing workspace group.
+- name: WorkspaceUpdate
+  fields: 3
+  description: Request body for updating an existing workspace.
+relationships:
+- from: Job
+  to: JobSchedule
+  type: has_one
+  via: schedule
+- from: Job
+  to: JobExecutionConfig
+  type: has_one
+  via: executionConfig
+- from: Job
+  to: JobTargetConfig
+  type: has_one
+  via: targetConfig
+- from: JobExecution
+  to: Job
+  type: belongs_to
+  via: jobID
+- from: JobCreate
+  to: JobSchedule
+  type: has_one
+  via: schedule
+- from: JobCreate
+  to: JobExecutionConfig
+  type: has_one
+  via: executionConfig
+- from: JobCreate
+  to: JobTargetConfig
+  type: has_one
+  via: targetConfig
+- from: JobCreate
+  to: JobParameter
+  type: has_many
+  via: parameters
+- from: WorkspaceGroupCreate
+  to: Region
+  type: belongs_to
+  via: regionID
+- from: WorkspaceGroup
+  to: Region
+  type: belongs_to
+  via: regionID
+- from: WorkspaceGroupDeleteResponse
+  to: WorkspaceGroup
+  type: belongs_to
+  via: workspaceGroupID
+- from: Workspace
+  to: WorkspaceGroup
+  type: belongs_to
+  via: workspaceGroupID
+- from: Workspace
+  to: AutoSuspendConfig
+  type: has_one
+  via: autoSuspend
+- from: WorkspaceCreate
+  to: WorkspaceGroup
+  type: belongs_to
+  via: workspaceGroupID
+- from: WorkspaceCreate
+  to: AutoSuspendConfig
+  type: has_one
+  via: autoSuspend
+- from: WorkspaceUpdate
+  to: AutoSuspendConfig
+  type: has_one
+  via: autoSuspend
+- from: WorkspaceDeleteResponse
+  to: Workspace
+  type: belongs_to
+  via: workspaceID

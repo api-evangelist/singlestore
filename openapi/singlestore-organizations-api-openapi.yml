@@ -34,6 +34,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    Error:
+      type: object
+      description: Standard error response returned when an API request fails.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code of the error.
+        message:
+          type: string
+          description: Human-readable description of the error.
     Organization:
       type: object
       description: An organization is the top-level account entity within SingleStore Helios, grouping users, workspace groups, and billing.
@@ -49,16 +59,6 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp when the organization was created.
-    Error:
-      type: object
-      description: Standard error response returned when an API request fails.
-      properties:
-        code:
-          type: integer
-          description: HTTP status code of the error.
-        message:
-          type: string
-          description: Human-readable description of the error.
   responses:
     Unauthorized:
       description: The request did not include a valid Bearer token.

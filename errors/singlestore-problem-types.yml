@@ -1,0 +1,49 @@
+generated: '2026-10-04'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/singlestore-files-api-openapi.yml
+- openapi/singlestore-health-api-openapi.yml
+- openapi/singlestore-jobs-api-openapi.yml
+- openapi/singlestore-organizations-api-openapi.yml
+- openapi/singlestore-queries-api-openapi.yml
+- openapi/singlestore-regions-api-openapi.yml
+- openapi/singlestore-secrets-api-openapi.yml
+- openapi/singlestore-workspace-groups-api-openapi.yml
+- openapi/singlestore-workspaces-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: Error
+coverage:
+  operations: 29
+  statuses_declared: 4
+problems:
+- status: 400
+  title: Bad Request
+  description: The request was malformed or contained invalid parameters.
+  operations: 8
+  media_types:
+  - application/json
+  schema: Error
+- status: 401
+  title: Unauthorized
+  description: The request did not include a valid Bearer token.
+  operations: 28
+  media_types:
+  - application/json
+  schema: Error
+- status: 404
+  title: Not Found
+  description: The requested resource was not found.
+  operations: 14
+  media_types:
+  - application/json
+  schema: Error
+- status: 500
+  title: Internal Server Error
+  description: The SQL statement failed to execute due to a database or server-side error.
+  operations: 3
+  media_types:
+  - application/json
+  schema: Error

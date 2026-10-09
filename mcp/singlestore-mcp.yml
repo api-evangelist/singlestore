@@ -1,0 +1,13 @@
+generated: '2026-10-04'
+method: derived
+source: none
+coverage:
+  coverage: none
+  scope: []
+deployment:
+  mode: none
+  endpoint: null
+  install: ""
+  package: ""
+  auth: unknown
+  verified: derived
