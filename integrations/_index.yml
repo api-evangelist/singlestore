@@ -39,3 +39,16 @@
   relationship: connector-coverage
   status: not-a-workflow
   arazzo: null
+- slug: singlestore-datadog-own
+  label: Datadog (own)
+  partner: datadog
+  partner_name: Datadog (own)
+  category: Data Stores
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/DataDog/integrations-extras/tree/master/singlestoredb_cloud
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
