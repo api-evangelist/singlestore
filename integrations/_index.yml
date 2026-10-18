@@ -152,7 +152,7 @@
     - alpha
     in_cloud: false
     builder: unknown (community connector; contributor not in the record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: singlestore-fivetran-fivetran-connectors
   label: Fivetran (fivetran-connectors)
