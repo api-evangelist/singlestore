@@ -13,74 +13,10 @@ checked:
 - https://github.com/run-llama/llama_index/tree/main/llama-index-integrations
 - https://hightouch.com/docs/sources/single-store
 - https://zapier.com/api/v4/apps/
+- power-bi/integrations/power-bi-integration-edges.yml
+- tableau/integrations/tableau-integration-edges.yml
 marketplace_apps: []
 edges:
-- partner_name: AWS Marketplace
-  partner: amazon-web-services
-  partner_match: aggregator
-  type: marketplace
-  marketplace: aws-marketplace
-  channel: distribution
-  relationship: distribution-channel
-  direction: third-party
-  evidence: https://aws.amazon.com/marketplace/seller-profile?id=0fd1cfb8-b2b1-4bb9-9981-c63fff8d3efb
-  listing_count: 2
-  apps:
-  - SingleStore Helios
-  - SingleStore Helios - On Demand Pricing
-  seller_name: SingleStore
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Microsoft Azure Marketplace
-  partner: microsoft-azure
-  partner_match: aggregator
-  type: marketplace
-  marketplace: azure-marketplace
-  channel: distribution
-  relationship: distribution-channel
-  direction: third-party
-  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=SingleStore%2C%20Inc.
-  listing_count: 1
-  apps:
-  - SingleStore Helios
-  seller_name: SingleStore, Inc.
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Hightouch
-  partner: hightouch
-  partner_match: aggregator
-  marketplace: coverage
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: connector-coverage
-  evidence: https://hightouch.com/docs/sources/single-store
-  coverage_role:
-  - source
-  cdp_signals:
-    source:
-      catalog_entries:
-      - single-store
-      status: released
-  detected_by: sweep-cdp.py
-  first_seen: '2026-10-14'
-- partner_name: Datadog (own)
-  partner: datadog
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://github.com/DataDog/integrations-extras/tree/master/singlestoredb_cloud
-  mirror_of: datadog/integrations/datadog-integration-edges.yml
-  apps:
-  - SingleStoreDB Cloud
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Data Stores
 - partner_name: LlamaIndex
   partner: llamaindex
   partner_match: framework
@@ -102,41 +38,6 @@ edges:
     vendor_domain: singlestore.com
   matched_by: verified-domain-table
   detected_by: sweep-rag-vector.py
-  first_seen: '2026-10-15'
-- partner_name: CNCF (Cloud Native Landscape)
-  partner: cncf
-  partner_match: register
-  type: register
-  direction: partner-built
-  category: Cloud native landscape
-  evidence: https://github.com/cncf/landscape/blob/3a7d378b1824b82e729a453bb03fa6f1e37557e1/landscape.yml
-  channel: standard-directory
-  relationship: standard-participant
-  contract_reference:
-    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @3a7d378b18)
-    spec_file: null
-    standard: Cloud Native (CNCF)
-    role: landscape-listed
-    registered_name: SingleStore
-    registered_names:
-    - SingleStore
-    - SingleStore (Wasm)
-    website: https://www.singlestore.com/
-    matched_domain: singlestore.com
-    matched_by: domain
-    member_tier: null
-    joined: null
-    end_user: false
-    cncf_projects: []
-    landscape_categories:
-    - App Definition and Development / Database
-    - Wasm / Embedded Functions
-    landscape_entries: 2
-    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
-      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
-    detected_by: sweep-cloud-native.py
-    detected: '2026-10-15'
-  detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
 - partner_name: Zapier
   partner: zapier
@@ -163,6 +64,24 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://hightouch.com/docs/sources/single-store
+  coverage_role:
+  - source
+  cdp_signals:
+    source:
+      catalog_entries:
+      - single-store
+      status: released
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
 - partner_name: Airbyte
   partner: airbyte
   partner_match: aggregator
@@ -193,6 +112,23 @@ edges:
     builder: unknown (community connector; contributor not in the record)
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
+- partner_name: Datadog (own)
+  partner: datadog
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://github.com/DataDog/integrations-extras/tree/master/singlestoredb_cloud
+  mirror_of: datadog/integrations/datadog-integration-edges.yml
+  apps:
+  - SingleStoreDB Cloud
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Data Stores
 - partner_name: Fivetran (fivetran-connectors)
   partner: fivetran
   partner_match: mirror
@@ -210,4 +146,105 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: data integration
+- partner_name: Power BI (own)
+  partner: power-bi
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://learn.microsoft.com/en-us/power-query/connectors/singlestore
+  mirror_of: power-bi/integrations/power-bi-integration-edges.yml
+  apps:
+  - SingleStore Direct Query Connector
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+  category: Other
+- partner_name: Tableau (own)
+  partner: tableau
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://exchange.tableau.com/products/866
+  mirror_of: tableau/integrations/tableau-integration-edges.yml
+  apps:
+  - SingleStoreDB JDBC
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+  category: connector
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=0fd1cfb8-b2b1-4bb9-9981-c63fff8d3efb
+  listing_count: 2
+  apps:
+  - SingleStore Helios
+  - SingleStore Helios - On Demand Pricing
+  seller_name: SingleStore
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=SingleStore%2C%20Inc.
+  listing_count: 2
+  apps:
+  - SingleStore Helios - On Demand Pricing
+  - SingleStore Helios
+  seller_name: SingleStore, Inc.
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: Cloud native landscape
+  evidence: https://github.com/cncf/landscape/blob/42dd4cd91dad8ec8558ac02467a43f0805b9957a/landscape.yml
+  channel: standard-directory
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @42dd4cd91d)
+    spec_file: null
+    standard: Cloud Native (CNCF)
+    role: landscape-listed
+    registered_name: SingleStore
+    registered_names:
+    - SingleStore
+    - SingleStore (Wasm)
+    website: https://www.singlestore.com/
+    matched_domain: singlestore.com
+    matched_by: domain
+    member_tier: null
+    joined: null
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - App Definition and Development / Database
+    - Wasm / Embedded Functions
+    landscape_entries: 2
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-19'
+  detected_by: sweep-cloud-native.py
+  first_seen: '2026-10-15'
 source: https://hightouch.com/docs/sources/single-store
