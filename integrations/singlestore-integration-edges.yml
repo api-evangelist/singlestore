@@ -15,6 +15,8 @@ checked:
 - https://zapier.com/api/v4/apps/
 - power-bi/integrations/power-bi-integration-edges.yml
 - tableau/integrations/tableau-integration-edges.yml
+- opentofu/integrations/opentofu-integration-edges.yml
+- terraform/integrations/terraform-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: LlamaIndex
@@ -112,6 +114,73 @@ edges:
     builder: unknown (community connector; contributor not in the record)
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=0fd1cfb8-b2b1-4bb9-9981-c63fff8d3efb
+  listing_count: 2
+  apps:
+  - SingleStore Helios
+  - SingleStore Helios - On Demand Pricing
+  seller_name: SingleStore
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=SingleStore%2C%20Inc.
+  listing_count: 2
+  apps:
+  - SingleStore Helios - On Demand Pricing
+  - SingleStore Helios
+  seller_name: SingleStore, Inc.
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: CNCF (Cloud Native Landscape)
+  partner: cncf
+  partner_match: register
+  type: register
+  direction: partner-built
+  category: Cloud native landscape
+  evidence: https://github.com/cncf/landscape/blob/42dd4cd91dad8ec8558ac02467a43f0805b9957a/landscape.yml
+  channel: standard-directory
+  relationship: standard-participant
+  contract_reference:
+    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @42dd4cd91d)
+    spec_file: null
+    standard: Cloud Native (CNCF)
+    role: landscape-listed
+    registered_name: SingleStore
+    registered_names:
+    - SingleStore
+    - SingleStore (Wasm)
+    website: https://www.singlestore.com/
+    matched_domain: singlestore.com
+    matched_by: domain
+    member_tier: null
+    joined: null
+    end_user: false
+    cncf_projects: []
+    landscape_categories:
+    - App Definition and Development / Database
+    - Wasm / Embedded Functions
+    landscape_entries: 2
+    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
+      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
+    detected_by: sweep-cloud-native.py
+    detected: '2026-10-19'
+  detected_by: sweep-cloud-native.py
+  first_seen: '2026-10-15'
 - partner_name: Datadog (own)
   partner: datadog
   partner_match: mirror
@@ -180,71 +249,43 @@ edges:
   detected: '2026-10-19'
   detected_by: mirror-platform-listings.py
   category: connector
-- partner_name: AWS Marketplace
-  partner: amazon-web-services
-  partner_match: aggregator
+- partner_name: OpenTofu (opentofu-registry)
+  partner: opentofu
+  partner_match: mirror
+  mirror_match: domain
   type: marketplace
-  marketplace: aws-marketplace
-  channel: distribution
-  relationship: distribution-channel
+  relationship: platform-app
   direction: third-party
-  evidence: https://aws.amazon.com/marketplace/seller-profile?id=0fd1cfb8-b2b1-4bb9-9981-c63fff8d3efb
-  listing_count: 2
+  channel: partner-built
+  marketplace: opentofu-registry
+  evidence: https://search.opentofu.org/provider/singlestore-labs/singlestoredb
+  mirror_of: opentofu/integrations/opentofu-integration-edges.yml
   apps:
-  - SingleStore Helios
-  - SingleStore Helios - On Demand Pricing
-  seller_name: SingleStore
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Microsoft Azure Marketplace
-  partner: microsoft-azure
-  partner_match: aggregator
+  - singlestore-labs/singlestoredb
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
+- partner_name: Terraform (terraform-registry)
+  partner: terraform
+  partner_match: mirror
+  mirror_match: domain
   type: marketplace
-  marketplace: azure-marketplace
-  channel: distribution
-  relationship: distribution-channel
+  relationship: platform-app
   direction: third-party
-  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=SingleStore%2C%20Inc.
-  listing_count: 2
+  channel: partner-built
+  marketplace: terraform-registry
+  evidence: https://registry.terraform.io/providers/singlestore-labs/singlestoredb
+  mirror_of: terraform/integrations/terraform-integration-edges.yml
   apps:
-  - SingleStore Helios - On Demand Pricing
-  - SingleStore Helios
-  seller_name: SingleStore, Inc.
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: CNCF (Cloud Native Landscape)
-  partner: cncf
-  partner_match: register
-  type: register
-  direction: partner-built
-  category: Cloud native landscape
-  evidence: https://github.com/cncf/landscape/blob/42dd4cd91dad8ec8558ac02467a43f0805b9957a/landscape.yml
-  channel: standard-directory
-  relationship: standard-participant
-  contract_reference:
-    register: CNCF Cloud Native Landscape (github.com/cncf/landscape landscape.yml @42dd4cd91d)
-    spec_file: null
-    standard: Cloud Native (CNCF)
-    role: landscape-listed
-    registered_name: SingleStore
-    registered_names:
-    - SingleStore
-    - SingleStore (Wasm)
-    website: https://www.singlestore.com/
-    matched_domain: singlestore.com
-    matched_by: domain
-    member_tier: null
-    joined: null
-    end_user: false
-    cncf_projects: []
-    landscape_categories:
-    - App Definition and Development / Database
-    - Wasm / Embedded Functions
-    landscape_entries: 2
-    signal_note: 'participation only: a landscape listing is standard-participant evidence, not depth. Entries,
-      categories, tier and projects are CONTEXT, never read (breadth is not credit)'
-    detected_by: sweep-cloud-native.py
-    detected: '2026-10-19'
-  detected_by: sweep-cloud-native.py
-  first_seen: '2026-10-15'
+  - singlestore-labs/singlestoredb
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (Terraform partner tier)
+  - Verified publisher (GitHub domain-verified organization)
 source: https://hightouch.com/docs/sources/single-store

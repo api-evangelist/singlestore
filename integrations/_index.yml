@@ -81,58 +81,6 @@
     builder: unknown (community connector; contributor not in the record)
   status: not-a-workflow
   arazzo: null
-- slug: singlestore-datadog-own
-  label: Datadog (own)
-  partner: datadog
-  partner_name: Datadog (own)
-  category: Data Stores
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://github.com/DataDog/integrations-extras/tree/master/singlestoredb_cloud
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: singlestore-fivetran-fivetran-connectors
-  label: Fivetran (fivetran-connectors)
-  partner: fivetran
-  partner_name: Fivetran (fivetran-connectors)
-  category: data integration
-  type: marketplace
-  marketplace: fivetran-connectors
-  channel: partner-built
-  evidence: https://fivetran.com/docs/connectors/databases/singlestore
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: singlestore-power-bi-own
-  label: Power BI (own)
-  partner: power-bi
-  partner_name: Power BI (own)
-  category: Other
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://learn.microsoft.com/en-us/power-query/connectors/singlestore
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: singlestore-tableau-own
-  label: Tableau (own)
-  partner: tableau
-  partner_name: Tableau (own)
-  category: connector
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://exchange.tableau.com/products/866
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: singlestore-aws-marketplace
   label: AWS Marketplace
   partner: amazon-web-services
@@ -191,5 +139,83 @@
       categories, tier and projects are CONTEXT, never read (breadth is not credit)'
     detected_by: sweep-cloud-native.py
     detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: singlestore-datadog-own
+  label: Datadog (own)
+  partner: datadog
+  partner_name: Datadog (own)
+  category: Data Stores
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/DataDog/integrations-extras/tree/master/singlestoredb_cloud
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: singlestore-fivetran-fivetran-connectors
+  label: Fivetran (fivetran-connectors)
+  partner: fivetran
+  partner_name: Fivetran (fivetran-connectors)
+  category: data integration
+  type: marketplace
+  marketplace: fivetran-connectors
+  channel: partner-built
+  evidence: https://fivetran.com/docs/connectors/databases/singlestore
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: singlestore-power-bi-own
+  label: Power BI (own)
+  partner: power-bi
+  partner_name: Power BI (own)
+  category: Other
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://learn.microsoft.com/en-us/power-query/connectors/singlestore
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: singlestore-tableau-own
+  label: Tableau (own)
+  partner: tableau
+  partner_name: Tableau (own)
+  category: connector
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://exchange.tableau.com/products/866
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: singlestore-opentofu-opentofu-registry
+  label: OpenTofu (opentofu-registry)
+  partner: opentofu
+  partner_name: OpenTofu (opentofu-registry)
+  category: infrastructure-as-code provider registry listing
+  type: marketplace
+  marketplace: opentofu-registry
+  channel: partner-built
+  evidence: https://search.opentofu.org/provider/singlestore-labs/singlestoredb
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: singlestore-terraform-terraform-registry
+  label: Terraform (terraform-registry)
+  partner: terraform
+  partner_name: Terraform (terraform-registry)
+  category: infrastructure-as-code provider registry listing
+  type: marketplace
+  marketplace: terraform-registry
+  channel: partner-built
+  evidence: https://registry.terraform.io/providers/singlestore-labs/singlestoredb
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
