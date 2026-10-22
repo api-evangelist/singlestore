@@ -17,6 +17,7 @@ checked:
 - tableau/integrations/tableau-integration-edges.yml
 - opentofu/integrations/opentofu-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
+- vercel/integrations/vercel-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: LlamaIndex
@@ -288,4 +289,22 @@ edges:
   badges:
   - Verified publisher (Terraform partner tier)
   - Verified publisher (GitHub domain-verified organization)
+- partner_name: Vercel (own)
+  partner: vercel
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://vercel.com/marketplace/singlestoredb-cloud
+  mirror_of: vercel/integrations/vercel-integration-edges.yml
+  apps:
+  - SingleStoreDB Cloud
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Storage
+  partner_tier: third-party
 source: https://hightouch.com/docs/sources/single-store
