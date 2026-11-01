@@ -1,4 +1,4 @@
-# SingleStore (singlestore)
+# SingleStore
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,92 +66,211 @@
 
 SingleStore is a cloud-native distributed SQL database designed for real-time analytics and mixed workloads. It offers a management API for provisioning and managing cloud workspaces, and a data API for executing SQL statements over HTTP without requiring native database drivers. SingleStore Helios is the fully managed cloud service providing serverless database capabilities with elastic scaling.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/apis.yml)
+**Areas:** Database · SQL · Analytics · Cloud · Distributed SQL
 
-## Scope
+## SingleStore on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for SingleStore is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/singlestore/](https://apis.io/providers/singlestore/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- Database
-- SQL
-- Analytics
-- Cloud
-- Distributed SQL
+- [SingleStore Files API](https://apis.io/apis/singlestore/singlestore-files-api/) — Upload, download, list, and delete files in the personal, shared, or models space within SingleStore Helios Spaces (stage storage).
+- [SingleStore Health API](https://apis.io/apis/singlestore/singlestore-health-api/) — Health check operations for verifying connectivity to the Data API endpoint without requiring authentication credentials.
+- [SingleStore Jobs API](https://apis.io/apis/singlestore/singlestore-jobs-api/) — Create, retrieve, list, and delete scheduled notebook jobs within SingleStore Helios. Jobs enable automated execution of notebooks on configurable schedules.
+- [SingleStore Organizations API](https://apis.io/apis/singlestore/singlestore-organizations-api/) — Retrieve information about the current user's organization within SingleStore Helios.
+- [SingleStore Queries API](https://apis.io/apis/singlestore/singlestore-queries-api/) — Execute SQL statements against a SingleStore Helios workspace over HTTP. Supports DDL, DML, and SELECT statements returning results as JSON.
+- [SingleStore Regions API](https://apis.io/apis/singlestore/singlestore-regions-api/) — List available cloud provider regions that support workspace group creation, including shared tier regions.
+- [SingleStore Secrets API](https://apis.io/apis/singlestore/singlestore-secrets-api/) — Manage organization-level secrets that can be referenced securely in notebooks and jobs without exposing plaintext credentials.
+- [SingleStore Workspaces API](https://apis.io/apis/singlestore/singlestore-workspaces-api/) — Create, list, retrieve, update, suspend, resume, and delete workspaces within a workspace group. Workspaces are the compute resources that connect to a…
+- [SingleStore Workspace Groups API](https://apis.io/apis/singlestore/singlestore-workspace-groups-api/) — Create, list, retrieve, update, and delete workspace groups within a SingleStore Helios organization. Workspace groups are logical containers that group…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### SingleStore Data API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The SingleStore Data API enables developers to execute SQL statements against a SingleStore Helios database over standard HTTP connections without requiring a native database driver or MySQL-compatible client. It supports all SQL statements via /api/v2/exec, and returns query result sets via /api/v2/query/rows and /api/v2/query/tuples. Authentication is handled using HTTP Basic or Bearer Authentication over HTTPS.
+- [Singlestore Agentic Access](https://apis.io/agentic-access/singlestore/singlestore-agentic-access/)
 
-- **Human URL:** [https://docs.singlestore.com/cloud/reference/data-api/](https://docs.singlestore.com/cloud/reference/data-api/)
-- **Base URL:** `https://{workspaceHost}`
+#### JSON Schema (20)
 
-#### Tags
+The data models the API reads and writes.
 
-- SQL
-- Database
-- Query
-- HTTP SQL
+- [ExecRequest](https://apis.io/schemas/singlestore/singlestore-exec-request/)
+- [ExecResponse](https://apis.io/schemas/singlestore/singlestore-exec-response/)
+- [Job](https://apis.io/schemas/singlestore/singlestore-job/)
+- [JobCreate](https://apis.io/schemas/singlestore/singlestore-job-create/)
+- [JobExecution](https://apis.io/schemas/singlestore/singlestore-job-execution/)
+- [Organization](https://apis.io/schemas/singlestore/singlestore-organization/)
+- [SingleStore Data API Query](https://apis.io/schemas/singlestore/singlestore-query/)
+- [QueryRequest](https://apis.io/schemas/singlestore/singlestore-query-request/)
+- [QueryRowsResponse](https://apis.io/schemas/singlestore/singlestore-query-rows-response/)
+- [QueryTuplesResponse](https://apis.io/schemas/singlestore/singlestore-query-tuples-response/)
+- [Region](https://apis.io/schemas/singlestore/singlestore-region/)
+- [Secret](https://apis.io/schemas/singlestore/singlestore-secret/)
+- [SingleStore Workspace](https://apis.io/schemas/singlestore/singlestore-workspace/)
+- [WorkspaceCreate](https://apis.io/schemas/singlestore/singlestore-workspace-create/)
+- [WorkspaceDeleteResponse](https://apis.io/schemas/singlestore/singlestore-workspace-delete-response/)
+- [WorkspaceGroup](https://apis.io/schemas/singlestore/singlestore-workspace-group/)
+- [WorkspaceGroupCreate](https://apis.io/schemas/singlestore/singlestore-workspace-group-create/)
+- [WorkspaceGroupDeleteResponse](https://apis.io/schemas/singlestore/singlestore-workspace-group-delete-response/)
+- [WorkspaceGroupUpdate](https://apis.io/schemas/singlestore/singlestore-workspace-group-update/)
+- [WorkspaceUpdate](https://apis.io/schemas/singlestore/singlestore-workspace-update/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://docs.singlestore.com/cloud/reference/data-api/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/openapi/singlestore-data-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/singlestore-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/singlestore-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/singlestore-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/singlestore-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### SingleStore Management API
+- [Singlestore Workspace Structure](https://apis.io/json-structure/singlestore/singlestore-workspace-structure/)
 
-The SingleStore Management API is a REST interface for programmatically creating and managing workspace groups and workspaces within SingleStore Helios. It supports provisioning, updating, suspending, resuming, and deleting workspaces, as well as managing private connections, regions, organizations, jobs, files, secrets, and teams.
+#### JSON-LD (1)
 
-- **Human URL:** [https://docs.singlestore.com/cloud/reference/management-api/](https://docs.singlestore.com/cloud/reference/management-api/)
-- **Base URL:** `https://api.singlestore.com/v1`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Singlestore Context](https://apis.io/jsonld/singlestore/singlestore-context/)
 
-- Management
-- Workspaces
-- Provisioning
-- Database
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://docs.singlestore.com/cloud/reference/management-api/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/singlestore/refs/heads/main/openapi/singlestore-management-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/singlestore-data-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/singlestore-data-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/singlestore-management-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/singlestore-management-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [SingleStore Vocabulary](https://apis.io/vocabularies/singlestore/singlestore-vocabulary/)
 
-## Common Properties
+#### Examples (2)
 
-- [LinkedIn](https://www.linkedin.com/company/singlestore)
+Example requests and responses.
+
+- [Singlestore Execute Sql Example](https://apis.io/examples/singlestore/singlestore-execute-sql-example/)
+- [Singlestore Query Rows Example](https://apis.io/examples/singlestore/singlestore-query-rows-example/)
+
+#### Collections (20)
+
+Postman and Open Collection request collections.
+
+- [SingleStore Data API](https://apis.io/collections/singlestore/open-singlestore-data-api/)
+- [SingleStore Data Files API](https://apis.io/collections/singlestore/open-singlestore-files-api/)
+- [SingleStore Data Files Health API](https://apis.io/collections/singlestore/open-singlestore-health-api/)
+- [SingleStore Data Files Jobs API](https://apis.io/collections/singlestore/open-singlestore-jobs-api/)
+- [SingleStore Management API](https://apis.io/collections/singlestore/open-singlestore-management-api/)
+- [SingleStore Data Files Organizations API](https://apis.io/collections/singlestore/open-singlestore-organizations-api/)
+- [SingleStore Data Files Queries API](https://apis.io/collections/singlestore/open-singlestore-queries-api/)
+- [SingleStore Data Files Regions API](https://apis.io/collections/singlestore/open-singlestore-regions-api/)
+- [SingleStore Data Files Secrets API](https://apis.io/collections/singlestore/open-singlestore-secrets-api/)
+- [SingleStore Data Files WorkspaceGroups API](https://apis.io/collections/singlestore/open-singlestore-workspacegroups-api/)
+- [SingleStore Data Files Workspaces API](https://apis.io/collections/singlestore/open-singlestore-workspaces-api/)
+- [SingleStore Data Files API](https://apis.io/collections/singlestore/postman-singlestore-files-api/)
+- [SingleStore Data Files Health API](https://apis.io/collections/singlestore/postman-singlestore-health-api/)
+- [SingleStore Data Files Jobs API](https://apis.io/collections/singlestore/postman-singlestore-jobs-api/)
+- [SingleStore Data Files Organizations API](https://apis.io/collections/singlestore/postman-singlestore-organizations-api/)
+- [SingleStore Data Files Queries API](https://apis.io/collections/singlestore/postman-singlestore-queries-api/)
+- [SingleStore Data Files Regions API](https://apis.io/collections/singlestore/postman-singlestore-regions-api/)
+- [SingleStore Data Files Secrets API](https://apis.io/collections/singlestore/postman-singlestore-secrets-api/)
+- [SingleStore Data Files WorkspaceGroups API](https://apis.io/collections/singlestore/postman-singlestore-workspacegroups-api/)
+- [SingleStore Data Files Workspaces API](https://apis.io/collections/singlestore/postman-singlestore-workspaces-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Singlestore Files Api Overlay](https://apis.io/overlays/singlestore/singlestore-files-api-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [SingleStore — jsonschema rules](https://apis.io/rules/singlestore/singlestore-jsonschema-spectral-rules/)
+- [SingleStore API Rules](https://apis.io/rules/singlestore/singlestore-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Singlestore Authentication](https://apis.io/security/singlestore/singlestore-authentication/)
+- [Singlestore Domain Security](https://apis.io/security/singlestore/singlestore-domain-security/)
+- [Singlestore Vulnerability Disclosure](https://apis.io/security/singlestore/singlestore-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Singlestore Plans Pricing](https://apis.io/plans/singlestore/singlestore-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Singlestore Rate Limits](https://apis.io/rate-limits/singlestore/singlestore-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Singlestore Finops](https://apis.io/finops/singlestore/singlestore-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.singlestore.com/)
-- [Developer Portal](https://docs.singlestore.com/)
 - [Documentation](https://docs.singlestore.com/cloud/)
 - [Pricing](https://www.singlestore.com/pricing/)
-- [Blog](https://www.singlestore.com/blog/)
-- [Git Hub Org](https://github.com/singlestore-labs)
-- [Sign Up](https://www.singlestore.com/cloud-trial/)
-- [Terms of Service](https://www.singlestore.com/cloud-terms-and-conditions/)
-- [Privacy Policy](https://www.singlestore.com/privacy-policy/)
 - [Support](https://support.singlestore.com)
-- [Integrations](https://www.singlestore.com/partners/)
-- [L L Ms Txt](https://docs.singlestore.com/llms.txt)
+- [Blog](https://www.singlestore.com/blog/)
+- [Terms of service](https://www.singlestore.com/cloud-terms-and-conditions/)
+- [Privacy policy](https://www.singlestore.com/privacy-policy/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 45.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 58.8 |
+| Contract governance | 28.0 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 39.3 |
+| Access clarity | 42.1 |
+
+**Agent readiness 26.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 26.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/singlestore/](https://apis.io/providers/singlestore/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for SingleStore: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/singlestore/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
